@@ -16,12 +16,23 @@ namespace MyFps
 
         private void Start()
         {
-            //씬 시작시 페이드인 효과
-            StartCoroutine(FadeIn());
+            //초기화: 시작시 화면을 검정색으로 시작
+            image.color = new Color(0f, 0f, 0f, 1f);
         }
 
-        IEnumerator FadeIn()
+        public void FromFade(float delayTime = 0f)
         {
+            //씬 시작시 페이드인 효과
+            StartCoroutine(FadeIn(delayTime));
+        }
+
+        IEnumerator FadeIn(float delayTime)
+        {
+            if(delayTime > 0f)
+            {
+                yield return new WaitForSeconds(delayTime);
+            }
+
             //1초동안 image a 1-> 0
             float t = 1f;
 
