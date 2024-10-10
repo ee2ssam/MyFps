@@ -39,7 +39,7 @@ namespace MyFps
 
             //3. 3초후에 시나리오 텍스트 없어진다
             yield return new WaitForSeconds(3f);
-            //textBox.text = "";
+            textBox.text = "";
             textBox.gameObject.SetActive(false);
 
             //4.플레이 캐릭터 활성화
