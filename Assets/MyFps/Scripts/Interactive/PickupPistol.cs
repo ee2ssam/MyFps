@@ -9,12 +9,17 @@ namespace MyFps
         //Action
         public GameObject realPistol;
         public GameObject arrow;
+
+        public GameObject enemyTrigger;
         #endregion
 
         protected override void DoAction()
         {
             realPistol.SetActive(true);
             arrow.SetActive(false);
+
+            enemyTrigger.SetActive(true);
+
             Destroy(gameObject);
         }
     }
