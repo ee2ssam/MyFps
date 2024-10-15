@@ -46,6 +46,7 @@ namespace MyFps
             textBox.gameObject.SetActive(false);
             //플레이 캐릭터 활성화(다시 플레이)
             thePlayer.SetActive(true);
+
             //트리거 충돌체 비활성화
             transform.GetComponent<BoxCollider>().enabled = false;
         }
