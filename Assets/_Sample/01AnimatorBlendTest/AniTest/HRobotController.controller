@@ -23,7 +23,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7e340e156bb693d42a8250be74bd5e57, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4f47ca660b152ad4c93088f3a0067ed4, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -127,7 +127,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 48152a9b74cae054fadffb3df44fcdc0, type: 2}
+  m_Motion: {fileID: 7400000, guid: 012df337bc49e5e4cb5da1f8338360cc, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -164,7 +164,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RobotController
+  m_Name: HRobotController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: RobotState
@@ -231,7 +231,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8a8c3ea335c955e42a0d89d3edd72967, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1199d1563046c29499d98934bc60bf98, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -360,7 +360,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f54f7885695167346aecc9e91ed72777, type: 2}
+  m_Motion: {fileID: 7400000, guid: f1db8a6f48217034fa821008645d5fa2, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

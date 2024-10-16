@@ -37,6 +37,13 @@ namespace MyFps
             //Enemy 등장 사운드
             jumpScare.Play();
 
+            //Enemy 타겟을 향해 걷기
+            RobotController robot = theRobot.GetComponent<RobotController>();
+            if (robot != null)
+            {
+                robot.SetState(RobotState.R_Walk);
+            }
+
             //트리거 킬
             Destroy(this.gameObject);
         }
