@@ -21,7 +21,7 @@ namespace MyFps
         protected override void DoAction()
         {
             animator.SetBool("IsOpen", true);
-            GetComponent<Collider>().enabled = false;
+            m_Collider.enabled = false;
             audioSource.Play();
         }
     }

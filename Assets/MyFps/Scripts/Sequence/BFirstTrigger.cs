@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +16,8 @@ namespace MyFps
         public TextMeshProUGUI textBox;
         [SerializeField]
         private string sequence = "Looks like a weapon on that table";
+
+        public AudioSource line03;
         #endregion
 
         private void OnTriggerEnter(Collider other)
@@ -26,11 +29,12 @@ namespace MyFps
         IEnumerator PlaySequence()
         {
             //플레이 캐릭터 비활성화(플레이 멈춤)
-            thePlayer.SetActive(false);
+            thePlayer.GetComponent<FirstPersonController>().enabled = false;
 
-            //대사 출력: "Looks like a weapon on that table."
+            //대사 출력: "Looks like a weapon on that table.", 음성 출력
             textBox.gameObject.SetActive(true);
             textBox.text = sequence;
+            line03.Play();
 
             //1초 딜레이
             yield return new WaitForSeconds(2f);
@@ -44,11 +48,13 @@ namespace MyFps
             //초기화
             textBox.text = "";
             textBox.gameObject.SetActive(false);
-            //플레이 캐릭터 활성화(다시 플레이)
-            thePlayer.SetActive(true);
 
-            //트리거 충돌체 비활성화
-            transform.GetComponent<BoxCollider>().enabled = false;
+            //플레이 캐릭터 활성화(다시 플레이)
+            thePlayer.GetComponent<FirstPersonController>().enabled = true;
+
+            //트리거 충돌체 비활성화 - 킬
+            Destroy(gameObject);
+            //transform.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }
