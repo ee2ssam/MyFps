@@ -68,7 +68,7 @@ namespace MyFps
                     sound = s;
 
                     //
-                    if(s.name == bgmSound)
+                    if (s.name == bgmSound)
                     {
                         bgmSound = "";
                     }
@@ -96,7 +96,7 @@ namespace MyFps
             }
 
             //배경음 정지
-            Stop(bgmSound);
+            StopBgm();
 
             Sound sound = null;
 
@@ -119,5 +119,10 @@ namespace MyFps
 
             sound.source.Play();
         }
+
+        public void StopBgm()
+        {
+            Stop(bgmSound);
+        } 
     }
 }
