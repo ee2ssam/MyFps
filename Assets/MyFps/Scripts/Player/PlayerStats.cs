@@ -6,6 +6,7 @@ namespace MyFps
     public enum PuzzleKey
     {
         ROOM01_KEY,
+        LEFTEYE_KEY,
         MAX_KEY             //퍼즐 아이템 갯수
     }
 
