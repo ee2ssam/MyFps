@@ -7,6 +7,7 @@ namespace MyFps
     {
         ROOM01_KEY,
         LEFTEYE_KEY,
+        RIGHTEYE_KEY,
         MAX_KEY             //퍼즐 아이템 갯수
     }
 
