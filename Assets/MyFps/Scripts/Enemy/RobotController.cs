@@ -109,10 +109,10 @@ namespace MyFps
         private void Attack()
         {
             Debug.Log("플레이어에게 데미지를 준다");
-            PlayerController player = thePlayer.GetComponent<PlayerController>();
-            if (player != null)
+            IDamageable damageable = thePlayer.GetComponent<IDamageable>();
+            if (damageable != null)
             {
-                player.TakeDamage(attackDamage);
+                damageable.TakeDamage(attackDamage);
             }
         }
 
