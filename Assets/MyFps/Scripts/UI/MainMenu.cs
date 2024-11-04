@@ -91,7 +91,8 @@ namespace MyFps
         public void QuitGame()
         {
             //Cheating
-            PlayerPrefs.DeleteAll();
+            //PlayerPrefs.DeleteAll();
+            //SaveLoad.DeleteFile();
 
             Debug.Log("Quit Game");
             Application.Quit();

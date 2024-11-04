@@ -21,12 +21,12 @@ namespace MyFps
 
         public void Retry()
         {
-            fader.FadeTo(loadToScene);
+            fader.FadeTo(PlayerStats.Instance.NowSceneNumber);
         }
 
         public void Menu()
         {
-            Debug.Log("Goto Menu!!!");
+            fader.FadeTo(loadToScene);
         }
     }
 }

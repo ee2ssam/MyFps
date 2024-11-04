@@ -7,10 +7,13 @@ namespace MyFps
     //게임 데이터 파일 저장/가져오기 구현 - 이진화 저장
     public static class SaveLoad
     {
+        #region Variables
+        private static string fileName = "/playData.arr";
+        #endregion
         public static void SaveData()
         {
             //파일이름, 경로 지정
-            string path = Application.persistentDataPath + "/playData.arr";
+            string path = Application.persistentDataPath + fileName;
 
             //저장할 데이터를 이진화 준비
             BinaryFormatter formatter = new BinaryFormatter();
@@ -33,7 +36,7 @@ namespace MyFps
             PlayData playData;
 
             //파일이름, 경로 지정
-            string path = Application.persistentDataPath + "/playData.arr";
+            string path = Application.persistentDataPath + fileName;
 
             //지정된 경로에 저장된 파일이 있는지 없는지 체크
             if (File.Exists(path) == true)
@@ -59,6 +62,12 @@ namespace MyFps
             }
 
             return playData;
+        }
+
+        public static void DeleteFile()
+        {
+            string path = Application.persistentDataPath + fileName;
+            File.Delete(path);
         }
     }
 }
