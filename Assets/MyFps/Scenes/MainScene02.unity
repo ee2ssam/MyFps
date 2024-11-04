@@ -439,7 +439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &31735877
 Transform:
   m_ObjectHideFlags: 0
@@ -1631,7 +1631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &138018085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2632,6 +2632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 179940177}
   - component: {fileID: 179940178}
+  - component: {fileID: 179940179}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -2669,6 +2670,18 @@ MonoBehaviour:
   fader: {fileID: 1323067865}
   thePlayer: {fileID: 1085764698}
   textBox: {fileID: 235506743}
+--- !u!114 &179940179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179940176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fe2c61baa83584faf9bd80bb64477c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &180730770 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7646218370291860996, guid: 56c2048eda57f74489b3f8d5a8f2dbcd,
@@ -3973,6 +3986,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383059841}
   - component: {fileID: 383059840}
+  - component: {fileID: 383059842}
   m_Layer: 0
   m_Name: PlayerFollowCamera
   m_TagString: Untagged
@@ -4035,6 +4049,19 @@ Transform:
   - {fileID: 890274690}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &383059842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383059839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1227974d86be42d499d493746d064918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 1
 --- !u!1001 &384786065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4643,6 +4670,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2598029878983603678, guid: 5c43eed09c55cfd41ae800551cbf5a3d,
+        type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 26cdf60a717ea4449a67443ea23f07a0,
+        type: 2}
     - target: {fileID: 2598029878983603678, guid: 5c43eed09c55cfd41ae800551cbf5a3d,
         type: 3}
       propertyPath: sounds.Array.size
@@ -8985,10 +9018,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
-  m_PivotOffset: {x: 0, y: 0, z: 1}
-  m_AmplitudeGain: 0.5
-  m_FrequencyGain: 0.3
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 0
   mNoiseOffsets: {x: -451.37964, y: 684.7062, z: 648.0488}
 --- !u!114 &890274693
 MonoBehaviour:
@@ -14977,6 +15010,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1011950353}
   - component: {fileID: 1011950354}
+  - component: {fileID: 1011950355}
   m_Layer: 0
   m_Name: GameHUD
   m_TagString: Untagged
@@ -15017,6 +15051,19 @@ MonoBehaviour:
   pauseUI: {fileID: 404475988}
   fader: {fileID: 1323067865}
   loadToScene: MainMenu
+--- !u!114 &1011950355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011950352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d177aecf2054a44aaf86c46a52d189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoUI: {fileID: 138018084}
 --- !u!1 &1015990040
 GameObject:
   m_ObjectHideFlags: 0
@@ -25575,6 +25622,7 @@ MonoBehaviour:
   hurt01: {fileID: 839591745}
   hurt02: {fileID: 636923733}
   hurt03: {fileID: 1269368847}
+  realPistol: {fileID: 31735876}
 --- !u!114 &1085764700
 MonoBehaviour:
   m_ObjectHideFlags: 0

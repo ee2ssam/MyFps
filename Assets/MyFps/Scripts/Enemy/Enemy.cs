@@ -93,6 +93,7 @@ namespace MyFps
             if (distance <= attackRange)
             {
                 SetState(EnemyState.E_Attack);
+                agent.SetDestination(this.transform.position);
             }
             else if (detectDistance > 0)
             {
@@ -176,7 +177,7 @@ namespace MyFps
 
         private void Attack()
         {
-            Debug.Log("플레이어에게 데미지를 준다");
+            //Debug.Log("플레이어에게 데미지를 준다");
             IDamageable damageable = thePlayer.GetComponent<IDamageable>();
             if (damageable != null)
             {
@@ -187,7 +188,7 @@ namespace MyFps
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            Debug.Log($"Enemy Health: {currentHealth}");
+            //Debug.Log($"Enemy Health: {currentHealth}");
 
             if (currentHealth <= 0 && !isDeath)
             {

@@ -15,18 +15,26 @@ namespace MyFps
         public GameObject mainMenuUI;
         public GameObject optionUI;
         public GameObject creditUI;
+        public GameObject loadGameButton;
 
         //Audio
         public AudioMixer audioMixer;
         public Slider bgmSlider;
         public Slider sfxSlider;
 
+        //저장되어 있는 씬번호
+        //private int sceneNumber;
         #endregion
 
         private void Start()
         {
-            //게임 저장데이터, 저장된 옵션값 불러오기
-            LoadOptions();
+            //게임 데이터 초기화
+            InitGameData();
+            //저장된 씬이 있으면
+            if(PlayerStats.Instance.SceneNumber > 0)
+            {
+                loadGameButton.SetActive(true);
+            }
 
             //씬 페이드인 효과
             fader.FromFade();
@@ -38,8 +46,21 @@ namespace MyFps
             audioManager.PlayBgm("MenuBgm");
         }
 
+        private void InitGameData()
+        {
+            //게임설정값: 저장된 옵션값 불러오기
+            LoadOptions();
+
+            //게임 플레이 데이터 로드
+            PlayData playData = SaveLoad.LoadData();
+            PlayerStats.Instance.PlayerStatInit(playData);
+        }
+
         public void NewGame()
         {
+            //게임 데이터 초기화
+            PlayerStats.Instance.PlayerStatInit(null);
+
             audioManager.Stop(audioManager.BgmSound);            
             audioManager.Play("MenuButton");
 
@@ -48,7 +69,11 @@ namespace MyFps
 
         public void LoadGame()
         {
-            Debug.Log("Goto LoadGame");
+            //Debug.Log($"Goto LoadGame {sceneNumber}번 씬");
+            audioManager.Stop(audioManager.BgmSound);
+            audioManager.Play("MenuButton");
+
+            fader.FadeTo(PlayerStats.Instance.SceneNumber);
         }
 
         public void Options()
@@ -113,13 +138,13 @@ namespace MyFps
         {
             //배경음 볼륨
             float bgmVolume = PlayerPrefs.GetFloat("BgmVolume", 0);
-            Debug.Log($"bgmVolume: {bgmVolume}");
+            //Debug.Log($"bgmVolume: {bgmVolume}");
             SetBgmVolume(bgmVolume);        //사운드 볼륨 조절
             bgmSlider.value = bgmVolume;    //UI 셋팅
 
             //효과음 볼륨
             float sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0);
-            Debug.Log($"sfxVolume: {sfxVolume}");
+            //Debug.Log($"sfxVolume: {sfxVolume}");
             SetSfxVolume(sfxVolume);        //사운드 볼륨 조절
             sfxSlider.value = sfxVolume;    //UI 셋팅
 

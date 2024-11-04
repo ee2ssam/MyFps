@@ -7970,6 +7970,7 @@ GameObject:
   m_Component:
   - component: {fileID: 790825723}
   - component: {fileID: 790825722}
+  - component: {fileID: 790825724}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -8011,6 +8012,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &790825724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790825721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fe2c61baa83584faf9bd80bb64477c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &826293956
 GameObject:
   m_ObjectHideFlags: 0
@@ -16382,6 +16395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1459720594}
   - component: {fileID: 1459720595}
+  - component: {fileID: 1459720596}
   m_Layer: 0
   m_Name: GameHUD
   m_TagString: Untagged
@@ -16422,6 +16436,19 @@ MonoBehaviour:
   pauseUI: {fileID: 1029834229}
   fader: {fileID: 0}
   loadToScene: MainMenu
+--- !u!114 &1459720596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459720593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d177aecf2054a44aaf86c46a52d189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoUI: {fileID: 911378527}
 --- !u!1 &1482168589
 GameObject:
   m_ObjectHideFlags: 0
@@ -36431,10 +36458,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
-  m_PivotOffset: {x: 0, y: 0, z: 1}
-  m_AmplitudeGain: 0.5
-  m_FrequencyGain: 0.3
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 0
   mNoiseOffsets: {x: -451.37964, y: 684.7062, z: 648.0488}
 --- !u!114 &5966339953293774161
 MonoBehaviour:
@@ -36571,6 +36598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5966339953757748369}
   - component: {fileID: 5966339953757748368}
+  - component: {fileID: 5966339953757748591}
   m_Layer: 0
   m_Name: PlayerFollowCamera
   m_TagString: Untagged
@@ -36578,6 +36606,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5966339953757748591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5966339953757748590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1227974d86be42d499d493746d064918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 1
 --- !u!114 &5968633399949356562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37976,6 +38017,7 @@ MonoBehaviour:
   hurt01: {fileID: 826293958}
   hurt02: {fileID: 2081533610}
   hurt03: {fileID: 555608294}
+  realPistol: {fileID: 1631617908}
 --- !u!4 &9192056091196700377
 Transform:
   m_ObjectHideFlags: 0

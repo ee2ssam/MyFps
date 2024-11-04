@@ -108,7 +108,7 @@ namespace MyFps
 
         private void Attack()
         {
-            Debug.Log("플레이어에게 데미지를 준다");
+            //Debug.Log("플레이어에게 데미지를 준다");
             IDamageable damageable = thePlayer.GetComponent<IDamageable>();
             if (damageable != null)
             {
@@ -135,7 +135,7 @@ namespace MyFps
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            Debug.Log($"Robot Health: {currentHealth}");
+            //Debug.Log($"Robot Health: {currentHealth}");
 
             if(currentHealth <= 0 && !isDeath)
             {
@@ -147,7 +147,7 @@ namespace MyFps
         {
             isDeath = true;
 
-            Debug.Log("Robot Death!!!!");
+            //Debug.Log("Robot Death!!!!");
             SetState(RobotState.R_Death);
 
             //배경음 변경
