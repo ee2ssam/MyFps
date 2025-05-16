@@ -18,6 +18,9 @@ namespace MyFps
 
         //마우스 입력(위치) 값
         private Vector2 inputLook;
+
+        //그라운드 체크
+
         #endregion
 
         #region Unity Event Method
