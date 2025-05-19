@@ -14,6 +14,9 @@ namespace MyFps
         public GameObject actionUI;
         public TextMeshProUGUI actionText;
 
+        //크로스헤어
+        public GameObject extraCross;
+
         [SerializeField]
         private string action = "Open The Door";
 
@@ -34,7 +37,9 @@ namespace MyFps
 
         private void OnMouseOver()
         {
-            if(theDistance <= 2f)
+            extraCross.SetActive(true);
+
+            if (theDistance <= 2f)
             {
                 ShowActionUI();
 
@@ -56,6 +61,8 @@ namespace MyFps
 
         private void OnMouseExit()
         {
+            extraCross.SetActive(false);
+
             HideActionUI();
         }
         #endregion
