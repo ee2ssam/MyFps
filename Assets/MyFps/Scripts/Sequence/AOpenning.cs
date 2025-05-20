@@ -23,6 +23,10 @@ namespace MyFps
         #region Unity Event Method
         private void Start()
         {
+            //커서 제어
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
             //오프닝 연출 시작
             StartCoroutine(SequencePlay());
         }
