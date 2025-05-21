@@ -18,6 +18,7 @@ namespace MyFps
             //무기획득, 충돌체 제거
             realPistol.SetActive(true);
             theArrow.SetActive(false);
+
             this.gameObject.SetActive(false);   //fake pistol 및 충돌체 제거                    
         }
         #endregion

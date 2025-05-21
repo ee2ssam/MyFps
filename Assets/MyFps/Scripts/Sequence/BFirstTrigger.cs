@@ -23,10 +23,13 @@ namespace MyFps
         #region Unity Event Method
         private void OnTriggerEnter(Collider other)
         {
-            //트리거 해제
-            this.GetComponent<BoxCollider>().enabled = false;
-
-            StartCoroutine(SequencePlayer());
+            //플레이어 체크
+            if (other.tag == "Player")
+            {
+                //트리거 해제
+                this.GetComponent<BoxCollider>().enabled = false;
+                StartCoroutine(SequencePlayer());
+            }
         }
         #endregion
 
