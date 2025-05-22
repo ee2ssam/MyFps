@@ -53,7 +53,7 @@ namespace MyFps
         }
 
         //페이드인 외부에서 호출
-        public void FadeStart(float delayTime)
+        public void FadeStart(float delayTime = 0f)
         {
             StartCoroutine(FadeIn(delayTime));
         }
