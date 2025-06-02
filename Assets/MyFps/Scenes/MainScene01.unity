@@ -868,6 +868,7 @@ MonoBehaviour:
   actionUI: {fileID: 2110193795}
   actionText: {fileID: 1661001878}
   extraCross: {fileID: 497610588}
+  unInteractive: 0
   action: Pick up Pistol
   realPistol: {fileID: 2904934504266123715}
   ammoUI: {fileID: 1926959445}
@@ -5010,6 +5011,7 @@ MonoBehaviour:
   actionUI: {fileID: 2110193795}
   actionText: {fileID: 1661001878}
   extraCross: {fileID: 497610588}
+  unInteractive: 0
   action: Open The Door
   fader: {fileID: 7937705}
   loadToScene: MainScene02
@@ -15527,6 +15529,7 @@ MonoBehaviour:
   actionUI: {fileID: 2110193795}
   actionText: {fileID: 1661001878}
   extraCross: {fileID: 497610588}
+  unInteractive: 0
   action: Open The Door
   animator: {fileID: 6646439816524306123}
   audioSource: {fileID: 655444959}

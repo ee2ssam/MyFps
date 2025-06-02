@@ -12,7 +12,9 @@ namespace MyFps
     //퍼즐 아이템 enum값 설정
     public enum PuzzleKey
     {
-        ROOM01_KEY,        
+        ROOM01_KEY,
+        LEFTEYE_KEY,
+        RIGHTEYE_KEY,
         MAX_KEY              //퍼즐 아이템 갯수
     }
 
