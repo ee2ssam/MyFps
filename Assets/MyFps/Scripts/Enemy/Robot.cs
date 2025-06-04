@@ -8,7 +8,9 @@ namespace MyFps
         R_Idle = 0,
         R_Walk,
         R_Attack,
-        R_Death
+        R_Death,
+        R_Patrol,
+        R_Chase
     }
 
     //enemy(로봇)의 상태 제어하는 클래스
