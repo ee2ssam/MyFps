@@ -28,10 +28,13 @@ namespace MyFps
         private float idleCountdown = 0f;
 
         //디텍팅
+        private Vector3 target;                 //플레이어의 위치
+
         [SerializeField]
         private float detectingRange = 15f;
+        private float distance;
 
-        private Vector3 target;                 //플레이어의 위치
+        private Vector3 originPosition;
 
         //공격 : 총 발사 : 멈추고 Fire 애니메이션
         [SerializeField]
@@ -39,6 +42,9 @@ namespace MyFps
 
         [SerializeField] private float attackTime = 2f;
         private float attackCountdown = 0f;
+        //공격 데미지
+        [SerializeField]
+        private float attackDamage = 5f;
 
         //애니메이션 파라미터
         private string enemyState = "EnemyState";
@@ -69,6 +75,8 @@ namespace MyFps
         private void Start()
         {
             //초기화
+            originPosition = transform.position;
+
             ChangeState(RobotState.R_Idle);
         }
 
@@ -78,18 +86,32 @@ namespace MyFps
             if (gunmanHealth.IsDeath)
                 return;
 
-            //적 디텍팅
-            target = new Vector3(thePlayer.position.x, 0f, thePlayer.position.z);
-            float distance = Vector3.Distance(transform.position, target);
-            if(distance <= attackRange) //5
+            //플레이어 위치 확인 - 안전지역에 있으면
+            if(PlayerController.safeZoneIn)
             {
-                //공격 상태로 변경
-                ChangeState(RobotState.R_Attack);
+                if(gunmanState == RobotState.R_Attack || gunmanState == RobotState.R_Chase)
+                {
+                    Debug.Log("제자리에 돌아가라");
+                    //제자리에 돌아가라
+                    BackHome();
+                    return;
+                }
             }
-            else if(distance <= detectingRange) //15
+            else //Enemy Zone에 있는 경우
             {
-                //추격 상태로 변경
-                ChangeState(RobotState.R_Chase);
+                //적 디텍팅
+                target = new Vector3(thePlayer.position.x, 0f, thePlayer.position.z);
+                distance = Vector3.Distance(transform.position, target);
+                if (distance <= attackRange) //5
+                {
+                    //공격 상태로 변경                
+                    ChangeState(RobotState.R_Attack);
+                }
+                else if (distance <= detectingRange) //15
+                {
+                    //추격 상태로 변경
+                    ChangeState(RobotState.R_Chase);
+                }
             }
 
             //상태 구현
@@ -110,6 +132,11 @@ namespace MyFps
                     }
                     break;
                 case RobotState.R_Walk:
+                    //웨이포인트 도착 판정
+                    if (agent.remainingDistance <= 0.2f)
+                    {
+                        ChangeState(RobotState.R_Idle);
+                    }
                     break;
                 case RobotState.R_Attack:
                     //공격 타이머
@@ -122,6 +149,8 @@ namespace MyFps
                         //타이머 초기화
                         attackCountdown = 0f;
                     }
+                    //타겟을 바라본다
+                    transform.LookAt(target);
                     break;
                 case RobotState.R_Death:
                     break;
@@ -135,6 +164,13 @@ namespace MyFps
                 case RobotState.R_Chase:
                     //타겟을 향해 이동 (실시간으로 목표 지점을 변경)
                     agent.SetDestination(target);
+
+                    //플레이어가 디텍팅 거리에서 벗어나면
+                    if (distance > detectingRange) //15
+                    {
+                        //제자리로 되돌아가기
+                        BackHome();
+                    }
                     break;
             }
         }
@@ -144,6 +180,9 @@ namespace MyFps
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, detectingRange);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
         }
         #endregion
 
@@ -169,10 +208,13 @@ namespace MyFps
                 //다음 웨이포인트로 이동
                 GoNextWayPoint();
             }
-            else if(gunmanState == RobotState.R_Idle)
+            else if (gunmanState == RobotState.R_Idle)
             {
                 animator.SetInteger(enemyState, (int)gunmanState);
                 idleTime = Random.Range(2f, 5f);
+
+                //네비게이션 패스 초기화
+                agent.ResetPath();
             }
             else if (gunmanState == RobotState.R_Chase)
             {
@@ -182,11 +224,11 @@ namespace MyFps
                 //조준 애니 적용
                 animator.SetLayerWeight(1, 1);
             }
-            else if(gunmanState == RobotState.R_Attack)
+            else if (gunmanState == RobotState.R_Attack)
             {
                 animator.SetInteger(enemyState, (int)RobotState.R_Idle);
                 //조준 애니 적용
-                animator.SetLayerWeight(1, 1);                
+                animator.SetLayerWeight(1, 1);
 
                 //타겟을 향한 이동 멈춤
                 agent.ResetPath();
@@ -208,12 +250,40 @@ namespace MyFps
             agent.SetDestination(wayPoints[nowWayPointIndex].position);
         }
 
+        //제자리로 돌아가기
+        private void BackHome()
+        {
+            //패트롤 여부 체크
+            if(wayPoints.Length > 1)
+            {
+                ChangeState(RobotState.R_Patrol);
+            }
+            else
+            {
+                ChangeState(RobotState.R_Walk); //지정한 위치로 이동
+                agent.SetDestination(originPosition);
+            }
+            //조준 애니 푼다
+            animator.SetLayerWeight(1, 0);
+        }
+
+        public void Attack()
+        {
+            Debug.Log($"플레이어에게 {attackDamage}를 준다");
+            IDamageable damageable = thePlayer.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(attackDamage);
+            }
+        }
+
         //죽음시 호출되는 함수
         private void OnDie()
         {
             ChangeState(RobotState.R_Death);
 
             //추가 구현 내용..
+            agent.enabled = false;
 
             this.GetComponent<BoxCollider>().enabled = false;
         }

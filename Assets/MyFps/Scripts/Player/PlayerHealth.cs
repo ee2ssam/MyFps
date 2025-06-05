@@ -57,6 +57,8 @@ namespace MyFps
         {
             //vfx
             damageFlash.SetActive(true);
+            //카메라 흔들기
+            CinemachineCameraShake.Instance.Shake(2f, 1f, 0.75f);
 
             //sfx
             int randNum = Random.Range(1, 4);
