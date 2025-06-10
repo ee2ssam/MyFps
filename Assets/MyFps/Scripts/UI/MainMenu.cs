@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
+using System.Collections;
 
 namespace MyFps
 {
@@ -14,11 +17,27 @@ namespace MyFps
         [SerializeField]
         private string loadToScene = "MainScene01";
 
+        //메뉴
+        public GameObject mainMenuUI;
+        public GameObject optionUI;
+        public GameObject creditCanvas;
+
+        private bool isShowOption = false;
+        private bool isShowCredit = false;
+
+        //볼륨 조절
+        public AudioMixer audioMixer;
+
+        public Slider bgmSlider;
+        public Slider sfxSlider;
         #endregion
 
         #region Unity Event Method
         private void Start()
         {
+            //옵션 저장값 가져와서 게임에 적용
+            LoadOptions();
+
             //참조
             audioManager = AudioManager.Instance;
 
@@ -27,6 +46,26 @@ namespace MyFps
 
             //메뉴 배경음 플레이
             audioManager.PlayBgm("MenuMusic");
+
+            //초기화
+            isShowOption = false;
+            isShowCredit = false;
+        }
+
+        private void Update()
+        {
+            //esc키를 누르면
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if(isShowOption)
+                {
+                    HideOptionUI();
+                }
+                else if(isShowCredit)
+                {
+                    HideCreditUI();
+                }
+            }
         }
         #endregion
 
@@ -47,18 +86,102 @@ namespace MyFps
 
         public void Options()
         {
-            Debug.Log("Show Options!!!");
+            //메뉴 선택 사운드
+            audioManager.Play("MenuSelect");
+
+            //옵션 UI 보여주기
+            isShowOption = true;
+            mainMenuUI.SetActive(false);
+            optionUI.SetActive(true);
         }
 
         public void Credits()
         {
-            Debug.Log("Show Cridist!!!");
+            //메뉴 선택 사운드
+            audioManager.Play("MenuSelect");
+
+            //크레딧 UI 보여주기
+            StartCoroutine(ShowCreditUI());
         }
 
         public void QuitGame()
         {
+            //TODO: Cheating
+            PlayerPrefs.DeleteAll();
+
             Debug.Log("Quit Game!!!");
             Application.Quit();
+        }
+        
+        //옵션 UI 나가기
+        public void HideOptionUI()
+        {   
+            optionUI.SetActive(false);
+            mainMenuUI.SetActive(true);
+
+            isShowOption = false;
+        }
+
+        //Bgm 볼륨 조절
+        public void SetBgmVolume(float value)
+        {
+            //볼륨값 저장
+            PlayerPrefs.SetFloat("Bgm", value);
+
+            //볼륨 조절
+            audioMixer.SetFloat("Bgm", value);
+        }
+
+        //Sfx 볼륨 조절
+        public void SetSfxVolume(float value)
+        {
+            //볼륨값 저장
+            PlayerPrefs.SetFloat("Sfx", value);
+
+            //볼륨 조절
+            audioMixer.SetFloat("Sfx", value);
+        }
+
+        //옵션 저장값들을 가져와서 게임에 적용한다
+        private void LoadOptions()
+        {
+            //배경음 볼륨값 가져오기
+            float bgmVolume = PlayerPrefs.GetFloat("Bgm", 0f);
+            //오디오 믹서에 적용
+            SetBgmVolume(bgmVolume);
+            //UI에 적용
+            bgmSlider.value = bgmVolume;
+
+            //효과음 볼륨값 가져오기
+            float sfxVolume = PlayerPrefs.GetFloat("Sfx", 0f);
+            //오디오 믹서에 적용
+            SetSfxVolume(sfxVolume);
+            //UI에 적용
+            sfxSlider.value = sfxVolume;
+
+            //기타...
+        }
+
+        //크레딧 UI 보여주기
+        IEnumerator ShowCreditUI()
+        {
+            isShowCredit = true;
+
+            mainMenuUI.SetActive(false);
+            creditCanvas.SetActive(true);
+
+            yield return new WaitForSeconds(6f);
+
+            HideCreditUI();
+        }
+
+        //크레딧 UI 나가기
+        public void HideCreditUI()
+        {
+            creditCanvas.SetActive(false);
+            mainMenuUI.SetActive(true);
+
+            isShowCredit = false;
         }
         #endregion
     }

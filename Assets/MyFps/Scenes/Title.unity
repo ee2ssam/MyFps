@@ -7732,7 +7732,7 @@ MonoBehaviour:
   m_text: MY FPS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aa51f8fcb01845143af7deb129e65e4e, type: 2}
-  m_sharedMaterial: {fileID: -2087304481272893686, guid: aa51f8fcb01845143af7deb129e65e4e, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 7bb294f33d3a82146b40fb5649def287, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7826,7 +7826,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2087304481272893686, guid: aa51f8fcb01845143af7deb129e65e4e, type: 2}
+  - {fileID: 2100000, guid: 7bb294f33d3a82146b40fb5649def287, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
