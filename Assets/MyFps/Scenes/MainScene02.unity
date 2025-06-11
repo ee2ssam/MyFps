@@ -2254,6 +2254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c5b69083a9019a409f05ee08e585e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fader: {fileID: 2097080387}
+  loadToScene: MainMenu
   pauseUI: {fileID: 1310813270}
   playerInput: {fileID: 606046709}
 --- !u!1 &152260752
@@ -8649,7 +8651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1caec4e1655e64e80ae5320f4d50f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
   damageFlash: {fileID: 1997459927}
   hurt01: {fileID: 1277074519}
   hurt02: {fileID: 1922175688}

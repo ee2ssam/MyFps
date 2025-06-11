@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace MyFps
 {
@@ -22,6 +23,15 @@ namespace MyFps
         #region Unity Event Method
         private void Start()
         {
+            //게임 데이터(씬 번호) 저장
+            /* PlayerPrefs 모드
+            int sceneNumber = SceneManager.GetActiveScene().buildIndex;            
+            PlayerPrefs.SetInt("SceneNumber", sceneNumber);
+            */
+            //File System 모드
+            PlayerDataManager.Instance.SceneNumber = SceneManager.GetActiveScene().buildIndex;
+            SaveLoad.SaveData();
+
             //커서 제어
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -50,7 +60,6 @@ namespace MyFps
             //TODO : Cheating
             //메인 2번 씬 설정
             PlayerDataManager.Instance.Weapon = WeaponType.Pistol;
-            PlayerDataManager.Instance.AddAmmo(5);
 
             //배경음 플레이 시작
             AudioManager.Instance.PlayBgm("Bgm02");

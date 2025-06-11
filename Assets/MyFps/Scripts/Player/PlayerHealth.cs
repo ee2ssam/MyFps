@@ -9,9 +9,6 @@ namespace MyFps
         #region Variables
         //체력
         private float currentHealth;
-        [SerializeField]
-        private float maxHealth = 20;
-
         private bool isDeath = false;
 
         //데미지 효과
@@ -31,7 +28,7 @@ namespace MyFps
         private void Start()
         {
             //초기화
-            currentHealth = maxHealth;
+            currentHealth = PlayerDataManager.Instance.PlayerHealth;
         }
         #endregion
 
@@ -41,6 +38,8 @@ namespace MyFps
         {
             currentHealth -= damage;
             //Debug.Log($"player currentHealth: {currentHealth}");
+                        
+            PlayerDataManager.Instance.PlayerHealth = currentHealth;
 
             //데미지 연출 Sfx, Vfx
             StartCoroutine(DamageEffect());
@@ -82,6 +81,8 @@ namespace MyFps
         private void Die()
         {
             isDeath = true;
+
+            //TODO : 게임오버시 플레이한 씬 번호 저장
 
             //죽음처리
             fader.FadeTo(loadToScene);

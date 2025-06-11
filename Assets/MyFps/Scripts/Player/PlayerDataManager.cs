@@ -22,39 +22,94 @@ namespace MyFps
     public class PlayerDataManager : PersistanceSingleton<PlayerDataManager>
     {
         #region Variables
-        private int ammoCount;
+        private int sceneNumber;        //플레이중인 씬 빌드 번호
+        private int ammoCount;          //소지한 탄환 갯수
+        private float playerHealth;     //플레이어 체력
 
         private bool[] hasKeys;         //퍼즐 아이템 소지 여부 체크
+
+        [SerializeField]
+        private float maxPlayerHealth = 20;
         #endregion
 
         #region Property
         //무기 타입
         public WeaponType Weapon { get; set; }
 
-        //탄환 갯수 리턴하는 읽기 전용 프로퍼티
-        public int AmmoCount => ammoCount;
+        //플레이중인 씬 빌드 번호
+        public int SceneNumber
+        {
+            get
+            {
+                return sceneNumber;
+            }
+            set
+            {
+                sceneNumber = value;
+            }
+        }
+
+        //탄환 갯수 프로퍼티
+        public int AmmoCount
+        {
+            get
+            {
+                return ammoCount;
+            }
+            set
+            {
+                ammoCount = value;
+            }
+        }
+
+        public float PlayerHealth
+        {
+            get
+            {
+                return playerHealth;
+            }
+            set
+            {
+                playerHealth = value;
+            }
+        }
         #endregion
 
         #region Unity Event Method
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+
             //플레이 데이터 초기화 
             InitPlayerData();
-        }
-
-        //플레이 데이터 초기화 
-        private void InitPlayerData()
-        {
-            ammoCount = 0;
-            Weapon = WeaponType.None;
-
-            //퍼즐 아이템 설정: 퍼즐 아이템 갯수만큼 불형 변수 요소수 생성
-            hasKeys = new bool[(int)PuzzleKey.MAX_KEY];
-
         }
         #endregion
 
         #region Custom Method
+        //플레이 데이터 초기화 
+        public void InitPlayerData(PlayData pData = null)
+        {
+            if(pData != null)
+            {
+                sceneNumber = pData.sceneNumber;
+                ammoCount = pData.ammoCount;
+                playerHealth = pData.playerHealth;
+
+                //....
+            }
+            else
+            {
+                sceneNumber = -1;
+                ammoCount = 0;
+                playerHealth = maxPlayerHealth;
+            }   
+
+            Weapon = WeaponType.None;
+
+            //퍼즐 아이템 설정: 퍼즐 아이템 갯수만큼 불형 변수 요소수 생성
+            hasKeys = new bool[(int)PuzzleKey.MAX_KEY];
+        }
+
         //ammo 저축 함수
         public void AddAmmo(int amount)
         {

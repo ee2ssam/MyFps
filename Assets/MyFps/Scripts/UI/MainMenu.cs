@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEditor.Overlays;
 
 namespace MyFps
 {
@@ -22,6 +23,8 @@ namespace MyFps
         public GameObject optionUI;
         public GameObject creditCanvas;
 
+        public GameObject loadGameButton;
+
         private bool isShowOption = false;
         private bool isShowCredit = false;
 
@@ -30,13 +33,26 @@ namespace MyFps
 
         public Slider bgmSlider;
         public Slider sfxSlider;
+
+        //게임 데이터
+        private int sceneNumber;
         #endregion
 
         #region Unity Event Method
         private void Start()
         {
-            //옵션 저장값 가져와서 게임에 적용
-            LoadOptions();
+            //게임데이터 가져와서 초기화 하기
+            GameDataInit();    
+            
+            //메뉴 UI 셋팅
+            if(sceneNumber >= 0)
+            {
+                loadGameButton.SetActive(true);
+            }
+            else
+            {
+                loadGameButton.SetActive(false);
+            }
 
             //참조
             audioManager = AudioManager.Instance;
@@ -70,9 +86,25 @@ namespace MyFps
         #endregion
 
         #region Custom Method
+        //게임데이터 가져와서 초기화 하기
+        private void GameDataInit()
+        {
+            //옵션 저장값 가져와서 게임에 적용
+            LoadOptions();
+
+            //게임 플레이 저장값 가져오기: 빌드번호
+            //PlayerPrefs 모드
+            //sceneNumber = PlayerPrefs.GetInt("SceneNumber", -1);
+            //FileSystem 모드
+            PlayData playData = SaveLoad.LoadData();
+            PlayerDataManager.Instance.InitPlayerData(playData);
+            sceneNumber = PlayerDataManager.Instance.SceneNumber;
+        }
+
         public void NewGame()
         {
             //메뉴 선택 사운드
+            audioManager.StopBgm();
             audioManager.Play("MenuSelect");
 
             //새게임 하러 가기
@@ -81,7 +113,12 @@ namespace MyFps
 
         public void LoadGame()
         {
-            Debug.Log("Load Game!!!");
+            //메뉴 선택 사운드
+            audioManager.StopBgm();
+            audioManager.Play("MenuSelect");
+
+            //새게임 하러 가기
+            fader.FadeTo(sceneNumber);
         }
 
         public void Options()

@@ -1431,6 +1431,63 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1001 &606798805
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451029858131308907, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6698940702185339548, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 956b812631e8aa345854f86ba2ce7d3f, type: 3}
 --- !u!1 &613576567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2770,7 +2827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1255422918
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8338,10 +8395,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fader: {fileID: 1654389078}
-  loadToScene: MainScene01
+  loadToScene: Intro
   mainMenuUI: {fileID: 1527101689}
   optionUI: {fileID: 1767062360}
   creditCanvas: {fileID: 1519913460}
+  loadGameButton: {fileID: 1255422917}
   audioMixer: {fileID: 24100000, guid: 537b05a1cab638c41962dda8c0d7ff87, type: 2}
   bgmSlider: {fileID: 1765129480}
   sfxSlider: {fileID: 731828137}
@@ -11601,6 +11659,7 @@ SceneRoots:
   - {fileID: 1617482713}
   - {fileID: 1654133062}
   - {fileID: 329649352}
+  - {fileID: 606798805}
   - {fileID: 6478620829849019531}
   - {fileID: 1474978752}
   - {fileID: 1723828195}

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using JetBrains.Annotations;
 
 namespace MyFps
 {
@@ -95,10 +96,38 @@ namespace MyFps
             }
         }
 
-        //다른 씬으로 이동시 호출
+        //FadeOut 효과 후 매개변수로 받은 씬 빌드번호로 LoadScene으로 이동
+        IEnumerator FadeOut(int sceneNumber)
+        {
+            //FadeOut 효과 후
+            float t = 0f;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime;
+                float a = curve.Evaluate(t);
+                img.color = new Color(0f, 0f, 0f, a);
+
+                yield return 0f;
+            }
+
+            //씬이동
+            if (sceneNumber >= 0)
+            {
+                SceneManager.LoadScene(sceneNumber);
+            }
+        }
+
+        //다른 씬으로 이동시 호출 - 씬 이름
         public void FadeTo(string sceneName = "")
         {            
             StartCoroutine(FadeOut(sceneName));
+        }
+
+        //다른 씬으로 이동시 호출 - 씬 빌드 인덱스
+        public void FadeTo(int sceneNumber = -1)
+        {
+            StartCoroutine(FadeOut(sceneNumber));
         }
 
     }
