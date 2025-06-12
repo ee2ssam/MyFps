@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using System.Collections;
-using UnityEditor.Overlays;
 
 namespace MyFps
 {
