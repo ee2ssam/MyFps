@@ -32,7 +32,7 @@ namespace Unity.FPS.Gameplay
         //플레이어가 게임중에 들고 다니는 무기
         private WeaponController[] weaponSlots = new WeaponController[9];
 
-        //무기 위치 정보
+        //무기의 최종 위치 정보
         private Vector3 weaponMainLocalPosion;
 
         //무기 교체
@@ -52,11 +52,17 @@ namespace Unity.FPS.Gameplay
         //무기 교체 연출
         private float weaponSwitchTimeStarted = 0f;         //연출 시작 시간
         private float weaponSwitchDelay = 1f;                //연출 플레이 시간
+
+        //적 포착
+        public Camera weaponCamera;
         #endregion
 
         #region Property
         //무기 리스트(weaponSlots)를 관리하는 인덱스 - 현재 액티브한 무기의 인덱스
         public int ActiveWeaponIndex { get; private set; }
+
+        //적 포착 체크
+        public bool IsPointingAtEnemy { get; private set; }
         #endregion
 
         #region Unity Event Method
@@ -75,7 +81,7 @@ namespace Unity.FPS.Gameplay
             //처음 지급 받은 무기를 장착한다
             foreach (var w in StartingWeapons)
             {
-                //무기 리스트 추가
+                //무기 슬롯 리스트 추가
                 AddWeapon(w);
             }
             //무기 교체
@@ -84,7 +90,34 @@ namespace Unity.FPS.Gameplay
 
         private void Update()
         {
+            //현재 액티브 무기 가져오기
+            WeaponController activeWeapon = GetActiveWeapon();
+
             //키 인풋을 받아 무기 교체
+            if(weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down)
+            {
+                int switchWeaponInput = inputHandler.GetSwitchWeaponInput();
+                if (switchWeaponInput != 0)
+                {
+                    bool switchUp = switchWeaponInput > 0f;
+                    //무기 교체
+                    SwitchWeapon(switchUp);
+                }
+            }
+
+            //적 포착
+            IsPointingAtEnemy = false;
+            if(activeWeapon)
+            {
+                if(Physics.Raycast(weaponCamera.transform.position, weaponCamera.transform.forward, out RaycastHit hit, 1000))
+                {
+                    //충돌체중에서 적을 판정
+                    if(hit.collider.GetComponentInParent<Health>() != null)
+                    {
+                        IsPointingAtEnemy = true;
+                    }
+                }
+            }
         }
 
         private void LateUpdate()
@@ -276,6 +309,7 @@ namespace Unity.FPS.Gameplay
 
                 //액티브 인덱스 해당되는 무기(weaponController) 가져오기
                 WeaponController weaponController = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+
                 //액티브 무기(weaponController)를 매개변수로 한 등록된 함수들 호출
                 OnSwitchToWeapon?.Invoke(weaponController);
             }

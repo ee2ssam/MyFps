@@ -242,6 +242,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRoot: {fileID: 1505447205160222267}
   swtichWeaponSfx: {fileID: 8300000, guid: b91e28c0491754e49ac1434fc56eaced, type: 3}
+  defalutCrosshair:
+    crosshairSprite: {fileID: 21300000, guid: 1d67aff8a5705d043926bafde7d61a4d, type: 3}
+    crosshairSize: 40
+    crosshairColor: {r: 0, g: 1, b: 0.9697323, a: 1}
+  targetInSightCrosshair:
+    crosshairSprite: {fileID: 21300000, guid: 1d67aff8a5705d043926bafde7d61a4d, type: 3}
+    crosshairSize: 30
+    crosshairColor: {r: 0, g: 0.5717716, b: 1, a: 1}
 --- !u!1 &2867801751256125023
 GameObject:
   m_ObjectHideFlags: 0
