@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7951103439727585977}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: PistonSocket (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 825220459589154871}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: GunRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7790229181078538301}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: PistonSocket (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 2225486910712267856}
   - component: {fileID: 8090847488450120274}
   - component: {fileID: -3553145628063224596}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Weapon_Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -250,6 +250,8 @@ MonoBehaviour:
     crosshairSprite: {fileID: 21300000, guid: 1d67aff8a5705d043926bafde7d61a4d, type: 3}
     crosshairSize: 30
     crosshairColor: {r: 0, g: 0.5717716, b: 1, a: 1}
+  aimZoomRatio: 0.7
+  aimOffset: {x: 0, y: 0.13, z: 0}
 --- !u!1 &2867801751256125023
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2404975934069440899}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: PistonSocket (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +295,7 @@ GameObject:
   - component: {fileID: 1262935449618622753}
   - component: {fileID: 2610202351315121541}
   - component: {fileID: 2445377965259952752}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 226946101372664820}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: PistonSocket (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +413,7 @@ GameObject:
   - component: {fileID: 2212995298065052642}
   - component: {fileID: 32135321772247728}
   - component: {fileID: 682340196304323557}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +497,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6867164317952318004}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: WeaponMesh_Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +534,7 @@ GameObject:
   - component: {fileID: 6867164318176036209}
   - component: {fileID: 6867164318176806225}
   - component: {fileID: 6867164318177937297}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Primary_Weapon_Container_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -619,7 +621,7 @@ GameObject:
   - component: {fileID: 6867164318176036211}
   - component: {fileID: 6867164318176806227}
   - component: {fileID: 6867164318177937299}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Primary_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -705,7 +707,7 @@ GameObject:
   - component: {fileID: 6867164318176036213}
   - component: {fileID: 6867164318176806229}
   - component: {fileID: 6867164318177937301}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Primary_Weapon_Container_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +794,7 @@ GameObject:
   - component: {fileID: 6867164318176036215}
   - component: {fileID: 6867164318176806231}
   - component: {fileID: 6867164318177937303}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Primary_Weapon_Container_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -879,7 +881,7 @@ GameObject:
   - component: {fileID: 6867164318176036217}
   - component: {fileID: 6867164318176806233}
   - component: {fileID: 6867164318177937305}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Primary_Weapon_Front_Piece_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -965,7 +967,7 @@ GameObject:
   - component: {fileID: 6867164318176036219}
   - component: {fileID: 6867164318176806235}
   - component: {fileID: 6867164318177937307}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Primary_Weapon_Container_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1050,7 +1052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6867164318176036221}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Weapon_Primary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1090,7 +1092,7 @@ GameObject:
   - component: {fileID: 6867164318176036223}
   - component: {fileID: 6867164318176806239}
   - component: {fileID: 6867164318177937311}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Primary_Weapon_Front_Piece_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1174,7 +1176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8334323006752503713}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: GunMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -1207,7 +1209,7 @@ GameObject:
   - component: {fileID: 3588859339244344434}
   - component: {fileID: 8447767181634179601}
   - component: {fileID: 1623558750480576435}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

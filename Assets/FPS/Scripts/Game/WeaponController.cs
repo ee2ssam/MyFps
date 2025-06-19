@@ -26,6 +26,11 @@ namespace Unity.FPS.Game
         //크로스 헤어
         public CrosshairData defalutCrosshair;      //기본 크로스 헤어
         public CrosshairData targetInSightCrosshair;    //적이 타겟팅 되었을때의 크로스 헤어
+
+        //조준 Aim
+        [Range(0, 1)]
+        public float aimZoomRatio = 1f;     //조준시 줌 확대 배율
+        public Vector3 aimOffset;           //조준 위치로 이동시 무기별 위치 offset(조정) 값
         #endregion
 
         #region Property

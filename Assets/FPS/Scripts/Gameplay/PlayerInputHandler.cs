@@ -20,6 +20,11 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Used to flip the horizontal input axis")]
         public bool InvertXAxis = false;
 
+        #region Variables
+        //Fire 버튼 상태 체크
+        private bool wasFireInputHeld;
+        #endregion
+
 
         void Start()
         {   
@@ -29,7 +34,9 @@ namespace Unity.FPS.Gameplay
 
         void LateUpdate()
         {
-            
+
+            //Fire 버튼 상태 저장
+            wasFireInputHeld = GetFireInputHeld();
         }
 
         public bool CanProcessInput()
@@ -161,6 +168,47 @@ namespace Unity.FPS.Gameplay
             return 0;
         }
 
-        
+        //마우스 우클릭하고 있는 동안 조준 모드
+        public bool GetAimInputHeld()
+        {
+            if(CanProcessInput())
+            {
+                return Input.GetButton(GameConstants.k_ButtonNameAim);
+            }
+
+            return false;
+        }
+
+        //Fire버튼 누르고 있을때
+        public bool GetFireInputHeld()
+        {
+            if(CanProcessInput())
+            {
+                return Input.GetButton(GameConstants.k_ButtonNameFire);
+            }
+
+            return false;
+        }
+
+        //Fire버튼 누를때(누르기 시작할때)
+        public bool GetFireInputDown()
+        {
+            if (CanProcessInput())
+            {
+                return !wasFireInputHeld && GetFireInputHeld();
+            }
+            return false;
+        }
+
+        //Fire버튼 땔때 (누르기 끝날때)
+        public bool GetFireInputReleased()
+        {
+            if (CanProcessInput())
+            {
+                return wasFireInputHeld && !GetFireInputHeld();
+            }
+
+            return false;
+        }
     }
 }
