@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponRoot: {fileID: 5646165488041817916}
+  weaponMuzzle: {fileID: 2749496858225023403}
   swtichWeaponSfx: {fileID: 8300000, guid: b91e28c0491754e49ac1434fc56eaced, type: 3}
   defalutCrosshair:
     crosshairSprite: {fileID: 21300000, guid: 694103530d89123439c0a93a928ad5f0, type: 3}
@@ -156,6 +157,11 @@ MonoBehaviour:
     crosshairColor: {r: 0.16694808, g: 1, b: 0, a: 1}
   aimZoomRatio: 0.8
   aimOffset: {x: 0, y: 0, z: 0}
+  shootType: 0
+  maxAmmo: 8
+  delayBetweenShots: 0.5
+  muzzleFlashPrefab: {fileID: 0}
+  shootSfx: {fileID: 8300000, guid: 59bca9b983cdae84f8529dbbd951e896, type: 3}
 --- !u!1 &2990922162098100101
 GameObject:
   m_ObjectHideFlags: 0
