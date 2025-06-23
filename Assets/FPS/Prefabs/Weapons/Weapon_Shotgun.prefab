@@ -258,6 +258,10 @@ MonoBehaviour:
   delayBetweenShots: 0.5
   muzzleFlashPrefab: {fileID: 748781637555137343, guid: 4f5d4e5eaa0e5104791549cea3dc3f23, type: 3}
   shootSfx: {fileID: 8300000, guid: 41e334dd9cd41574593a206df0532bc9, type: 3}
+  recoilForce: 0.5
+  projectPrefab: {fileID: 7980154201463763803, guid: f05c7e6fbbfbe824388456bb4abff9d4, type: 3}
+  bulletsPerShot: 1
+  bulletSpredAngle: 0
 --- !u!1 &2867801751256125023
 GameObject:
   m_ObjectHideFlags: 0

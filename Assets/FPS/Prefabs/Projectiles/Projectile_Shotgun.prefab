@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3659995153115176982}
   - component: {fileID: 7980154201463763803}
+  - component: {fileID: 50340237423194022}
   m_Layer: 0
   m_Name: Projectile_Shotgun
   m_TagString: Untagged
@@ -45,6 +46,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45ab7503ec9c2446b8c2190a55c5486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLifeTime: 5
+  speed: 20
+  gravityDown: 0
+  root: {fileID: 3659995153115176982}
+  tip: {fileID: 1135791333161367127}
+--- !u!114 &50340237423194022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3659995153115176983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e61edaff2040e4459102eb5814c9122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 5
 --- !u!1 &5564024855854763701
 GameObject:
   m_ObjectHideFlags: 0

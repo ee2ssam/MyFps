@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.FPS.Game;
 using UnityEngine.Events;
-using UnityEditor.ShaderGraph.Internal;
 
 namespace Unity.FPS.Gameplay
 {
@@ -86,6 +85,12 @@ namespace Unity.FPS.Gameplay
         private Vector3 accumulateRecoil;                           //반동 힘에 의한 이동 Vector3 값
 
         private Vector3 weaponRecoilLocalPosition;                  //반동에 의해 이동한 최종 계산값
+
+        //저격모드 Sniper
+        private bool isScopeOn = false;
+        //저격모드 시작/해제시 등록된 함수들 호출하는 이벤트 함수
+        public UnityAction OnScopedWeapon;
+        public UnityAction OffScopedWeapon;
         #endregion
 
         #region Property
@@ -114,6 +119,10 @@ namespace Unity.FPS.Gameplay
             //무기 교체시 호출될 함수 등록
             OnSwitchToWeapon += OnWeaponSwitched;
 
+            //저격 모드 On/Off 시 호출될 함수 등록
+            OnScopedWeapon += OnScope;
+            OffScopedWeapon += OffScope;
+
             //처음 지급 받은 무기를 장착한다
             foreach (var w in StartingWeapons)
             {
@@ -133,6 +142,20 @@ namespace Unity.FPS.Gameplay
             {
                 //키 인풋 받아서 조준
                 IsAiming = inputHandler.GetAimInputHeld();
+
+                if(activeWeapon.ShootType == WeaponShootType.Sniper)
+                {
+                    if(inputHandler.GetAimInputDown())
+                    {
+                        //저격모드 체크
+                        isScopeOn = true;
+                    }
+                    else if(inputHandler.GetAimInputReleased())
+                    {
+                        //저격모드 끝
+                        OffScopedWeapon?.Invoke();
+                    }
+                }
 
                 //발사
                 bool isFire = activeWeapon.HandleShootInput(
@@ -205,14 +228,31 @@ namespace Unity.FPS.Gameplay
 
             if(IsAiming && activeWeapon)    //조준 모드
             {
+                if(isScopeOn)
+                {
+                    //거리 측정 후 isScopeOn = fase;
+                    float distance = Vector3.Distance(weaponMainLocalPosion, aimingWeaponPosition.localPosition + activeWeapon.aimOffset);
+                    if(distance < 0.05f)
+                    {
+                        //저격모드 시작
+                        isScopeOn = false;
+
+                        //Scope UI 활성화, 무기가 안보이도 만들기
+                        OnScopedWeapon?.Invoke();
+                    }
+                }
+
                 //위치 조정
                 weaponMainLocalPosion = Vector3.Lerp(weaponMainLocalPosion,
                     aimingWeaponPosition.localPosition + activeWeapon.aimOffset,
                     aimingAnimationSpeed * Time.deltaTime);
                 //fov 조정
-                aimingFov = Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
+                if(isScopeOn == false)
+                {
+                    aimingFov = Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
                     defaultFov * activeWeapon.aimZoomRatio, aimingAnimationSpeed * Time.deltaTime);
-                SetFov(aimingFov);
+                    SetFov(aimingFov);
+                }                
             }
             else //조준 모드 해제
             {
@@ -499,6 +539,18 @@ namespace Unity.FPS.Gameplay
             {
                 newWeapon.ShowWeapon(true);
             }
+        }
+
+        //저격모드 ON - 무기 전용 카메라 Off
+        private void OnScope()
+        {
+            weaponCamera.enabled = false;
+        }
+
+        //저격모드 off - 무기 전용 카메라 On
+        private void OffScope()
+        {
+            weaponCamera.enabled = true;
         }
         #endregion
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEditor.ShaderGraph.Internal;
 
 namespace Unity.FPS.Game
 {
@@ -17,7 +18,8 @@ namespace Unity.FPS.Game
     {
         Manual,
         Automatic,
-        Charge
+        Charge,
+        Sniper
     }
 
     //무기를 제어하는 클래스, 모든 무기에 부착된다
@@ -58,7 +60,14 @@ namespace Unity.FPS.Game
         public float recoilForce = 0.5f;
 
         //발사체 Projectile
-        private Vector3 lastMuzzlePosition;     //지난 프레임에 Muzzle의 위치
+        public ProjectileBase projectPrefab;
+
+        //한번 방아쇠를 당길때(쏘는데) 발사되는 뷸렛의 갯수
+        [SerializeField] private int bulletsPerShot = 1;
+        //발사체가 발사될때 퍼져 나가는 각도
+        [SerializeField] private float bulletSpredAngle = 0f;
+
+        private Vector3 lastMuzzlePosition;     //지난 프레임에 Muzzle의 위치        
         #endregion
 
         #region Property
@@ -70,6 +79,8 @@ namespace Unity.FPS.Game
         public Vector3 MuzzleWorldVelocity { get; private set; } //발사시 프레임의 총구의 이동 속도
 
         public float CurrentCharge { get; private set; }         //슛 타입의 무기의 발사 충전량
+
+        public WeaponShootType ShootType => shootType;          //슛 타입 읽기 전용
         #endregion
 
         #region Unity Event Method
@@ -133,6 +144,13 @@ namespace Unity.FPS.Game
 
                 case WeaponShootType.Charge:
                     break;
+
+                case WeaponShootType.Sniper:
+                    if (inputDown == true)
+                    {
+                        return TryShoot();
+                    }
+                    break;
             }
 
             return false;
@@ -156,6 +174,19 @@ namespace Unity.FPS.Game
         //발사 연출
         private void HandleShoot()
         {
+            //fire시 최종적으로 발생하는 발사체의 갯수
+            int bulletsPerShotFinal = bulletsPerShot;
+
+            for (int i = 0; i < bulletsPerShotFinal; i++)
+            {
+                //발사체가 나가는 방향을 랜덤하게 구한다
+                Vector3 shotDirector = GetShotDirectionWithinSpread(weaponMuzzle);
+                //발사체 생성 후 슛
+                ProjectileBase projectileBase = Instantiate(projectPrefab, weaponMuzzle.position,
+                    Quaternion.LookRotation(shotDirector));
+                projectileBase.Shoot(this);
+            }
+
             //vfx - Muzzle effect
             if(muzzleFlashPrefab)
             {
@@ -171,6 +202,13 @@ namespace Unity.FPS.Game
 
             //발사한 시간 저장
             lastTimeShot = Time.time;
+        }
+
+        //발사체가 나가는 방향 구하기
+        private Vector3 GetShotDirectionWithinSpread(Transform shotTransform)
+        {
+            float spreadAngleRatio = bulletSpredAngle / 180f;
+            return Vector3.Slerp(shotTransform.forward, UnityEngine.Random.insideUnitSphere, spreadAngleRatio);
         }
         #endregion
     }
