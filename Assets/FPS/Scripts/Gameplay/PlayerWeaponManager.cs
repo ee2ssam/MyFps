@@ -36,9 +36,11 @@ namespace Unity.FPS.Gameplay
         //무기의 최종 위치 정보
         private Vector3 weaponMainLocalPosion;
 
-        //무기 교체
-        //무기 교체시 등록된 함수들이 호출되는 UnityAction 함수 
+        //무기 교체, 추가, 제거
+        //무기 교체, 추가, 제거시 등록된 함수들이 호출되는 UnityAction 함수 
         public UnityAction<WeaponController> OnSwitchToWeapon;
+        public UnityAction<WeaponController, int> OnAddedWeapon;
+        public UnityAction<WeaponController, int> OnRemovedWeapon;
 
         //무개 상태에 따른 계산되는 위치
         public Transform defaultWeaponPosition;
@@ -412,12 +414,49 @@ namespace Unity.FPS.Gameplay
                     weaponInstance.SourcePrefab = weaponPrefab.gameObject;
                     weaponInstance.ShowWeapon(false);
 
+                    //슬롯에 무기 추가
                     weaponSlots[i] = weaponInstance;
+
+                    //무기 추가와 관련된 등록된 함수 호출
+                    OnAddedWeapon?.Invoke(weaponInstance, i);
+
                     return true;
                 }
             }
 
             Debug.Log("WeaponSlots Full");
+            return false;
+        }
+
+        //매개변수로 받은 무기(WeaponController )를 무기 리스트에서 제거
+        private bool RemovedWeapon(WeaponController weaponInstance)
+        {
+            if (weaponInstance == null)
+                return false;
+
+            //슬롯에서 같은 무기 찾아 슬롯에서 제거
+            for (int i = 0; i < weaponSlots.Length; i++)
+            {
+                if (weaponSlots[i] == weaponInstance)
+                {
+                    //슬롯값 초기화
+                    weaponSlots[i] = null;
+
+                    //무기 제거와 관련된 등록된 함수 호출
+                    OnRemovedWeapon?.Invoke(weaponInstance, i);
+
+                    //무기 오브젝트 kill
+                    Destroy(weaponInstance.gameObject);
+
+                    //제거한 무기가 현재 들고 있는 무기이면 액티브 무기 교체
+                    if(i == ActiveWeaponIndex)
+                    {
+                        SwitchWeapon(true);
+                    }
+                    return true;
+                }
+            }
+
             return false;
         }
 

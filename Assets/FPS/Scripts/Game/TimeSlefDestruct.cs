@@ -6,7 +6,7 @@ namespace Unity.FPS.Game
     public class TimeSlefDestruct : MonoBehaviour
     {
         #region Variablse
-        [SerializeField] private float lifeTime = 5f;
+        public float lifeTime = 5f;
         private float spawnTime;    //생성 시간
         #endregion
 
