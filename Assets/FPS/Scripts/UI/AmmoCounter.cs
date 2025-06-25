@@ -30,6 +30,9 @@ namespace Unity.FPS.UI
         private float ammoFillSharpness = 10f;      //ammo UI 게이지바 충전 속도(Lerp 계수)
         [SerializeField]
         private float weaponSwitchSharpness = 10f;  //무기 변경시 UI 투명도, 크기 변경 속도(Lerp 계수)
+
+        //게이지 바 컬러 효과
+        public ForBackColorChange forBackColorChange;
         #endregion
 
         #region Property
@@ -55,6 +58,9 @@ namespace Unity.FPS.UI
             Vector3 currentScale = isActiveWeapon ? Vector3.one : unSelectedScale;
             transform.localScale = Vector3.Lerp(transform.localScale, currentScale,
                 Time.deltaTime * weaponSwitchSharpness);
+
+            //게이지bar 컬러 효과
+            forBackColorChange.UpdateVusual(currentFillRate);
         }
         #endregion
 
@@ -70,6 +76,9 @@ namespace Unity.FPS.UI
 
             //UI 초기화
             weaponIndexText.text = (weaponIndex + 1).ToString();
+
+            //컬러효과 초기화
+            forBackColorChange.Initialized(1f, 0.1f);
         }
         #endregion
     }

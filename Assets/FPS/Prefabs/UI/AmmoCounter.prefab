@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 645032500860478886}
   - component: {fileID: 645032500860478887}
   - component: {fileID: 3401710880005807190}
+  - component: {fileID: 2848634780758164521}
   m_Layer: 5
   m_Name: AmmoCounter
   m_TagString: Untagged
@@ -272,6 +273,28 @@ MonoBehaviour:
   unSelectedOpacity: 0.35
   ammoFillSharpness: 10
   weaponSwitchSharpness: 10
+  forBackColorChange: {fileID: 2848634780758164521}
+--- !u!114 &2848634780758164521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645032500860478885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf5e2cdb64324a45b3f680174847140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forgroundImage: {fileID: 645032500597732956}
+  defaultForGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  fullFlashForGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  backgroundImage: {fileID: 645032499974091307}
+  defaultBackGroundColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+  emptyFlashBackGroundColor: {r: 1, g: 0, b: 0, a: 0.5019608}
+  fullValue: 1
+  emptyValue: 0
+  colorChangeSharpness: 5
 --- !u!1 &1644869328222790790
 GameObject:
   m_ObjectHideFlags: 0

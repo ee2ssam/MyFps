@@ -67,7 +67,13 @@ namespace Unity.FPS.Game
         //발사체가 발사될때 퍼져 나가는 각도
         [SerializeField] private float bulletSpredAngle = 0f;
 
-        private Vector3 lastMuzzlePosition;     //지난 프레임에 Muzzle의 위치        
+        private Vector3 lastMuzzlePosition;     //지난 프레임에 Muzzle의 위치
+
+        //재장전 - Reload
+        //자동 재장전
+        [SerializeField] private bool automaticReload = true;
+        private float ammoReloadRate = 1f;          //초당 재장전 되는 ammo의 량
+        private float ammoReloadDelay = 2f;         //총을 쏜 후 delay 시간 이후 재장전 시간
         #endregion
 
         #region Property
@@ -82,7 +88,7 @@ namespace Unity.FPS.Game
 
         public WeaponShootType ShootType => shootType;          //슛 타입 읽기 전용
 
-        public float CurrentAmmoRate => currentAmmo / maxAmmo;  //현재 소유한 ammo 비율
+        public float CurrentAmmoRate { get; private set; }  //현재 소유한 ammo 비율
         #endregion
 
         #region Unity Event Method
@@ -102,7 +108,9 @@ namespace Unity.FPS.Game
 
         private void Update()
         {
-            if(Time.deltaTime > 0f)
+            UpdateAmmo();
+
+            if (Time.deltaTime > 0f)
             {
                 //이번 프레임의 Muzzle 속도 구하기
                 MuzzleWorldVelocity = (weaponMuzzle.position - lastMuzzlePosition) / Time.deltaTime;
@@ -114,6 +122,27 @@ namespace Unity.FPS.Game
         #endregion
 
         #region Custom Method
+        //Ammo 연산
+        private void UpdateAmmo()
+        {
+            //재장전 - 자동
+            if(automaticReload && currentAmmo < maxAmmo && (lastTimeShot+ammoReloadDelay) < Time.time)
+            {
+                currentAmmo += ammoReloadRate * Time.deltaTime;
+                currentAmmo = Mathf.Clamp(currentAmmo, 0f, maxAmmo);
+            }
+
+            //CurrentAmmoRate 연산
+            if (maxAmmo == 0 || maxAmmo == Mathf.Infinity)
+            {
+                CurrentAmmoRate = 1f;
+            }
+            else
+            {
+                CurrentAmmoRate = currentAmmo / maxAmmo;
+            }   
+        }
+
         public void ShowWeapon(bool show)
         {
             weaponRoot.SetActive(show);
