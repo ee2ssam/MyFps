@@ -33,6 +33,8 @@ namespace Unity.FPS.UI
         {
             //참조
             weaponManager = FindFirstObjectByType<PlayerWeaponManager>();
+
+            //
             OnWeaponChanged(weaponManager.GetActiveWeapon());
 
             //무기 교체시 호출 되는 이벤트 함수에 등록

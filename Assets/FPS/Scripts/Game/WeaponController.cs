@@ -81,6 +81,8 @@ namespace Unity.FPS.Game
         public float CurrentCharge { get; private set; }         //슛 타입의 무기의 발사 충전량
 
         public WeaponShootType ShootType => shootType;          //슛 타입 읽기 전용
+
+        public float CurrentAmmoRate => currentAmmo / maxAmmo;  //현재 소유한 ammo 비율
         #endregion
 
         #region Unity Event Method

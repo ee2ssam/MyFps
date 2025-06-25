@@ -196,7 +196,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.607
+  m_FillAmount: 0.48
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -266,6 +266,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81100d97dabd94b4597c2db1f4da88af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponIndexText: {fileID: 2904203937318842817}
+  ammoFillIamge: {fileID: 645032500597732956}
+  canvasGroup: {fileID: 645032500860478887}
+  unSelectedOpacity: 0.35
+  ammoFillSharpness: 10
+  weaponSwitchSharpness: 10
 --- !u!1 &1644869328222790790
 GameObject:
   m_ObjectHideFlags: 0
