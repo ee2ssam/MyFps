@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2225486910712267856}
   - component: {fileID: 7583640433812654122}
   - component: {fileID: -2773126956615045725}
+  - component: {fileID: 6702066967570256231}
   m_Layer: 8
   m_Name: Weapon_Launcher
   m_TagString: Untagged
@@ -157,7 +158,7 @@ MonoBehaviour:
     crosshairColor: {r: 0.16694808, g: 1, b: 0, a: 1}
   aimZoomRatio: 0.8
   aimOffset: {x: 0, y: 0, z: 0}
-  shootType: 0
+  shootType: 2
   maxAmmo: 8
   delayBetweenShots: 0.5
   muzzleFlashPrefab: {fileID: 0}
@@ -166,6 +167,42 @@ MonoBehaviour:
   projectPrefab: {fileID: 8520573776408208245, guid: 0e23901b938cf4f4eb86850d912715eb, type: 3}
   bulletsPerShot: 1
   bulletSpredAngle: 0
+  automaticReload: 1
+  lastChargeTriggerTimesTemp: 0
+--- !u!114 &6702066967570256231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225486910712267859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c68d39f169602479d51be75e0a126f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charingObejct: {fileID: 2990922162098100103}
+  spiningFrame: {fileID: 2990922162098100101}
+  diskOrbitParticlePrefab: {fileID: 1087039822203223203, guid: b9cf7bff98404174d83a37d58c543aa5, type: 3}
+  scale:
+    Min: {x: 0.1, y: 0.1, z: 0.1}
+    Max: {x: 1, y: 1, z: 1}
+  offset: {x: 0, y: 0, z: 0.765}
+  parentTransform: {fileID: 0}
+  orbitY:
+    Min: 3.1416
+    Max: 12.5
+  radius:
+    Min: {x: 0.5, y: 0.5, z: 0.5}
+    Max: {x: 1.5, y: 1.5, z: 1.5}
+  spiningSpeed:
+    Min: 50
+    Max: 1500
+  chargeSound: {fileID: 8300000, guid: dcc9aa5b233dbe8499ed6f346bf9c375, type: 3}
+  loopChareWeaponSfx: {fileID: 8300000, guid: b50d22d11cc0f62438d3588f2f945aff, type: 3}
+  fadeLoopDuration: 0.5
+  useProceduralPitchOnLoop: 0
+  maxProceduralPitchValue: 2
 --- !u!1 &2990922162098100101
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2990922162098100101}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.00000009068096, y: 0.18957508, z: 0.55900544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

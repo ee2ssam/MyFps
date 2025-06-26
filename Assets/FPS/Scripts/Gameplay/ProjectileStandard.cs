@@ -13,8 +13,8 @@ namespace Unity.FPS.Gameplay
         [SerializeField] private float maxLifeTime = 5f;         //발사체 라이프 타임
 
         //이동
-        [SerializeField] private float speed = 20f;             //이동 속도
-        [SerializeField] private float gravityDown = 0f;        //중력 적용
+        public float speed = 20f;             //이동 속도
+        public float gravityDown = 0f;        //중력 적용
 
         public Transform root;                  //발사체의 위치
         public Transform tip;                   //발사체의 머리 위치
@@ -25,7 +25,7 @@ namespace Unity.FPS.Gameplay
         private float shootTime;
 
         //충돌
-        private float radius = 0.01f;           //충돌체크 반경
+        public float radius = 0.01f;           //충돌체크 반경
 
         public LayerMask hittableLayers = -1;   //충돌 레이어
         private List<Collider> ignoredColliders;    //충돌 체크 무시 콜라이더 리스트
@@ -38,7 +38,7 @@ namespace Unity.FPS.Gameplay
         public AudioClip impactSfxClip;
 
         //데미지
-        [SerializeField] private float damage = 40f;
+        public float damage = 40f;
         #endregion
 
         #region Unity Event Method
