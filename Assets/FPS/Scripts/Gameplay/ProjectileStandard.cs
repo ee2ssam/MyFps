@@ -39,6 +39,8 @@ namespace Unity.FPS.Gameplay
 
         //데미지
         public float damage = 40f;
+        //범위 공격 
+        private DamageArea areaDamage;
         #endregion
 
         #region Unity Event Method
@@ -46,6 +48,9 @@ namespace Unity.FPS.Gameplay
         {
             projectileBase = GetComponent<ProjectileBase>();
             projectileBase.OnShoot += OnShoot;
+
+            //참조
+            areaDamage = GetComponent<DamageArea>();
 
             //생성후 라이프 타임 후 킬
             //Destroy(gameObject, maxLifeTime);
@@ -160,12 +165,20 @@ namespace Unity.FPS.Gameplay
         //충돌처리
         private void OnHit(Vector3 point, Vector3 normal, Collider collider)
         {
-            //데미지
-            Damageable damageable = collider.GetComponent<Damageable>();
-            if(damageable)
+            //데미지 주기
+            if(areaDamage)  //DamageArae 컴포넌트가 있으면 범위 공격
             {
-                damageable.InflictDamage(damage, false, projectileBase.Owner);
+                areaDamage.InflictDamageArea(damage, point, hittableLayers, QueryTriggerInteraction.Collide, projectileBase.Owner);
             }
+            else //없으면 단발 공격
+            {
+                Damageable damageable = collider.GetComponent<Damageable>();
+                if (damageable)
+                {
+                    damageable.InflictDamage(damage, false, projectileBase.Owner);
+                }
+            }
+                
 
             //Vfx
             if(impactVfxPrefab)

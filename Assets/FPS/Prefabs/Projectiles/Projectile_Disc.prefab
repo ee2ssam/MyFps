@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8520573776408208245}
   - component: {fileID: 1692634997980448162}
   - component: {fileID: 1084707772836569051}
+  - component: {fileID: 1026495430971189532}
+  - component: {fileID: 7973286115797705968}
   m_Layer: 0
   m_Name: Projectile_Disc
   m_TagString: Untagged
@@ -107,11 +109,12 @@ MonoBehaviour:
   gravityDown: 10
   root: {fileID: 106790115311484948}
   tip: {fileID: 106790115311484948}
+  radius: 0.01
   hittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  impactVfxPrefab: {fileID: 0}
-  impactSfxClip: {fileID: 0}
+  impactVfxPrefab: {fileID: 4260779743739990948, guid: bbe6bdea7cd168e428a309e9eb2e728b, type: 3}
+  impactSfxClip: {fileID: 8300000, guid: e4de0b714fac53542bade346088b1d90, type: 3}
   damage: 40
 --- !u!114 &1692634997980448162
 MonoBehaviour:
@@ -140,8 +143,78 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargingObject: {fileID: 106790115311484953}
   scale:
-    Min: {x: 0.1, y: 0.1, z: 0.1}
-    Max: {x: 1, y: 1, z: 1}
+    Min: {x: 0.5, y: 0.5, z: 0.5}
+    Max: {x: 0.8, y: 0.8, z: 0.8}
+--- !u!114 &1026495430971189532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106790115311484953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c99eec3f0dfc44592e49bd22fc1b8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage:
+    Min: 80
+    Max: 350
+  speed:
+    Min: 20
+    Max: 40
+  gravityDown:
+    Min: 10
+    Max: 3
+  radius:
+    Min: 0.2
+    Max: 0.2
+--- !u!114 &7973286115797705968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106790115311484953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de32fb40512eb0249bed829cccfd7c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaOfEffectDistance: 5
+  damageRatioOverDistance:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.48177016
+      outSlope: -0.48177016
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5025761
+      value: 0.75787383
+      inSlope: -0.8415663
+      outSlope: -0.8415663
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.37544006
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.99722433
+      value: 0.012500763
+      inSlope: -2.9999309
+      outSlope: -2.9999309
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20216802
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1945832826066038730
 GameObject:
   m_ObjectHideFlags: 0

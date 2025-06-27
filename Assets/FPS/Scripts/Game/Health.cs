@@ -75,6 +75,7 @@ namespace Unity.FPS.Game
             float beforeHealth = CurrentHealth; //데미지 입기 전의 체력
             CurrentHealth -= damage;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, maxHealth);  //체력의 최대 최소값 클램프
+            //Debug.Log($"CurrentHealth: {CurrentHealth}");
 
             //리얼 데미지
             float realDamage = beforeHealth - CurrentHealth;
