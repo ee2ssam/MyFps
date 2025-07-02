@@ -21,6 +21,9 @@ namespace Unity.FPS.AI
         public UnityAction onDetectedTarget;
         //적을 잃어버리는 순간 등록된 함수 호출하는 이벤트 함수
         public UnityAction onLostTarget;
+
+        //공격
+        public float attackRange = 10f;         //공격 가능 거리
         #endregion
 
         #region Property
@@ -30,6 +33,8 @@ namespace Unity.FPS.AI
         public bool HadKnownTarget { get; private set; }
         //타겟이 시야에 있는지 여부
         public bool IsSeeingTarget { get; private set; }
+        //타겟이 공격 범위에 있는지 여부
+        public bool IsTargetInAttackRange { get; private set; }
         #endregion
 
         #region Unity Event Method
@@ -101,8 +106,12 @@ namespace Unity.FPS.AI
                 }
             }
 
+            //찾은 적(타겟)이 공격 범위에 있는지 여부 체크
+            IsTargetInAttackRange = (KnownDetectedTarget != null &&
+                Vector3.Distance(KnownDetectedTarget.transform.position, transform.position) <= attackRange);
+
             //적을 모르고 있다가 적을 발견한 순간
-            if(HadKnownTarget == false && KnownDetectedTarget != null)
+            if (HadKnownTarget == false && KnownDetectedTarget != null)
             {
                 OnDetected();
             }
@@ -127,6 +136,20 @@ namespace Unity.FPS.AI
         private void OnLostTarget()
         {
             onLostTarget?.Invoke();
+        }
+
+        //데미지 입었을때 호출
+        public void OnDamaged(GameObject damageSource)
+        {
+            //나를 공격한 대상을 공격 목표로 설정
+            KnownDetectedTarget = damageSource;
+            timeLastSeenTarget = Time.time;
+        }
+
+        //공격 받았을때 호출
+        public void OnAttack()
+        {
+            //..
         }
         #endregion
 
