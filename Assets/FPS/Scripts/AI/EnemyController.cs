@@ -270,7 +270,6 @@ namespace Unity.FPS.AI
                     closestPathNodeIndex = i;
                 }
             }
-
             pathDestinationNodeIndex = closestPathNodeIndex;
         }
 

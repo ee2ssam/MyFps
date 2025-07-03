@@ -10,10 +10,11 @@ namespace Unity.FPS.AI
     {
         Patrol,     
         Follow,
-        Attack
+        Attack,
+        Ready
     }
 
-    //Enemy 상태를 구현하는 클래스
+    //이동하는 Enemy 상태를 구현하는 클래스
     [RequireComponent(typeof(EnemyController))]
     public class EnemyMobile : MonoBehaviour
     {
