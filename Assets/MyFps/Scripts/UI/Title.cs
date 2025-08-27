@@ -34,11 +34,8 @@ namespace MyFps
 
         #region Unity Event Method
         private void OnEnable()
-        {
-#if NET_MODE
-            netManager = NetManager.Instance;
-            netManager.OnNetUpdate += OnUpdateNet;
-#endif
+        {            
+
         }
 
         private void OnDisable()
@@ -50,6 +47,11 @@ namespace MyFps
 
         private void Start()
         {
+#if NET_MODE
+            netManager = NetManager.Instance;
+            netManager.OnNetUpdate += OnUpdateNet;
+#endif
+
             //페이드인 효과
             fader.FadeStart();
 
@@ -219,7 +221,22 @@ namespace MyFps
             netManager.NetSendLogin(loginId.text, password.text);
             ResetLoginUI();
         }
+
+        public void RegisterUser()
+        {
+            if (loginId.text.Length < 2 || loginId.text.Length > 20)
+            {
+                return;
+            }
+            if (password.text.Length < 2 || password.text.Length > 20)
+            {
+                return;
+            }
+
+            netManager.NetSendUserRegister(loginId.text, password.text);
+            ResetLoginUI();
+        }
 #endif
-#endregion
+        #endregion
     }
 }

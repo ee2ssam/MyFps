@@ -6801,6 +6801,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 895565063}
     m_Modifications:
+    - target: {fileID: 149088674906562164, guid: cb0ee7b9cbc16944394b2f5014e25360, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 209623000}
+    - target: {fileID: 149088674906562164, guid: cb0ee7b9cbc16944394b2f5014e25360, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RegisterUser
+      objectReference: {fileID: 0}
+    - target: {fileID: 149088674906562164, guid: cb0ee7b9cbc16944394b2f5014e25360, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MyFps.Title, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 797319860841910751, guid: cb0ee7b9cbc16944394b2f5014e25360, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

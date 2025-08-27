@@ -12,8 +12,7 @@ namespace MyFps
     public class NetManager : PersistanceSingleton<NetManager>
     {
         //접속할 서버 URL(dev,live)
-        //private string serverUrl = "http://192.168.105.150:8500/api";
-        private string serverUrl = "https://localhost:8500/api";
+        private string serverUrl = "http://192.168.105.150:8500/api";
 
         Dictionary<HttpWebRequest, object> mRequestData = new Dictionary<HttpWebRequest, object>();
         public delegate void WWWRequestFinished(string pSuccess, string pData);
@@ -32,6 +31,8 @@ namespace MyFps
         //서버 요청
         public void POST(string url, string post, WWWRequestFinished pDelegate)
         {
+            Debug.Log(url + ": " + post);
+
             var bytes = Encoding.UTF8.GetBytes(post);
 
             HttpWebRequest aWww = (HttpWebRequest)WebRequest.Create(url);
@@ -209,7 +210,7 @@ namespace MyFps
             string json = JsonUtility.ToJson(userInfo);
 
             //요청
-            string requestUrl = serverUrl + "/UserInfoService";
+            string requestUrl = serverUrl + "/UserInfoServices";
             POST(requestUrl, json, ReciveResult);
         }
 
