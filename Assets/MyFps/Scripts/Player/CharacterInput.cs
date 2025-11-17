@@ -16,12 +16,20 @@ namespace MyFps
 
         //뛰기 입력 값
         private bool sprint = false;
+
+        //점프 입력 값
+        private bool jump = false;
         #endregion
 
         #region Property
         public Vector2 Move => move;    //이동 입력 값 읽기 전용
         public Vector2 Look => look;    //마우스 입력 값 읽기 전용
         public bool Sprint => sprint;   //뛰기 입력 값 읽기 전용
+        public bool Jump
+        {
+            get { return jump; }
+            set { jump = value; }
+        }
         #endregion
 
         #region Unity Event Method
@@ -31,6 +39,10 @@ namespace MyFps
             float moveX = Input.GetAxis("Horizontal");
             float moveY = Input.GetAxis("Vertical");
             MoveInput(moveX, moveY);
+
+            //점프 입력처리
+            bool isJump = Input.GetButtonDown("Jump");
+            JumpInput(isJump);
 
             //마우스 입력 처리
             float mouseX = Input.GetAxis("Mouse X");
@@ -43,6 +55,11 @@ namespace MyFps
         private void MoveInput(float x, float y)
         {
             move = new Vector2(x, y);
+        }
+
+        private void JumpInput(bool isJump)
+        {
+            jump = isJump;
         }
 
         private void LookInput(float x, float y)

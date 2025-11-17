@@ -19,6 +19,27 @@ namespace MyFps
         private float sprintSpeed = 6f;     //뛰는 속도
 
         private float speed;                //이동 속도
+
+        //점프
+        [SerializeField]
+        private float jumpHeight = 1.2f;    //점프 입력시 점프할 높이
+        [SerializeField]
+        private float gravity = -15.0f;     //중력, 물리 기본값(-9.81f)
+        [SerializeField]
+        private float jumpTimeout = 0.1f;   //점프 키입력 처리
+
+        [SerializeField]
+        private float verticalVelocity;     //y축 속도 연산 결과
+
+        //그라운드 체크
+        [SerializeField]
+        private bool grounded = false;
+
+        [SerializeField]
+        private float groundedOffset = -0.14f;  //체크 포지션 조정값
+        [SerializeField]
+        private float groundedRadius = 0.5f;    //체크 포지션을 기준으로 체크 범위 영역
+        public LayerMask groundLayers;          //그라운드 레이어 설정
         #endregion
 
         #region Unity Event Method
@@ -31,11 +52,51 @@ namespace MyFps
 
         private void Update()
         {
+            JumpGravity();
+            GroundedCheck();
             Move();
         }
         #endregion
 
         #region CustomMethod
+        //캐릭터 점프
+        private void JumpGravity()
+        {
+            if(grounded)
+            {
+                //점프 입력 체크
+                if(_input.Jump && jumpTimeout <= 0f)
+                {
+                    //jumpHeight(1.2f) 만큼 뛰기 위한 속도갑 구하기
+                    verticalVelocity = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
+                }
+
+                //점프 타이머
+                if(jumpTimeout >= 0f)
+                {
+                    jumpTimeout -= Time.deltaTime;
+                }
+            }
+            else
+            {
+                jumpTimeout = 0.1f;
+                _input.Jump = false;
+            }
+
+            //중력 적용 - 평상시
+            verticalVelocity += gravity * Time.deltaTime;
+        }
+
+        //그라운드 체크
+        private void GroundedCheck()
+        {
+            //체크 위치 설정
+            Vector3 spherePosition = new Vector3(transform.position.x, 
+                transform.position.y - groundedOffset, transform.position.z);
+            //체크 위치에서 그라운드 범위 안에 있는지 체크
+            grounded = Physics.CheckSphere(spherePosition, groundedRadius, groundLayers, QueryTriggerInteraction.Ignore);
+        }
+
         //캐릭터 이동
         private void Move()
         {
@@ -54,8 +115,9 @@ namespace MyFps
                 inputDirection = transform.right * _input.Move.x + transform.forward * _input.Move.y;
             }
 
-            //이동 : 방향 * Time.deltatime * speed
-            _controller.Move(inputDirection.normalized * Time.deltaTime * speed);
+            //이동 : 방향 * Time.deltatime * speed + 점프(중력) 연산 결과(verticalVelocity)
+            _controller.Move(inputDirection.normalized * Time.deltaTime * speed 
+                + new Vector3(0f, verticalVelocity, 0f) * Time.deltaTime);
 
         }
         #endregion
