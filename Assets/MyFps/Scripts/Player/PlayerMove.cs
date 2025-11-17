@@ -12,6 +12,8 @@ namespace MyFps
         private CharacterController _controller;    //캐릭터 컨트롤러
         private CharacterInput _input;              //플레이어 인풋
 
+        //Header 특성 : 직렬화된 속성들의 설명 글
+        [Header("Player")]      
         //이동
         [SerializeField]
         private float moveSpeed = 4f;       //걷는 속도
@@ -31,6 +33,7 @@ namespace MyFps
         [SerializeField]
         private float verticalVelocity;     //y축 속도 연산 결과
 
+        [Header("Player Grounded")]
         //그라운드 체크
         [SerializeField]
         private bool grounded = false;
@@ -56,6 +59,24 @@ namespace MyFps
             GroundedCheck();
             Move();
         }
+
+        //그라운드 체크 기즈모 표시
+        private void OnDrawGizmosSelected()
+        {
+            if (grounded)
+            {
+                Gizmos.color = new Color(0f, 1f, 0f, 0.35f);    //녹색 투명
+            }
+            else
+            {
+                Gizmos.color = new Color(1f, 0f, 0f, 0.35f);    //적색 투명
+            }
+
+            //체크 위치 설정
+            Vector3 spherePosition = new Vector3(transform.position.x, 
+                transform.position.y - groundedOffset, transform.position.z);
+            Gizmos.DrawSphere(spherePosition, groundedRadius);
+        }
         #endregion
 
         #region CustomMethod
@@ -64,6 +85,12 @@ namespace MyFps
         {
             if(grounded)
             {
+                //지면에 있을때 verticalVelocity 값 고정
+                if (verticalVelocity < 0.0f)
+                {
+                    verticalVelocity = -2f;
+                }
+
                 //점프 입력 체크
                 if(_input.Jump && jumpTimeout <= 0f)
                 {
@@ -90,6 +117,9 @@ namespace MyFps
         //그라운드 체크
         private void GroundedCheck()
         {
+            //CharacterController의 그라운드 체크 값 가져오기
+            //grounded = _controller.isGrounded;
+
             //체크 위치 설정
             Vector3 spherePosition = new Vector3(transform.position.x, 
                 transform.position.y - groundedOffset, transform.position.z);
