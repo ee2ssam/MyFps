@@ -20,6 +20,8 @@ namespace MySample
         private float runSpeed = 8f;
 
         private float speed = 0f;
+        [SerializeField]
+        private float accelate = 1f;
 
 
         //애니메이터 파라미터 이름
@@ -86,7 +88,43 @@ namespace MySample
             }
 
             //이동 속도 적용
-            //speed = 
+            if(Walk)
+            {
+                if(Run)
+                {
+                    Speed += Time.deltaTime * accelate;
+                    if(Speed > runSpeed)
+                        speed = runSpeed;
+                }
+                else
+                {
+                    if(Speed > walkSpeed)
+                    {
+                        Speed -= Time.deltaTime * accelate;
+                        if(Speed < walkSpeed)
+                        {
+                            Speed = walkSpeed;
+                        }
+                    }
+                    else if (Speed < walkSpeed)
+                    {
+                        Speed += Time.deltaTime * accelate;
+                        if (Speed > walkSpeed)
+                        {
+                            Speed = walkSpeed;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Speed -= Time.deltaTime * accelate;
+                if (Speed < 0)
+                {
+                    Speed = 0;
+                }
+            }
+
 
         }
         #endregion
