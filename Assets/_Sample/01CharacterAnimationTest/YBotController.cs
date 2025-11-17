@@ -15,9 +15,45 @@ namespace MySample
         //참조
         private Animator animator;
 
+        //이동
+        private float walkSpeed = 4f;
+        private float runSpeed = 8f;
+
+        private float speed = 0f;
+
+
         //애니메이터 파라미터 이름
         private string IsWalk = "IsWalk";
         private string IsRun = "IsRun";
+        private string MoveSpeed = "MoveSpeed";
+        #endregion
+
+        #region Property
+        public bool Walk
+        {
+            get
+            {
+                return animator.GetBool(IsWalk);
+            }
+        }
+
+        public bool Run
+        {
+            get
+            {
+                return animator.GetBool(IsRun);
+            }
+        }
+
+        public float Speed
+        {
+            get { return speed; }
+            set
+            {
+                speed = value;
+                animator.SetFloat(MoveSpeed, speed);
+            }
+        }
         #endregion
 
         #region Unity Event Method
@@ -38,6 +74,7 @@ namespace MySample
             {
                 animator.SetBool(IsWalk, false);
             }
+
             //뛰기
             if(Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -47,6 +84,10 @@ namespace MySample
             {
                 animator.SetBool(IsRun, false);
             }
+
+            //이동 속도 적용
+            //speed = 
+
         }
         #endregion
     }
