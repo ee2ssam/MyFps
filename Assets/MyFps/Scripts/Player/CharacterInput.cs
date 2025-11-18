@@ -18,6 +18,7 @@ namespace MyFps
         private bool sprint = false;
 
         //점프 입력 값
+        [SerializeField]
         private bool jump = false;
         #endregion
 
@@ -59,6 +60,9 @@ namespace MyFps
 
         private void JumpInput(bool isJump)
         {
+            if (isJump == false)
+                return;
+
             jump = isJump;
         }
 
