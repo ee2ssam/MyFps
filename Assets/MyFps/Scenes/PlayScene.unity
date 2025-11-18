@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &45127819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7704261774162773459, guid: 3278081743787bf48b1f32039f495cfc, type: 3}
+  m_PrefabInstance: {fileID: 1349057622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &64350637
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +481,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3829740476224070262, guid: 3278081743787bf48b1f32039f495cfc, type: 3}
   m_PrefabInstance: {fileID: 1349057622}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &97712322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45127819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9186713c33e3d6f44a6098ef3784c5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toTarget: 0
 --- !u!1 &122969348
 GameObject:
   m_ObjectHideFlags: 0
@@ -2161,8 +2179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionUI: {fileID: 264662376}
-  actionText: {fileID: 0}
+  actionText: {fileID: 1376828552}
   action: Open The Door
+  animator: {fileID: 919132149473534873}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2774,7 +2793,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7704261774162773459, guid: 3278081743787bf48b1f32039f495cfc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 97712322}
   m_SourcePrefab: {fileID: 100100000, guid: 3278081743787bf48b1f32039f495cfc, type: 3}
 --- !u!1 &1370987870
 GameObject:
