@@ -8,6 +8,25 @@ namespace MySample
     /// </summary>
     public class Bullet : MonoBehaviour
     {
+        #region Variables
+        //참조
+        private Rigidbody rb;
 
+        //이동
+        [SerializeField]
+        private float moveForce = 50f;
+        #endregion
+
+        #region Custom Method
+        public void MoveForce()
+        {
+            if(rb == null)
+            {
+                rb = GetComponent<Rigidbody>();
+            }
+
+            rb.AddForce(transform.forward * moveForce, ForceMode.Impulse);
+        }
+        #endregion
     }
 }

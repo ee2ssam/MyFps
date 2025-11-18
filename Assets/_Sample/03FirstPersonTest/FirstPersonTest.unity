@@ -1619,6 +1619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a39ca173cbd19945bc86858ff33d8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 7641574879709481742, guid: df69d44bc14704b468d14f97624c25d4, type: 3}
+  firePoint: {fileID: 1205470924}
 --- !u!23 &6907519081863453090
 MeshRenderer:
   m_ObjectHideFlags: 0
