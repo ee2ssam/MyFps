@@ -11,6 +11,9 @@ namespace MyFps
     public class DoorCellOpen : MonoBehaviour
     {
         #region Varibles
+        //크로스헤어
+        public GameObject extraCross;
+
         //액션 UI
         public GameObject actionUI;
         public TextMeshProUGUI actionText;
@@ -37,16 +40,14 @@ namespace MyFps
         {
             if(PlayerCasting.distanceFromTarget > 2f)
             {
-                actionUI.SetActive(false);
-                actionText.text = "";
+                HideActionUI();
                 return;
             }
 
-            actionUI.SetActive(true);
-            actionText.text = action;
+            ShowActionUI();
 
             //만약 Action 버튼을 누르면
-            if(Input.GetButtonDown("Action"))
+            if (Input.GetButtonDown("Action"))
             {
                 OpenDoor();
             }
@@ -54,17 +55,29 @@ namespace MyFps
 
         private void OnMouseExit()
         {
-            actionUI.SetActive(false);
-            actionText.text = "";
+            HideActionUI();
         }
         #endregion
 
         #region Custom Method
-        void OpenDoor()
+        private void ShowActionUI()
         {
-            //UI
+            extraCross.SetActive(true);
+            actionUI.SetActive(true);
+            actionText.text = action;
+        }
+
+        private void HideActionUI()
+        {
+            extraCross.SetActive(false);
             actionUI.SetActive(false);
             actionText.text = "";
+        }
+
+        void OpenDoor()
+        {
+            //액션 UI 감추기
+            HideActionUI();
 
             //애니메이션
             animator.SetTrigger(Open);
