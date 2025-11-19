@@ -10,6 +10,13 @@ namespace MySample
         private void OnTriggerEnter(Collider other)
         {
             Debug.Log($"OnTriggerEnter: {other.name}");
+            //오른쪽으로 힘(200f), 컬러를 빨간색
+            MoveObejct moveObejct = other.GetComponent<MoveObejct>();
+            if (moveObejct)
+            {
+                moveObejct.MoveRigth();
+                moveObejct.ChangeMoveColor();
+            }
         }
 
         private void OnTriggerStay(Collider other)
@@ -20,6 +27,13 @@ namespace MySample
         private void OnTriggerExit(Collider other)
         {
             Debug.Log($"OnTriggerExit: {other.name}");
+            //오른쪽으로 힘(200f), 컬러를 오리진
+            MoveObejct moveObejct = other.GetComponent<MoveObejct>();
+            if (moveObejct)
+            {
+                moveObejct.MoveRigth();
+                moveObejct.ResetMoveColor();
+            }
         }
     }
 }

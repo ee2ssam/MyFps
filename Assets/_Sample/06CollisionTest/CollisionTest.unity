@@ -850,6 +850,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27c7fb83911e0c4c80f81e8440782ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movePower: 5
+  redMaterial: {fileID: 2100000, guid: 0e8a764376fa7c248a5ea75faae09dad, type: 2}
 --- !u!54 &1872722327
 Rigidbody:
   m_ObjectHideFlags: 0

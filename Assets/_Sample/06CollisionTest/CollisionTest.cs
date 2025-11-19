@@ -10,6 +10,12 @@ namespace MySample
         private void OnCollisionEnter(Collision collision)
         {
             Debug.Log($"OnCollisionEnter: {collision.gameObject.name}");
+            //왼쪽으로 힘(200f)
+            MoveObejct moveObejct = collision.gameObject.GetComponent<MoveObejct>();
+            if(moveObejct)
+            {
+                moveObejct.MoveLeft();
+            }
         }
 
         private void OnCollisionStay(Collision collision)
@@ -20,6 +26,12 @@ namespace MySample
         private void OnCollisionExit(Collision collision)
         {
             Debug.Log($"OnCollisionExit: {collision.gameObject.name}");
+            //왼쪽으로 힘(200f)
+            MoveObejct moveObejct = collision.gameObject.GetComponent<MoveObejct>();
+            if (moveObejct)
+            {
+                moveObejct.MoveLeft();
+            }
         }
     }
 }

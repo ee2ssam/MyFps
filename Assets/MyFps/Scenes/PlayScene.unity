@@ -4885,7 +4885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1041575973
 Animator:
   serializedVersion: 7
@@ -8215,6 +8215,7 @@ GameObject:
   - component: {fileID: 1945191835}
   - component: {fileID: 1945191834}
   - component: {fileID: 1945191833}
+  - component: {fileID: 1945191837}
   m_Layer: 0
   m_Name: FirstTrigger
   m_TagString: Untagged
@@ -8311,6 +8312,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1945191837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945191832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffad620c7567e104ab50b599a2af1142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thePlayer: {fileID: 878853992}
+  sequenceText: {fileID: 651319832}
+  sequecne: Looks like a weapon on that table
+  theMarker: {fileID: 1041575972}
 --- !u!1 &1973136719
 GameObject:
   m_ObjectHideFlags: 0
@@ -9331,10 +9348,10 @@ SceneRoots:
   - {fileID: 426363621}
   - {fileID: 729790029}
   - {fileID: 732364867}
+  - {fileID: 1449635623}
+  - {fileID: 175961037}
   - {fileID: 1349057622}
   - {fileID: 543450653414045986}
   - {fileID: 6783608325973238823}
-  - {fileID: 175961037}
-  - {fileID: 1449635623}
   - {fileID: 1041575974}
   - {fileID: 1945191836}
