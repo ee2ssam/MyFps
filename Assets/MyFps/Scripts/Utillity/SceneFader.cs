@@ -19,8 +19,8 @@ namespace MyFps
         #region Unity Event Method
         private void Start()
         {
-            //시작하자 마자 페이드 인
-            FadeStart();
+            //페이더 이미지를 검정색으로 시작 - 씬을 시작하면 무조건 암전
+            img.color = new Color(0f, 0f, 0f, 1);
         }
         #endregion
 
@@ -35,8 +35,6 @@ namespace MyFps
         //페이드 시작전 매개변수로 받은 딜레이 시간 주기
         IEnumerator FadeIn(float delayTime)
         {
-            //페이더 이미지를 검정색으로 시작
-            img.color = new Color(0f, 0f, 0f, 1);
             //delayTime 체크
             if (delayTime >= 0f)
             {
