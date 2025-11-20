@@ -13,6 +13,8 @@ namespace MyFps
 
         protected bool isActive;
 
+        //사운드
+
         //애니메이터 파라미터
         const string IsOpen = "IsOpen";
         #endregion
@@ -25,6 +27,8 @@ namespace MyFps
             { 
                 isActive = value;
                 animator.SetBool(IsOpen, value);
+
+                //사운드 플레이
             }
         }
         #endregion
