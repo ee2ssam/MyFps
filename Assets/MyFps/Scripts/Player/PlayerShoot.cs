@@ -22,7 +22,8 @@ namespace MyFps
         private float attackDamage = 5f;
 
         //이펙트 효과(VFX, SFX)
-
+        public GameObject hitImpactPrefab;
+        public AudioSource pistolShoot;
 
         //애니메이션 파라미터
         private const string IsShoot = "IsShoot";
@@ -90,18 +91,31 @@ namespace MyFps
             if(Physics.Raycast(transform.position, transform.forward, out hit, attackRange))
             {
                 Debug.Log($"hit object: {hit.transform.name}");
+
+                //이펙트 효과(VFX)
+                if (hitImpactPrefab)
+                {
+                    GameObject effectGo = Instantiate(hitImpactPrefab, hit.point, Quaternion.identity);
+                    //이펙트 킬 예약
+                    Destroy(effectGo, 2f);
+                }
+
+                //적에게 데미지 주기                
                 Robot robot = hit.transform.GetComponent<Robot>();
                 if(robot)
                 {
                     robot.TakeDamage(attackDamage);
                 }
-
-                //이펙트 효과(VFX, SFX)
-
             }
 
             //애니메이션
             animator.SetBool(IsShoot, true);
+
+            //이펙트 효과(SFX)
+            if(pistolShoot)
+            {
+                pistolShoot.Play();
+            }
         }
         #endregion
     }
