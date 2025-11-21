@@ -19,7 +19,7 @@ namespace MyFps
         public AudioSource audioSource;
 
         //애니메이터 파라미터
-        const string Open = "Open";
+        private const string Open = "Open";
         #endregion
 
         #region Custom Method
