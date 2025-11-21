@@ -34,6 +34,9 @@ namespace MyFps
 
         private bool isDeath = false;
 
+        //플레이어 오브젝트
+        public Transform thePlayer;
+
         //애니메이션 파라미터
         private const string EnemyState = "EnemyState";
         #endregion
@@ -44,6 +47,25 @@ namespace MyFps
             //초기화
             health = 20f;
             SetState(RobotState.R_Idle);
+        }
+
+        private void Update()
+        {
+            //상태 구현
+            switch (robotState)
+            {
+                case RobotState.R_Idle:
+                    break;
+
+                case RobotState.R_Walk:
+                    break;
+
+                case RobotState.R_Attack:
+                    break;
+
+                case RobotState.R_Death:
+                    break;
+            }
         }
         #endregion
 

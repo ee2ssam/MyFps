@@ -1,16 +1,29 @@
+using MyFps;
+using MySample;
 using UnityEngine;
 
-namespace MyFps
+namespace MySample2
 {
-    /// <summary>
-    /// 무기 발사 구현
-    /// </summary>
-    public class PlayerShoot : MonoBehaviour
+    public enum ShootType
+    {
+        Shoot_Projectile,
+        Shoot_Raycast
+    }
+
+
+    public class ShootTest : MonoBehaviour
     {
         #region Variables
         //참조
         public Animator animator;       //무기 애니메이터
         public Transform firePoint;     //파이어 포인트
+
+        //슛타입
+        [SerializeField]
+        private ShootType shootType = ShootType.Shoot_Projectile;
+
+        //발사체 프리팹
+        public GameObject bulletPrefab; //총알 프리팹
 
         //무기 사거리
         [SerializeField]
@@ -24,6 +37,8 @@ namespace MyFps
         //이펙트 효과(VFX, SFX)
         public GameObject hitImpactPrefab;
         public AudioSource pistolShoot;
+        [SerializeField]
+        private float impactForce = 10f;
 
         //애니메이션 파라미터
         private const string IsShoot = "IsShoot";
@@ -43,9 +58,17 @@ namespace MyFps
         private void Update()
         {
             //발사 버튼 입력 처리, 연사 방지
-            if(Input.GetButtonDown("Fire") && IsFire == false)
+            if (Input.GetButtonDown("Fire") && IsFire == false)
             {
-                Shoot();
+                if(shootType == ShootType.Shoot_Projectile)
+                {
+                    ShootProjectile();
+                }
+                else
+                {
+                    ShootRaycast();
+                }
+                    
             }
         }
 
@@ -84,28 +107,73 @@ namespace MyFps
         #endregion
 
         #region Custom Method
-        //발사 처리
-        private void Shoot()
+        //Projectile 발사처리
+        private void ShootProjectile()
+        {
+            GameObject bulletGo = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+            Bullet bullet = bulletGo.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                bullet.MoveForce();
+            }
+
+            //bullet kill 예약
+            Destroy(bulletGo, 3f);
+        }
+
+        //Raycast 발사 처리
+        private void ShootRaycast()
         {
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, transform.forward, out hit, attackRange))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, attackRange))
             {
                 Debug.Log($"hit object: {hit.transform.name}");
 
                 //이펙트 효과(VFX)
                 if (hitImpactPrefab)
                 {
-                    GameObject effectGo = Instantiate(hitImpactPrefab, hit.point, 
+                    GameObject effectGo = Instantiate(hitImpactPrefab, hit.point,
                         Quaternion.LookRotation(hit.normal));
                     //이펙트 킬 예약
                     Destroy(effectGo, 2f);
                 }
 
-                //적에게 데미지 주기                
-                Robot robot = hit.transform.GetComponent<Robot>();
-                if(robot)
+                //임팩트 물리 효과 - 리디지바디 체크
+                if(hit.rigidbody)
                 {
-                    robot.TakeDamage(attackDamage);
+                    hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
+                }
+
+                /*//적에게 데미지 주기  
+                Zombie zombie = hit.transform.GetComponent<Zombie>();
+                if(zombie)
+                {
+                    zombie.TakeDamage(attackDamage);
+                }
+
+                Slime slime = hit.transform.GetComponent<Slime>();
+                if(slime)
+                {
+                    slime.TakeDamage(attackDamage);
+                }
+
+                Skeleton skeleton = hit.transform.GetComponent<Skeleton>();
+                if (skeleton)
+                {
+                    skeleton.TakeDamage(attackDamage);
+                }*/
+
+                /*Monster monster = hit.transform.GetComponent<Monster>();
+                if(monster)
+                {
+                    monster.TakeDamage(attackDamage);
+                }*/
+
+                IDamageable damageable = hit.transform.GetComponent<IDamageable>();
+                if(damageable != null)
+                {
+                    damageable.TakeDamage(attackDamage);
                 }
             }
 
@@ -113,7 +181,7 @@ namespace MyFps
             animator.SetBool(IsShoot, true);
 
             //이펙트 효과(SFX)
-            if(pistolShoot)
+            if (pistolShoot)
             {
                 pistolShoot.Play();
             }

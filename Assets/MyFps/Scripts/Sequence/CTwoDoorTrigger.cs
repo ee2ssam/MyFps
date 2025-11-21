@@ -11,6 +11,7 @@ namespace MyFps
         //시퀀스
         public Door door;
 
+        public GameObject robot;
         #endregion
 
         #region Unity Event Method
@@ -33,6 +34,7 @@ namespace MyFps
         private void SequencePlay()
         {
             door.Activate();
+            robot.SetActive(true);
         }
         #endregion
     }

@@ -5274,6 +5274,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6359882540733591954, guid: 3278081743787bf48b1f32039f495cfc, type: 3}
   m_PrefabInstance: {fileID: 1349057622}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &878853993 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7749877104013333067, guid: 3278081743787bf48b1f32039f495cfc, type: 3}
+  m_PrefabInstance: {fileID: 1349057622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &887738968
 GameObject:
   m_ObjectHideFlags: 0
@@ -10613,6 +10618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1456297426}
+  robot: {fileID: 2969308020197421598}
 --- !u!65 &2043142239
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11526,7 +11532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &3156186508007888808
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12052,6 +12058,7 @@ MonoBehaviour:
   animator: {fileID: 5056969913351204344}
   robotState: 0
   maxHealth: 20
+  thePlayer: {fileID: 878853993}
 --- !u!4 &4296514799241745621
 Transform:
   m_ObjectHideFlags: 0
