@@ -35,32 +35,75 @@ namespace MyFps
         private bool isDeath = false;
 
         //플레이어 오브젝트
-        public Transform thePlayer;
+        private Transform thePlayer;
+
+        //대기
+        [SerializeField]
+        private float idleTimer = 2f;
+        private float countdown = 0f;
+
+        //이동
+        [SerializeField]
+        private float moveSpeed = 5f;
 
         //애니메이션 파라미터
         private const string EnemyState = "EnemyState";
         #endregion
 
         #region Unity Event Method
+        private void Awake()
+        {
+            //참조
+            //thePlayer = GameObject.Find("Robot").transform;
+            thePlayer = FindFirstObjectByType<PlayerMove>().transform;
+        }
+
         private void Start()
         {
             //초기화
-            health = 20f;
+            health = maxHealth;
+            countdown = 0f;
+
             SetState(RobotState.R_Idle);
         }
 
         private void Update()
         {
+            //타겟팅
+            Vector3 targetPosition = new Vector3(thePlayer.position.x, transform.position.y, thePlayer.position.z);
+            Vector3 dir = targetPosition - transform.position;
+            float distance = Vector3.Distance(targetPosition, transform.position);
+
             //상태 구현
             switch (robotState)
             {
+                //3초후에 걷기로 상태 전환
                 case RobotState.R_Idle:
+                    countdown += Time.deltaTime;
+                    if(countdown >= idleTimer)
+                    {
+                        //타이머 기능
+                        SetState(RobotState.R_Walk);
+
+                        //타이머 초기화
+                        countdown = 0f;
+                    }
                     break;
 
+                //플레이를 향해서 걷기, 플레이어와의 거리가 2이내가 되면 공격 상태로 전환
                 case RobotState.R_Walk:
+                    transform.Translate(dir.normalized * Time.deltaTime * moveSpeed, Space.World);
+
+                    //플레이어와의 거리가 2이내가 되면 공격 상태로 전환
+
                     break;
 
+                //2초마다 데미지를 5씩 준다, 플레이어와의 거리가 1.5가 넘어가면 걷기 상태로 전환
                 case RobotState.R_Attack:
+
+
+                    //플레이어와의 거리가 2가 넘어가면 걷기 상태로 전환
+
                     break;
 
                 case RobotState.R_Death:
