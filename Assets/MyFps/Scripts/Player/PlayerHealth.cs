@@ -48,7 +48,10 @@ namespace MyFps
 
         private void Die()
         {
-            //Debug.Log("Goto GameOver");
+            //죽음 체크
+            isDeath = true;
+
+            //죽음 이벤트 함수에 등록된 함수 호출
             onDie?.Invoke();
         }
         #endregion

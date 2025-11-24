@@ -5631,6 +5631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385b4ef74da09e44abf6ff6290b64a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fader: {fileID: 1671376499}
+  loadToScene: GameOver
   damageFlash: {fileID: 700536923}
   hurt01: {fileID: 744881192}
   hurt02: {fileID: 922033695}
@@ -6316,6 +6318,8 @@ GameObject:
   - component: {fileID: 997339549}
   - component: {fileID: 997339548}
   - component: {fileID: 997339547}
+  - component: {fileID: 997339551}
+  - component: {fileID: 997339552}
   m_Layer: 0
   m_Name: Third Person Aim Camera
   m_TagString: Untagged
@@ -6425,6 +6429,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &997339551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997339546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0
+  FrequencyGain: 0
+  m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &997339552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997339546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6599abaabc4c0f4ea0f2a05b1124176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1018803749
 GameObject:
   m_ObjectHideFlags: 0
