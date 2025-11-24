@@ -15,7 +15,7 @@ namespace MyFps
     /// 로봇을 관리하는 클래스
     /// 애니메이션, 체력, 이동
     /// </summary>
-    public class Robot : MonoBehaviour
+    public class Robot : MonoBehaviour, IDamageable
     {
         #region Variables
         //참조
@@ -45,6 +45,14 @@ namespace MyFps
         //이동
         [SerializeField]
         private float moveSpeed = 5f;
+
+        //공격
+        [SerializeField]
+        private float attackRange = 2f;
+        [SerializeField]
+        private float attackTimer = 2f;
+        [SerializeField]
+        private float attackDamage = 5f;
 
         //애니메이션 파라미터
         private const string EnemyState = "EnemyState";
@@ -94,16 +102,33 @@ namespace MyFps
                 case RobotState.R_Walk:
                     transform.Translate(dir.normalized * Time.deltaTime * moveSpeed, Space.World);
 
-                    //플레이어와의 거리가 2이내가 되면 공격 상태로 전환
+                    //플레이어와의 거리가 attackRange(2)이내가 되면 공격 상태로 전환
+                    if (distance <= attackRange)
+                    {
+                        SetState(RobotState.R_Attack);
+                    }
 
+                    //타겟을 바라본다
+                    transform.LookAt(targetPosition);
                     break;
 
                 //2초마다 데미지를 5씩 준다, 플레이어와의 거리가 1.5가 넘어가면 걷기 상태로 전환
                 case RobotState.R_Attack:
+                    /*countdown += Time.deltaTime;
+                    if (countdown >= attackTimer)
+                    {
+                        //타이머 기능
+                        Attack();
 
+                        //타이머 초기화
+                        countdown = 0f;
+                    }*/
 
-                    //플레이어와의 거리가 2가 넘어가면 걷기 상태로 전환
-
+                    //플레이어와의 거리가 attackRange(2)가 넘어가면 걷기 상태로 전환
+                    if(distance > attackRange)
+                    {
+                        SetState(RobotState.R_Walk);
+                    }
                     break;
 
                 case RobotState.R_Death:
@@ -128,6 +153,12 @@ namespace MyFps
 
             //새로운 상태 변경에 따른 구현 내용
             animator.SetInteger(EnemyState, (int)robotState);
+
+            //데스 킬 처리
+            if(robotState == RobotState.R_Death)
+            {
+                Destroy(gameObject, 6f);
+            }
         }
 
         //데미지 주기
@@ -150,6 +181,24 @@ namespace MyFps
 
             //Death 상태 변경
             SetState(RobotState.R_Death);
+        }
+
+        //공격
+        public void Attack()
+        {
+            //Debug.Log($"플레이어에게 데미지 {attackDamage}를 준다");
+            /*PlayerHealth playerHealth = thePlayer.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(attackDamage);
+            }*/
+            IDamageable damageable = thePlayer.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(attackDamage);
+            }
+
+
         }
         #endregion
     }
