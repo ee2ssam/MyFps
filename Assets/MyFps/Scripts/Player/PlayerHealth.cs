@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.Events;
 
 namespace MyFps
 {
@@ -16,8 +16,10 @@ namespace MyFps
 
         private bool isDeath = false;   //죽음 체크
 
-        //데미지
-        public GameObject damageFlash;
+        //데미지 입을때 등록된 함수 호출
+        public UnityAction onDamage;
+        //죽었을때 호출되는 함수 호출
+        public UnityAction onDie;
         #endregion
 
         #region Unity Event Method
@@ -35,8 +37,8 @@ namespace MyFps
             health -= damage;
             Debug.Log($"player Health : {health}");
 
-            //데미지 이펙트
-            StartCoroutine(DamageEffect());
+            //데미지 이벤트 함수에 등록된 함수 호출
+            onDamage?.Invoke();
 
             if (health <= 0f && isDeath == false)
             {
@@ -46,19 +48,8 @@ namespace MyFps
 
         private void Die()
         {
-            Debug.Log("Goto GameOver");
-        }
-
-        IEnumerator DamageEffect()
-        {
-            //화면전체 빨간색 플래쉬 효과
-            damageFlash.SetActive(true);
-
-            //데미지 사운드 3개중 1 랜덤 발생
-
-            yield return new WaitForSeconds(1.0f);
-
-            damageFlash.SetActive(false);
+            //Debug.Log("Goto GameOver");
+            onDie?.Invoke();
         }
         #endregion
     }
