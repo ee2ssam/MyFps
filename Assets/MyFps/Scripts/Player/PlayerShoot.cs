@@ -45,7 +45,15 @@ namespace MyFps
             //발사 버튼 입력 처리, 연사 방지
             if(Input.GetButtonDown("Fire") && IsFire == false)
             {
-                Shoot();
+                //무기 소지 여부
+                if(PlayerStats.Instance.WeaponType != WeaponType.None)
+                {
+                    //탄환 체크
+                    if (PlayerStats.Instance.UseAmmo(1))
+                    {
+                        Shoot();
+                    }
+                }
             }
         }
 
@@ -90,8 +98,7 @@ namespace MyFps
             RaycastHit hit;
             if(Physics.Raycast(transform.position, transform.forward, out hit, attackRange))
             {
-                Debug.Log($"hit object: {hit.transform.name}");
-
+                //Debug.Log($"hit object: {hit.transform.name}");
                 //이펙트 효과(VFX)
                 if (hitImpactPrefab)
                 {

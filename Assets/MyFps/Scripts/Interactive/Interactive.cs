@@ -54,6 +54,9 @@ namespace MyFps
             //만약 Action 버튼을 누르면
             if (Input.GetButtonDown("Action"))
             {
+                //액션 UI 감추기
+                HideActionUI();
+
                 //"Do Action" - 인터랙트브 액션
                 DoAction();
 

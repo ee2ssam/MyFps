@@ -14,6 +14,10 @@ namespace MyFps
         public GameObject fakePistol;
         public GameObject realPistol;
         public GameObject theMaker;
+
+        public GameObject ammoUI;
+
+        public WeaponType weaponType = WeaponType.Pistol;
         #endregion
 
         #region Custom Method
@@ -26,6 +30,15 @@ namespace MyFps
             realPistol.SetActive(true);
             //- 책상위의 가이드 화살표는 없어진다
             theMaker.SetActive(false);
+
+            //현재 소지무기 셋팅
+            PlayerStats.Instance.SetWeaponType(weaponType);
+
+            //UI
+            ammoUI.SetActive(true);
+
+            //아이템 킬
+            Destroy(gameObject);
         }
         #endregion
     }
