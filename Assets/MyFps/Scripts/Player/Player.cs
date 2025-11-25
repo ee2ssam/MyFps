@@ -77,7 +77,7 @@ namespace MyFps
             }
 
             //화면 흔들림 효과
-
+            CinemachineShake.Instance.ShakeCamera(1f, 1f, 1f);
 
             yield return new WaitForSeconds(1.0f);
 
