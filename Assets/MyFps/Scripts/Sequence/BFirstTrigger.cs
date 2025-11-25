@@ -22,6 +22,9 @@ namespace MyFps
         [SerializeField]
         private string sequecne = "Looks like a weapon on that table";
 
+        //오디오
+        public AudioSource line03;
+
         //화살표
         public GameObject theMarker;
         #endregion
@@ -51,6 +54,9 @@ namespace MyFps
 
             //-대사 출력: "Looks like a weapon on that table."
             sequenceText.text = sequecne;
+            // 오디오 출력
+            line03.Play();
+
             yield return new WaitForSeconds(2f); //- 2초 딜레이
 
             //-화살표 활성화

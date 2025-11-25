@@ -30,8 +30,10 @@ namespace MyFps
         #endregion
 
         #region Unity Event Method
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+
             //플레이어 데이터 초기화
             ammoCont = 0;
             weaponType = WeaponType.None;

@@ -8,6 +8,20 @@ namespace MyFps
     /// </summary>
     public class DrawAmmoUI : MonoBehaviour
     {
+        #region Unity Event Method
+        private void Start()
+        {
+            //Ammo UI 그리기
+            bool isShow = PlayerStats.Instance.WeaponType != WeaponType.None;
+            ShowAmmoUI(isShow);
+        }
+        #endregion
 
+        #region Custom Method
+        public void ShowAmmoUI(bool isShow)
+        {
+            gameObject.SetActive(isShow);
+        }
+        #endregion
     }
 }
