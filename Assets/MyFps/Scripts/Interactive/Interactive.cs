@@ -29,8 +29,6 @@ namespace MyFps
 
         [SerializeField]
         protected string action = "Do Action";
-
-        //인터랙티브 액션
         #endregion
 
         #region Unity Event Method
@@ -38,6 +36,14 @@ namespace MyFps
         {
             //참조
             collider = GetComponent<BoxCollider>();
+
+            //Action UI가 널이면 Find 게임오브젝트로 참조 찾기
+            /*if(extraCross == null)
+            {
+                extraCross = GameObject.Find("ExtraCross");
+                actionUI = GameObject.Find("ActionUI");
+                actionText = GameObject.Find("ActionText").GetComponent<TextMeshProUGUI>();
+            }*/
         }
 
         protected virtual void OnMouseOver()

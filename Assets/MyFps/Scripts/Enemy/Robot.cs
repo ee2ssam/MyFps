@@ -54,6 +54,14 @@ namespace MyFps
         [SerializeField]
         private float attackDamage = 5f;
 
+        //리워드
+        [SerializeField]
+        private int rewardGold = 0;
+        [SerializeField]
+        private float rewardExp = 0f;
+        //private Item rewardItem;
+        public GameObject rewardItemPrefab;
+
         //애니메이션 파라미터
         private const string EnemyState = "EnemyState";
         #endregion
@@ -178,6 +186,17 @@ namespace MyFps
         private void Die()
         {
             isDeath = true;
+
+            //리워드 처리
+            //AddGold(rewardGold);
+            //AddExp(rewardExp);
+            //AddInventory(rewardItem);
+            Debug.Log("보상을 지급하였습니다");
+            //필드에 아이템 떨구기
+            if(rewardItemPrefab != null)
+            {
+                Instantiate(rewardItemPrefab, this.transform.position + new Vector3(0f,1f,0f), Quaternion.identity);
+            }
 
             //Death 상태 변경
             SetState(RobotState.R_Death);
