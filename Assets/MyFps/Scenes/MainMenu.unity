@@ -7240,6 +7240,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af73e6045b7ea146b5e847199b7c554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sounds:
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: fb45d3c7035e08747bae8254f28d461c, type: 3}
+    vloume: 0.75
+    pitch: 1
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: ButtonHit
+    clip: {fileID: 8300000, guid: 54964f68e5c5f1842bc6d2176a2aa06e, type: 3}
+    vloume: 0.5
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: SHAmb
+    clip: {fileID: 8300000, guid: 2a95eabc71ea0dd47be293b02bfc72c3, type: 3}
+    vloume: 1
+    pitch: 1
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  bgmSound: 
 --- !u!4 &1030245808
 Transform:
   m_ObjectHideFlags: 0

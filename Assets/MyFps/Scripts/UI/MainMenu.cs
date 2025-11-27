@@ -20,6 +20,9 @@ namespace MyFps
             //페이드인 시작
             fader.FadeStart();
 
+            //배경음 플레이
+            AudioManager.Instance.PlayBGM("MenuMusic");
+
             //초기화
 
         }
@@ -29,6 +32,9 @@ namespace MyFps
         //버튼 대응 함수 구현, Debug.Log("  버튼 클릭")
         public void NewGame()
         {
+            //버튼 효과음
+            AudioManager.Instance.Play("ButtonHit");
+
             fader.FadeTo(loadToScene);
         }
 
