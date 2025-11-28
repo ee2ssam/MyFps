@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MyFps
 {
@@ -12,6 +13,9 @@ namespace MyFps
         protected Animator animator;
 
         protected bool isActive;
+
+        public UnityAction OnActivate;
+        public UnityAction OnDeactivate;
 
         //사운드
 
@@ -45,11 +49,17 @@ namespace MyFps
         public void Activate()
         {
             IsActive = true;
+
+            //활성화시 등록된 함수 호출
+            OnActivate?.Invoke();
         }
 
         public void Deactivate()
         {
             IsActive = false;
+
+            //비 활성화시 등록된 함수 호출
+            OnDeactivate?.Invoke();
         }
         #endregion
     }
