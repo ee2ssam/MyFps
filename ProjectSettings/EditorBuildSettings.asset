@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/MyFps/Scenes/PlayScene01.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/MyFps/Scenes/PlayScene02.unity
+    guid: eee6de94d9197124bb7b8c12c4ea0f02
+  - enabled: 1
     path: Assets/MyFps/Scenes/GameOver.unity
     guid: 5ffcd5a7bbc0354409d17724fda3d360
   m_configObjects:

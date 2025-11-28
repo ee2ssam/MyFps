@@ -37,6 +37,9 @@ namespace MyFps
             //플레이어 데이터 초기화
             ammoCont = 0;
             weaponType = WeaponType.None;
+
+            //TO DO : cheating
+            weaponType = WeaponType.Pistol;
         }
         #endregion
 
