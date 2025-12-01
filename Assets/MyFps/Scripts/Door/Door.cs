@@ -12,6 +12,8 @@ namespace MyFps
         //참조
         protected Animator animator;
 
+        // true:문 열려 있는 상태, false : 문이 닫혀 있는 상태
+        [SerializeField]
         protected bool isActive;
 
         public UnityAction OnActivate;
@@ -42,6 +44,15 @@ namespace MyFps
         {
             //참조
             animator = GetComponent<Animator>();
+        }
+
+        protected virtual void Start()
+        {
+            //문 상태 열림/닫힘 설정
+            if (isActive)
+            {
+                Activate();
+            }
         }
         #endregion
 

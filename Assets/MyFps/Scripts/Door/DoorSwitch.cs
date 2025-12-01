@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using TMPro;
 
 namespace MyFps
 {
@@ -16,6 +16,10 @@ namespace MyFps
         public Renderer renderer;           //스위치를 그리는 랜더러
         public Material closeMaterial;      //닫을때 스위치 컬러
         private Material originMaterial;    //열을때 스위치 컬러
+
+        public TextMeshProUGUI sequenceText;
+        [SerializeField]
+        private PuzzleItem needKey = PuzzleItem.None;
         #endregion
 
         #region Unity Event Method
@@ -46,14 +50,24 @@ namespace MyFps
 
         IEnumerator Toggle()
         {
-            //문 열고 닫기
-            if(door.IsActive)
+            //열쇠 체크
+            if (needKey == PuzzleItem.None || PlayerStats.Instance.HavePuzzleItem(needKey))
             {
-                door.Deactivate();
+                //문 열고 닫기
+                if (door.IsActive)
+                {
+                    door.Deactivate();
+                }
+                else
+                {
+                    door.Activate();
+                }
             }
-            else
+            else 
             {
-                door.Activate();
+                sequenceText.text = "You need Key";
+                yield return new WaitForSeconds(2f);
+                sequenceText.text = "";
             }
 
             yield return new WaitForSeconds(1f);

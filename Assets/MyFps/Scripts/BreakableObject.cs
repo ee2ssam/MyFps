@@ -10,6 +10,10 @@ namespace MyFps
     public class BreakableObject : MonoBehaviour, IDamageable
     {
         #region Variables
+        //깨지지 않는 오브젝트 체크
+        [SerializeField]
+        private bool unBreakable = false;
+
         private float health;
         [SerializeField]
         private float maxHealth = 1f;
@@ -43,6 +47,10 @@ namespace MyFps
         #region Custom Method
         public void TakeDamage(float damage)
         {
+            //깨지지 않는 오브젝트 체크
+            if (unBreakable)
+                return;
+
             health -= damage;
             
             if(health <= 0f && isDeath == false)
@@ -69,7 +77,12 @@ namespace MyFps
             breakObject.SetActive(true);
 
             yield return new WaitForSeconds(0.2f);
-            activateObject.SetActive(false);
+            if (activateObject != null)
+            {
+                activateObject.SetActive(false);
+            }
+            //사운드
+            AudioManager.Instance.Play("PotterySmash");
 
             yield return new WaitForSeconds(0.5f);
             //리워드 처리
@@ -78,9 +91,7 @@ namespace MyFps
             {
                 Instantiate(rewardItemPrefab, this.transform.position + new Vector3(0f, 1f, 0f), Quaternion.identity);
             }
-
-            //사운드
-            AudioManager.Instance.Play("PotterySmash");
+            
         }
         #endregion
     }
