@@ -3,7 +3,7 @@ using UnityEngine;
 namespace MyFps
 {
     /// <summary>
-    /// 아이템 줍기
+    /// 아이템 줍기, 리워드 아이템이 상속하는 부모 클래스
     /// </summary>
     public class PickupItem : Interactive
     {
@@ -25,6 +25,7 @@ namespace MyFps
         protected override void DoAction()
         {
             //Empty
+            Debug.Log("아이템 획득을 구현해야 합니다");
         }
 
         protected override void ShowActionUI()
