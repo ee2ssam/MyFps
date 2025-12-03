@@ -45,9 +45,15 @@ namespace MyFps
         private float countdown = 0f;
 
         //상태 - 패트롤
+        [SerializeField]
+        private bool isPatrol = false;
+
         public Transform[] wayPoints;
         [SerializeField]
         private int wayPointIndex = 0;
+
+        //처음 생성 위치
+        private Vector3 startPosion = Vector3.zero;
 
         //상태 - 추격
         [SerializeField]
@@ -84,6 +90,7 @@ namespace MyFps
             //초기화
             health = maxHealth;
             wayPointIndex = 1;
+            startPosion = transform.position;
 
             SetState(EnemyState.E_Idle);
         }
@@ -109,11 +116,14 @@ namespace MyFps
             switch (currentState)
             {
                 case EnemyState.E_Idle:
-                    countdown += Time.deltaTime;
-                    if(countdown >= idleTimer)
+                    if(isPatrol)
                     {
-                        //타이머 기능
-                        SetState(EnemyState.E_Walk);
+                        countdown += Time.deltaTime;
+                        if (countdown >= idleTimer)
+                        {
+                            //타이머 기능
+                            SetState(EnemyState.E_Walk);
+                        }
                     }
                     break;
 
@@ -121,12 +131,14 @@ namespace MyFps
                     //도착 판정
                     if (agent.remainingDistance < 0.1f)
                     {
-                        wayPointIndex++;
-                        if(wayPointIndex >= wayPoints.Length)
+                        if (isPatrol)
                         {
-                            wayPointIndex = 0;
+                            wayPointIndex++;
+                            if (wayPointIndex >= wayPoints.Length)
+                            {
+                                wayPointIndex = 0;
+                            }
                         }
-
                         SetState(EnemyState.E_Idle);
                     }
                     break;
@@ -134,8 +146,8 @@ namespace MyFps
                 case EnemyState.E_Chase: //추격
                     agent.SetDestination(thePlayer.position);
 
-                    if (distacne > detectDistance)    //디텍팅 거리 체크
-                    {
+                    if (distacne > detectDistance)    //디텍팅 거리 체크, 타겟을 잃어버리면
+                    {   
                         SetState(EnemyState.E_Walk);
                     }
                     break;
@@ -179,6 +191,10 @@ namespace MyFps
             beforeState = currentState; //현재 상태를 바로 이전 상태에 저장
             currentState = newState;    //현재 상태를 새로운 상태로 전환
 
+            //agenet 초기화
+            agent.ResetPath();
+
+
             //상태별 초기값 설정
             switch (currentState)
             {
@@ -189,7 +205,14 @@ namespace MyFps
 
                 case EnemyState.E_Walk:
                     //이동 목표 지점 설정
-                    agent.SetDestination(wayPoints[wayPointIndex].position);
+                    if (isPatrol)
+                    {                        
+                        agent.SetDestination(wayPoints[wayPointIndex].position);
+                    }
+                    else
+                    {
+                        agent.SetDestination(startPosion);
+                    }
                     break;
 
                 case EnemyState.E_Attack:

@@ -125,6 +125,12 @@ namespace MyFps
 
             sound.source.Play();
         }
+
+        //배경음 종료
+        public void StopBGM()
+        {
+            Stop(bgmSound);
+        }
         #endregion
     }
 }

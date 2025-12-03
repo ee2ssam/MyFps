@@ -20,7 +20,7 @@ namespace MyFps
         public UnityAction OnDeactivate;
 
         //적 등록
-        public GunMan enemy;
+        public GunMan[] enemies;
 
         //사운드
 
@@ -49,24 +49,6 @@ namespace MyFps
             animator = GetComponent<Animator>();
         }
 
-        protected void OnEnable()
-        {
-            if (enemy)
-            {
-                OnActivate += enemy.OnActive;
-                OnDeactivate += enemy.GoBack;
-            }
-        }
-
-        protected void OnDisable()
-        {
-            if (enemy)
-            {
-                OnActivate -= enemy.OnActive;
-                OnDeactivate -= enemy.GoBack;
-            }
-        }
-
         protected virtual void Start()
         {
             //문 상태 열림/닫힘 설정
@@ -84,6 +66,11 @@ namespace MyFps
 
             //활성화시 등록된 함수 호출, 문열기
             OnActivate?.Invoke();
+
+            foreach (var enemy in enemies)
+            {
+                enemy.OnActive();
+            }
         }
 
         public void Deactivate()
@@ -92,6 +79,11 @@ namespace MyFps
 
             //비 활성화시 등록된 함수 호출, 문닫기
             OnDeactivate?.Invoke();
+
+            foreach (var enemy in enemies)
+            {
+                enemy.GoBack();
+            }
         }
         #endregion
     }
