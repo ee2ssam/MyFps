@@ -70,7 +70,7 @@ namespace MyFps
         private void Awake()
         {
             //참조
-            //thePlayer = GameObject.Find("Robot").transform;
+            //thePlayer = GameObject.Find("Player").transform;
             thePlayer = FindFirstObjectByType<PlayerMove>().transform;
         }
 
