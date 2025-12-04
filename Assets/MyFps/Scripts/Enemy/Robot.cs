@@ -173,7 +173,7 @@ namespace MyFps
         public void TakeDamage(float damage)
         {
             health -= damage;
-            Debug.Log($"Robot Health: {health}");
+            //Debug.Log($"Robot Health: {health}");
 
             //죽음 체크 - 두번 죽이지 마라
             if (health <= 0f && isDeath == false)

@@ -35,7 +35,7 @@ namespace MyFps
         public void TakeDamage(float damage)
         {
             health -= damage;
-            Debug.Log($"player Health : {health}");
+            //Debug.Log($"player Health : {health}");
 
             //데미지 이벤트 함수에 등록된 함수 호출
             onDamage?.Invoke();

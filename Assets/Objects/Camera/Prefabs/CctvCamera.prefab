@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 6030234548729956980}
   - component: {fileID: 8379867495519403710}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: CctvCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

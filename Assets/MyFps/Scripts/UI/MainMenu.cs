@@ -21,23 +21,38 @@ namespace MyFps
         public GameObject optionUI;
         public GameObject creditUI;
 
+        public GameObject loadGameButton;
+
         //Option - 볼륨관리
         public AudioMixer audioMixer;
 
         public Slider bgmSlider;
         public Slider sfxSlider;
 
+        //씬번호
+        private int sceneNumber = -1;
+
         //AudioMixer, PlyaerPrefs 파라미터
         private const string BgmVolume = "BgmVolume";
-        private const string SfxVolume = "SfxVolume";
+        private const string SfxVolume = "SfxVolume";        
+        private const string SceneNumber = "SceneNumber";
         #endregion
 
         #region Unity Event Method
         private void Start()
         {
-            //저장된 데이터 불러와서 게임 적용
-            LoadOptions();
+            //저장된 데이터 불러와서 게임 데이터 초기화
+            GameDataInit();
 
+            //로드게임 버튼 셋팅
+            if(sceneNumber < 0)
+            {
+                loadGameButton.SetActive(false);
+            }
+            else
+            {
+                loadGameButton.SetActive(true);
+            }
 
             //페이드인 시작
             fader.FadeStart();
@@ -66,7 +81,10 @@ namespace MyFps
 
         public void LoadGame()
         {
-            Debug.Log("Goto Save Scene");
+            //버튼 효과음
+            AudioManager.Instance.Play("ButtonHit");
+
+            fader.FadeTo(sceneNumber);
         }
 
         public void Options()
@@ -171,6 +189,17 @@ namespace MyFps
         {
             mainMenuUI.SetActive(false);
             creditUI.SetActive(true);
+        }
+
+        private void GameDataInit()
+        {
+            //옵션 데이터
+            LoadOptions();
+
+            //플레이 데이터
+            //sceneNumber = PlayerPrefs.GetInt(SceneNumber, -1);
+            //Debug.Log($"Load SceneNumber: {sceneNumber}");
+            SaveLoad.LoadData();
         }
         #endregion
     }
