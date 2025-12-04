@@ -19,6 +19,7 @@ namespace MyFps
         //UI
         public GameObject mainMenuUI;
         public GameObject optionUI;
+        public GameObject creditUI;
 
         //Option - 볼륨관리
         public AudioMixer audioMixer;
@@ -76,7 +77,8 @@ namespace MyFps
 
         public void Credits()
         {
-            Debug.Log("Goto Credits Menu");
+            //Debug.Log("Goto Credits Menu");
+            ShowCreditUI();
         }
 
         public void QuitGame()
@@ -163,6 +165,12 @@ namespace MyFps
 
             //기타 옵션 값
             //...
+        }
+
+        private void ShowCreditUI()
+        {
+            mainMenuUI.SetActive(false);
+            creditUI.SetActive(true);
         }
         #endregion
     }
