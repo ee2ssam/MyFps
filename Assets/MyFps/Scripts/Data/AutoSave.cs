@@ -12,7 +12,7 @@ namespace MyFps
         private const string SceneNumber = "SceneNumber";
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        void Awake()
         {
             //씬 시작하자마자 데이터 저장
             SaveData();
@@ -28,7 +28,7 @@ namespace MyFps
             //씬 번호 저장
             int sceneNumber = SceneManager.GetActiveScene().buildIndex;
 
-            if (saveNumber < sceneNumber)
+            if (saveNumber <= sceneNumber)
             {
                 //저장
                 //PlayerPrefs.SetInt(SceneNumber, sceneNumber);
@@ -36,6 +36,11 @@ namespace MyFps
 
                 PlayerStats.Instance.SetSceneNumnber(sceneNumber);
                 SaveLoad.SaveData();
+            }
+            else
+            {
+                //새로 게임 시작 데이터를 강제로 셋팅 (?)                
+                PlayerStats.Instance.PlayerStatsInit();
             }
         }
     }

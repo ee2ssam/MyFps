@@ -13,7 +13,7 @@ namespace MyFps
         public static void SaveData()
         {
             //파일이름, 저장 경로 지정
-            string path = Application.persistentDataPath + "/pData.dat";
+            string path = Application.persistentDataPath + "/pData.brr";
 
             //저장할 데이터를 이진화 준비
             BinaryFormatter formatter = new BinaryFormatter();
@@ -40,7 +40,7 @@ namespace MyFps
             PlayData playData;
 
             //파일이름, 저장 경로 지정
-            string path = Application.persistentDataPath + "/pData.dat";
+            string path = Application.persistentDataPath + "/pData.brr";
 
             //지정된 경로에 파일이 있는지 없는지 체크
             if(File.Exists(path) == true)

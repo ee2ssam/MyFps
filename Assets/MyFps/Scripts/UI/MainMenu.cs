@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace MyFps
 {
@@ -30,7 +29,7 @@ namespace MyFps
         public Slider sfxSlider;
 
         //씬번호
-        private int sceneNumber = -1;
+        //private int sceneNumber = -1;
 
         //AudioMixer, PlyaerPrefs 파라미터
         private const string BgmVolume = "BgmVolume";
@@ -44,8 +43,9 @@ namespace MyFps
             //저장된 데이터 불러와서 게임 데이터 초기화
             GameDataInit();
 
+            Debug.Log($"Load SceneNumber: {PlayerStats.Instance.SceneNumber}");
             //로드게임 버튼 셋팅
-            if(sceneNumber < 0)
+            if (PlayerStats.Instance.SceneNumber < 0)
             {
                 loadGameButton.SetActive(false);
             }
@@ -84,7 +84,7 @@ namespace MyFps
             //버튼 효과음
             AudioManager.Instance.Play("ButtonHit");
 
-            fader.FadeTo(sceneNumber);
+            fader.FadeTo(PlayerStats.Instance.SceneNumber);
         }
 
         public void Options()

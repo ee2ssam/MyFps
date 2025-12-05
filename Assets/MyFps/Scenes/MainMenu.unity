@@ -1536,7 +1536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &399057005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1599,7 +1599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fader: {fileID: 1028125354}
-  loadToScene: PlayScene01
+  loadToScene: Intro
   mainMenuUI: {fileID: 101684936}
   optionUI: {fileID: 1906633262}
   creditUI: {fileID: 81819858}

@@ -34,9 +34,11 @@ namespace MyFps
         private string sceneName;
 
         //탄환 갯수
+        [SerializeField]
         private int ammoCont;
 
         //소지 무기 타입
+        [SerializeField]
         private WeaponType weaponType;
 
         //플레이어 체력
@@ -61,6 +63,10 @@ namespace MyFps
         protected override void Awake()
         {
             base.Awake();
+
+            //TO DO : cheating
+            //PlayerStatsInitialize(null);
+            //weaponType = WeaponType.Pistol;
         }
         #endregion
 
@@ -87,9 +93,14 @@ namespace MyFps
             }
 
             puzzleItems = new bool[(int)PuzzleItem.MaxPuzzleItem];
+        }
 
-            //TO DO : cheating
-            //weaponType = WeaponType.Pistol;
+        //1번씬 데이터 초기값 설정
+        public void PlayerStatsInit()
+        {
+            ammoCont = 0;
+            weaponType = WeaponType.None;
+            health = maxHealth;
         }
 
         //씬 번호 대입하기
