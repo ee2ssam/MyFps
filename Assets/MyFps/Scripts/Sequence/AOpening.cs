@@ -30,17 +30,11 @@ namespace MyFps
         //사운드
         public AudioSource line01;  //sequence01
         public AudioSource line02;  //sequence02
-
-        //PlayerPrefs 파라미터
-        private const string SceneNumber = "SceneNumber";
         #endregion
 
         #region Unity Event Method
         private void Start()
         {
-            //시작하자마자 데이터 저장
-            SaveData();
-
             //시작하자마자 오프닝 연출
             StartCoroutine(SequencePlay());
         }
@@ -75,24 +69,6 @@ namespace MyFps
 
             //4.플레이 캐릭터 활성화
             thePlayer.SetActive(true);
-        }
-
-        //데이터 저장하기
-        private void SaveData()
-        {
-            //저장된 번호 가져오기
-            int saveNumber = PlayerPrefs.GetInt(SceneNumber, -1);
-
-            //씬 번호 저장
-            int sceneNumber = SceneManager.GetActiveScene().buildIndex;
-
-            if(saveNumber < sceneNumber)
-            {
-                //저장
-                //PlayerPrefs.SetInt(SceneNumber, sceneNumber);
-                //Debug.Log($"Save Scene Number: {sceneNumber}");
-                SaveLoad.SaveData();
-            }            
         }
         #endregion
     }

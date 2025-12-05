@@ -26,7 +26,7 @@ namespace MyFps
         private void Start()
         {
             //초기화
-            health = maxHealth;
+            health = PlayerStats.Instance.Health;
         }
         #endregion
 
@@ -36,6 +36,8 @@ namespace MyFps
         {
             health -= damage;
             //Debug.Log($"player Health : {health}");
+
+            PlayerStats.Instance.SetHealth(health);
 
             //데미지 이벤트 함수에 등록된 함수 호출
             onDamage?.Invoke();

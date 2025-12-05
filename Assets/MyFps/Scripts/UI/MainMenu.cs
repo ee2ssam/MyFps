@@ -199,7 +199,11 @@ namespace MyFps
             //플레이 데이터
             //sceneNumber = PlayerPrefs.GetInt(SceneNumber, -1);
             //Debug.Log($"Load SceneNumber: {sceneNumber}");
-            SaveLoad.LoadData();
+
+            PlayData playData = SaveLoad.LoadData();
+
+            //PlayerStats의 데이터 초기화
+            PlayerStats.Instance.PlayerStatsInitialize(playData);
         }
         #endregion
     }
