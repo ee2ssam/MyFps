@@ -33,9 +33,33 @@ namespace Unity.FPS.Game
         #endregion
 
         #region Custom Method
+        //damage: 데미지량, isExplosionDamage:폭발 데미지 여부, damageSource:데미지 주는 주체
         public void InflictDamage(float damage, bool isExplosionDamage, GameObject damageSource)
         {
+            //health 체크
+            if (health == null)
+                return;
 
+            var totalDamage = damage;
+
+            //폭발 데미지 여부
+            if (isExplosionDamage)
+            {
+                totalDamage *= 1f;
+            }
+            else
+            {
+                totalDamage *= damageMultiplier;
+            }
+
+            //셀프 데미지 여부
+            if(health.gameObject == damageSource)
+            {
+                totalDamage *= sensibilityToSelfDamage;
+            }
+
+            //데미지 적용
+            health.TakeDamage(totalDamage, damageSource);
         }
         #endregion
     }
