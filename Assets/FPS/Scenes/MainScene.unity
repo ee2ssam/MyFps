@@ -5249,6 +5249,9 @@ MonoBehaviour:
   - {fileID: 8050500475010048900, guid: a00b3bdb266e3d64492cda057278eca0, type: 3}
   - {fileID: 6465005435089414839, guid: 1a025d17fef002e4dbd9db9c6e859d75, type: 3}
   weaponParentSocrket: {fileID: 1432261321010830765}
+  defaultWeaponPosition: {fileID: 0}
+  downWeaponPosition: {fileID: 0}
+  weaponSwitchDelay: 1
 --- !u!4 &8528395496428365225
 Transform:
   m_ObjectHideFlags: 0
