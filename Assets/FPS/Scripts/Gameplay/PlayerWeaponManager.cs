@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Unity.FPS.Game;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 namespace Unity.FPS.Gameplay
 {
@@ -22,6 +23,9 @@ namespace Unity.FPS.Gameplay
     public class PlayerWeaponManager : MonoBehaviour
     {
         #region Variables
+        //참조
+        private PlayerInputHandler inputHandler;
+
         //무기 장착
         //처음 지급되는 무기(WeaponController가 붙어 있는 프리팹) 리스트
         public List<WeaponController> startingWeapons = new List<WeaponController>();
@@ -58,7 +62,8 @@ namespace Unity.FPS.Gameplay
         #region Unity Event Method
         private void Awake()
         {
-            
+            //참조
+            inputHandler = GetComponent<PlayerInputHandler>();
         }
 
         private void Start()
@@ -78,9 +83,93 @@ namespace Unity.FPS.Gameplay
             //지급 받은 무기중에 맨 앞에 있는 무기 활성화
             SwitchWeapon(true); 
         }
+
+        private void Update()
+        {
+            //Weapon Input 처리
+            if(weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down)
+            {
+                //무기 교체 인풋
+                int swithWeaponIndex = inputHandler.GetSwitchWeaponInput();
+                if(swithWeaponIndex != 0)
+                {
+                    bool isSwitchUp = swithWeaponIndex > 0f;
+                    SwitchWeapon(isSwitchUp);
+                }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            UpdateWeaponSwitching();
+
+            //무기 위치 최종 연산값을 적용
+            weaponParentSocrket.localPosition = weaponMainLocalPosition;
+        }
         #endregion
 
         #region Custom Method
+        //무기 교체 상태에 따른 무기 연출 및 상태 전환
+        private void UpdateWeaponSwitching()
+        {
+            //Lero 변수
+            float switchingTimeFactor = 0f;
+            if(weaponSwitchDelay == 0)
+            {
+                switchingTimeFactor = 1;
+            }
+            else
+            {
+                switchingTimeFactor = Mathf.Clamp01((Time.time - weaponSwitchTimeStarted) / weaponSwitchDelay);
+            }
+
+            //타이머 완료: 연출 완료
+            if(switchingTimeFactor >= 1f)
+            {
+                if (weaponSwitchState == WeaponSwitchState.PutDownPrevious)
+                {
+                    //무기 교체 : 현재 무기 false, 새로운 무기 true
+                    WeaponController oldWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    if (oldWeapon != null)
+                    {
+                        oldWeapon.ShowWeapon(false);
+                    }
+
+                    ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
+                    WeaponController newWeaponController = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
+                    onSwitchToWeapon?.Invoke(newWeaponController);
+
+                    //무기 연출
+                    switchingTimeFactor = 0f;   //left 변수 초기화
+                    if (newWeaponController != null)
+                    {
+                        weaponSwitchTimeStarted = Time.time;
+                        weaponSwitchState = WeaponSwitchState.PutUpNew;
+                    }
+                    else
+                    {
+                        weaponSwitchState = WeaponSwitchState.Down;
+                    }
+                }
+                else if (weaponSwitchState == WeaponSwitchState.PutUpNew)
+                {
+                    weaponSwitchState = WeaponSwitchState.Up;
+                }
+            }
+
+            //무기 위치 이동 연출
+            if(weaponSwitchState == WeaponSwitchState.PutDownPrevious)
+            {
+                weaponMainLocalPosition = Vector3.Lerp(defaultWeaponPosition.localPosition,
+                    downWeaponPosition.localPosition, switchingTimeFactor);
+            }
+            else if(weaponSwitchState == WeaponSwitchState.PutUpNew)
+            {
+                weaponMainLocalPosition = Vector3.Lerp(downWeaponPosition.localPosition,
+                    defaultWeaponPosition.localPosition, switchingTimeFactor);
+            }
+        }
+
         //무기 장착(WeaponController를 가지고 있는 프리팹 -> weaponSlots)
         private bool AddWeapon(WeaponController weaponPrefab)
         {
@@ -186,8 +275,8 @@ namespace Unity.FPS.Gameplay
             if (newWeaponIndex < 0 || newWeaponIndex >= weaponSlots.Length)
                 return;
 
-            weaponSwitchNewWeaponIndex = newWeaponIndex;
-            weaponSwitchTimeStarted = Time.time;
+            weaponSwitchNewWeaponIndex = newWeaponIndex;        //교체할 무기 인덱스 저장
+            weaponSwitchTimeStarted = Time.time;                //교체 시작하는 시간을 저장
 
             if(GetAcitveWeapon() == null)
             {

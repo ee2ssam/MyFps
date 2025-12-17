@@ -1,7 +1,19 @@
 using UnityEngine;
+using System;
 
 namespace Unity.FPS.Game
 {
+    /// <summary>
+    /// 크로스헤어 데이터 직렬화 구조체
+    /// </summary>
+    [Serializable]
+    public struct CrosshairData
+    {
+        public Sprite CrossHairSprite;
+        public float CorssHairSize;
+        public Color CrossHairColor;
+    }
+
     /// <summary>
     /// 총기류 무기를 관리하는 클래스
     /// </summary>
@@ -17,6 +29,10 @@ namespace Unity.FPS.Game
 
         //무기 교체 효과음
         public AudioClip switchWeaponSfx;
+
+        //크로스헤어 - 기본
+        public CrosshairData defalutCrossHair;      //평상시의 크로스 헤어
+        public CrosshairData targetInSightCrossHair;         //적이 타겟팅 되었을때
         #endregion
 
         #region Property

@@ -135,6 +135,33 @@ namespace Unity.FPS.Gameplay
             return false;
         }
 
+        //무기 교체 인풋: -1, 1, 0 반환
+        public int GetSwitchWeaponInput()
+        {
+            if(CanProcessInput())
+            {
+                if(Input.GetAxis(GameConstants.k_MouseAxisNameScrollWheel) > 0f)
+                {
+                    return -1;
+                }
+                else if (Input.GetAxis(GameConstants.k_MouseAxisNameScrollWheel) < 0f)
+                {
+                    return 1;
+                }
+                else if (Input.GetAxis(GameConstants.k_AxisNameNextWeapon) > 0f)
+                {
+                    return 1;
+                }
+                else if (Input.GetAxis(GameConstants.k_AxisNameNextWeapon) < 0f)
+                {
+                    return -1;
+                }
+            }
+
+            return 0;
+        }
+
+
         
     }
 }
