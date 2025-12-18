@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using Unity.FPS.Game;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
 
 namespace Unity.FPS.Gameplay
 {
@@ -52,11 +51,17 @@ namespace Unity.FPS.Gameplay
         private float weaponSwitchTimeStarted = 0f;        //무기 교체 시작 시간
         [SerializeField]
         private float weaponSwitchDelay = 1f;               //무기 교체 딜레이
+
+        //적 포착
+        public Camera weaponCamera;                         //무기 전용 카메라
         #endregion
 
         #region Property
         //무기 슬롯(weaponSlots)을 관리하는 인덱스
         public int ActiveWeaponIndex { get; private set; }
+
+        //적 포착 여부
+        public bool IsPointigAtEnemy { get; private set; }
         #endregion
 
         #region Unity Event Method
@@ -86,6 +91,9 @@ namespace Unity.FPS.Gameplay
 
         private void Update()
         {
+            //현재 들고 있는 무기 가져오기
+            WeaponController activeWeapon = GetAcitveWeapon();
+
             //Weapon Input 처리
             if(weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down)
             {
@@ -95,6 +103,21 @@ namespace Unity.FPS.Gameplay
                 {
                     bool isSwitchUp = swithWeaponIndex > 0f;
                     SwitchWeapon(isSwitchUp);
+                }
+            }
+
+            //적 포착 체크
+            IsPointigAtEnemy = false;
+            if(activeWeapon)
+            {
+                if(Physics.Raycast(weaponCamera.transform.position, weaponCamera.transform.forward,
+                    out RaycastHit hit, 100f))
+                {
+                    Health enemyHealth = hit.collider.GetComponentInParent<Health>();
+                    if (enemyHealth != null)
+                    {
+                        IsPointigAtEnemy = true;
+                    }
                 }
             }
         }
@@ -137,6 +160,7 @@ namespace Unity.FPS.Gameplay
 
                     ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
                     WeaponController newWeaponController = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
+                    //무기 교체시 등록된 함수를 호출
                     onSwitchToWeapon?.Invoke(newWeaponController);
 
                     //무기 연출
