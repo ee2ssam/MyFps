@@ -1,5 +1,8 @@
 namespace Unity.FPS.Game
 {
+    /// <summary>
+    /// 인풋 매니저 파라미터 이름 정의
+    /// </summary>
     public class GameConstants
     {
         // all the constant string used across the game

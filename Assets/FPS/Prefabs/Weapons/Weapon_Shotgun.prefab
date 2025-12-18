@@ -153,6 +153,8 @@ MonoBehaviour:
     CrossHairSprite: {fileID: 21300000, guid: cfff8463f6d5d06489946a01a2948c7b, type: 3}
     CorssHairSize: 30
     CrossHairColor: {r: 0.11342516, g: 0.6735911, b: 0.9748427, a: 1}
+  aimZoomRatio: 0.7
+  aimOffset: {x: 0, y: 0.13, z: 0}
 --- !u!82 &8090847488450120274
 AudioSource:
   m_ObjectHideFlags: 0
