@@ -66,15 +66,23 @@ namespace Unity.FPS.Gameplay
 
         //흔들림
         [Header("Weapon Bob")]
-        [SerializeField] private float bobFrequecy = 10f;                   //m_WeaponBobFactor의 Lerp 계수
-        [SerializeField] private float bobSharpness = 10f;
+        [SerializeField] private float bobFrequecy = 10f;                   //Sin곡선의 속도 계수
+        [SerializeField] private float bobSharpness = 10f;                  //m_WeaponBobFactor의 Lerp 계수
         [SerializeField] private float defalutBobAmount = 0.05f;             //기본 흔들림 량
         [SerializeField] private float aimingBobAmount = 0.02f;              //조준시 흔들림 량
 
         private float m_WeaponBobFactor;        //이동 속도에 따른 흔들림 계수
-        private Vector3 m_LastCharacterPosition;    //현재 프레임에서의 캐릭터 위치
+        private Vector3 m_LastCharacterPosition;    //바로 이전 프레임에서의 캐릭터 위치
 
         private Vector3 m_WeaponBobLocalPosition;   //최종으로 계산된 흔들림 량
+
+        //반동
+        [Header("Weapon Recoil")]
+        [SerializeField] private float recoilSharpness = 50f;       //뒤로 밀리는 속도 계수
+        private float maxRecoilDistance = 0.5f;                     //뒤로 밀리는 최대거리
+        private float recoilRspositionSharpness = 10f;              //제자리로 돌아오는 속도 계수
+                
+        private Vector3 weaponRecoilLocalPosition;  //최종으로 계산된 반동 량
         #endregion
 
         #region Property
@@ -125,8 +133,14 @@ namespace Unity.FPS.Gameplay
             //무기 조준 인풋 처리
             IsAiming = inputHandler.GetAimInputHeld();
 
+            //발사 인풋 처리
+            activeWeapon.HandleShootInputs(
+                inputHandler.GetFireInputDown(),
+                inputHandler.GetFireInputHeld(),
+                inputHandler.GetCrouchInputReleased());
+
             //Weapon 교체 Input 처리
-            if(IsAiming == false
+            if (IsAiming == false
                 && (weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down))
             {
                 //무기 교체 인풋
@@ -226,7 +240,14 @@ namespace Unity.FPS.Gameplay
                 m_WeaponBobFactor = Mathf.Lerp(m_WeaponBobFactor, characterMovementFactor,
                     bobSharpness * Time.deltaTime);
 
+                //흔들림 량 계산
+                float bobAmount = IsAiming ? aimingBobAmount : defalutBobAmount;
+                float hBobValue = Mathf.Sin(Time.time * bobFrequecy) * bobAmount * m_WeaponBobFactor;
+                float vBobValue = ((Mathf.Sin(Time.time * bobFrequecy * 2) * 0.5f) + 0.5f)
+                    * bobAmount * m_WeaponBobFactor;
 
+                m_WeaponBobLocalPosition.x = hBobValue;
+                m_WeaponBobLocalPosition.y = vBobValue;
 
                 //현재 프레임에서의 캐릭터 위치 저장
                 m_LastCharacterPosition = playerCharacterController.transform.position;

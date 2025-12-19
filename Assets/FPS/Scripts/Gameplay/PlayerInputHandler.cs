@@ -20,6 +20,9 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Used to flip the horizontal input axis")]
         public bool InvertXAxis = false;
 
+        //파이어 버튼 상태 저장
+        private bool wasFireInputHeld;
+
 
         void Start()
         {   
@@ -29,7 +32,9 @@ namespace Unity.FPS.Gameplay
 
         void LateUpdate()
         {
-            
+
+            //파이어 버튼 상태 저장
+            wasFireInputHeld = GetFireInputHeld();
         }
 
         public bool CanProcessInput()
@@ -171,6 +176,40 @@ namespace Unity.FPS.Gameplay
 
             return false;
         }
+
+        //방아쇠를 누르기 시작할때
+        public bool GetFireInputDown()
+        {
+            if (CanProcessInput())
+            {
+                return GetFireInputHeld() && !wasFireInputHeld;
+            }
+
+            return false;
+        }
+
+        //방아쇠에서 손을 뗄때
+        public bool GetFireInputReleased()
+        {
+            if (CanProcessInput())
+            {
+                return !GetFireInputHeld() && wasFireInputHeld;
+            }
+
+            return false;
+        }
+
+        //방아쇠를 누르고 있는중
+        public bool GetFireInputHeld()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetButton(GameConstants.k_ButtonNameFire);
+            }
+
+            return false;
+        }
+
         
     }
 }
