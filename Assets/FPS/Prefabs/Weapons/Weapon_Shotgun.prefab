@@ -161,6 +161,8 @@ MonoBehaviour:
   weaponMuzzle: {fileID: 8334323006752503713}
   muzzleFlashPrefab: {fileID: 748781637555137343, guid: 4f5d4e5eaa0e5104791549cea3dc3f23, type: 3}
   shootSfx: {fileID: 8300000, guid: b5c58f7b23e4cd44db4e63325646e650, type: 3}
+  recoilForec: 0.5
+  prejectilePrefab: {fileID: 3402518218971502544, guid: f05c7e6fbbfbe824388456bb4abff9d4, type: 3}
 --- !u!82 &8090847488450120274
 AudioSource:
   m_ObjectHideFlags: 0

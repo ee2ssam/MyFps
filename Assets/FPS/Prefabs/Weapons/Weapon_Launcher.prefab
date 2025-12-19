@@ -59,12 +59,16 @@ MonoBehaviour:
     CrossHairColor: {r: 0.35870656, g: 0.7610062, b: 0.016751762, a: 1}
   aimZoomRatio: 0.8
   aimOffset: {x: 0, y: 0, z: 0}
-  shootType: 2
+  shootType: 0
   maxAmmo: 4
   delayBeteenShots: 0.5
-  weaponMuzzle: {fileID: 0}
+  weaponMuzzle: {fileID: 2749496858225023403}
   muzzleFlashPrefab: {fileID: 0}
   shootSfx: {fileID: 8300000, guid: 42980290264b4d744a662d54d837ecdb, type: 3}
+  recoilForec: 0.5
+  prejectilePrefab: {fileID: 4346021353870538952, guid: 0e23901b938cf4f4eb86850d912715eb, type: 3}
+  bulletsPerShot: 1
+  bulletSpreadAngle: 0
 --- !u!82 &7583640433812654122
 AudioSource:
   m_ObjectHideFlags: 0

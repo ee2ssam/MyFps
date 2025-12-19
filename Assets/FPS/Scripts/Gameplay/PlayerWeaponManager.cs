@@ -79,9 +79,10 @@ namespace Unity.FPS.Gameplay
         //반동
         [Header("Weapon Recoil")]
         [SerializeField] private float recoilSharpness = 50f;       //뒤로 밀리는 속도 계수
-        private float maxRecoilDistance = 0.5f;                     //뒤로 밀리는 최대거리
-        private float recoilRspositionSharpness = 10f;              //제자리로 돌아오는 속도 계수
-                
+        [SerializeField] private float maxRecoilDistance = 0.5f;         //뒤로 밀리는 최대거리
+        [SerializeField] private float recoilRspositionSharpness = 10f;  //제자리로 돌아오는 속도 계수
+        private Vector3 accumulateRecoil;           //뒤로 밀리는 량(Vector3)
+
         private Vector3 weaponRecoilLocalPosition;  //최종으로 계산된 반동 량
         #endregion
 
@@ -134,10 +135,17 @@ namespace Unity.FPS.Gameplay
             IsAiming = inputHandler.GetAimInputHeld();
 
             //발사 인풋 처리
-            activeWeapon.HandleShootInputs(
+            bool isFire = activeWeapon.HandleShootInputs(
                 inputHandler.GetFireInputDown(),
                 inputHandler.GetFireInputHeld(),
                 inputHandler.GetCrouchInputReleased());
+
+            //반동 효과: 밀리는 량 계산
+            if (isFire)
+            {
+                accumulateRecoil += Vector3.back * activeWeapon.recoilForec;
+                accumulateRecoil = Vector3.ClampMagnitude(accumulateRecoil, maxRecoilDistance);
+            }
 
             //Weapon 교체 Input 처리
             if (IsAiming == false
@@ -170,16 +178,33 @@ namespace Unity.FPS.Gameplay
 
         private void LateUpdate()
         {
+            UpdateWeaponRecoil();
             UpdateWeaponAiming();
             UpdateWeaponBob();
             UpdateWeaponSwitching();
 
             //무기 위치 최종 연산값을 적용
-            weaponParentSocrket.localPosition = weaponMainLocalPosition + m_WeaponBobLocalPosition;
+            weaponParentSocrket.localPosition = weaponMainLocalPosition + m_WeaponBobLocalPosition + weaponRecoilLocalPosition;
         }
         #endregion
 
         #region Custom Method
+        //무기 반동 연출
+        private void UpdateWeaponRecoil()
+        {            
+            if(weaponRecoilLocalPosition.z > accumulateRecoil.z * 0.99f)    //뒤로 밀린다
+            {
+                weaponRecoilLocalPosition = Vector3.Lerp(weaponRecoilLocalPosition,
+                    accumulateRecoil, recoilSharpness * Time.deltaTime);
+            } 
+            else //제자리로 돌아간다
+            {
+                weaponRecoilLocalPosition = Vector3.Lerp(weaponRecoilLocalPosition,
+                    Vector3.zero, recoilRspositionSharpness * Time.deltaTime);
+                accumulateRecoil = weaponRecoilLocalPosition;
+            }
+        }
+
         //카메라 FOV 셋팅
         private void SetFov(float fov)
         {
