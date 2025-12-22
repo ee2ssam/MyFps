@@ -25,6 +25,7 @@ namespace Unity.FPS.Game
         //발사체 발사하는 순간 호출
         public void Shoot(WeaponController weaponController)
         {
+            //속성값 셋팅
             Owner = weaponController.Owner;
             InitialPosition = transform.position;
             InitialDirection = transform.forward;

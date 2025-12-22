@@ -176,8 +176,9 @@ namespace Unity.FPS.Game
 
             for (int i = 0; i < bulletsPerShotFinal; i++)
             {
+                Vector3 shotDirection = GetShotDirectionWithInSpread(weaponMuzzle);
                 ProjectileBase objectProjectile = Instantiate(prejectilePrefab, weaponMuzzle.position,
-                    Quaternion.identity);
+                    Quaternion.LookRotation(shotDirection));
                 objectProjectile.Shoot(this);
             }
 
@@ -198,6 +199,13 @@ namespace Unity.FPS.Game
 
             //슛 타임 저장
             lastTimeShot = Time.time;
+        }
+
+        //발사체가 퍼져 나가는 랜덤한 방향 구하기
+        private Vector3 GetShotDirectionWithInSpread(Transform shootTransform)
+        {
+            float spreadAngleRatio = bulletSpreadAngle / 180f;
+            return Vector3.Slerp(shootTransform.forward, UnityEngine.Random.insideUnitSphere, spreadAngleRatio);
         }
         #endregion
     }

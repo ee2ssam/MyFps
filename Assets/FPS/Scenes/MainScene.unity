@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 522214044}
   - component: {fileID: 522214043}
   - component: {fileID: 522214042}
+  - component: {fileID: 522214047}
   m_Layer: 0
   m_Name: Eemey_Cube
   m_TagString: Untagged
@@ -370,6 +371,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522214047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522214041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06c76c180258e354daad90232a5414b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &567189782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5037,6 +5050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8073978906825032892}
   - component: {fileID: 8073978906825032893}
+  - component: {fileID: 8073978906825032894}
   m_Layer: 5
   m_Name: GameHUD
   m_TagString: Untagged
@@ -5326,6 +5340,20 @@ MonoBehaviour:
     CrossHairSprite: {fileID: 0}
     CorssHairSize: 0
     CrossHairColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &8073978906825032894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5790203944389090552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13af46f2a2075c94980543643d7c1c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoPanel: {fileID: 8596418510904582542}
+  ammoCountPrefab: {fileID: 645032500860478885, guid: fb727941cbd15634c86dc7769f0e8fde, type: 3}
 --- !u!114 &8118132282568604719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5408,6 +5436,13 @@ MonoBehaviour:
   defaultFov: 60
   weaponFovMulitplier: 1
   aimingAnimationSpeed: 10
+  bobFrequecy: 10
+  bobSharpness: 10
+  defalutBobAmount: 0.05
+  aimingBobAmount: 0.02
+  recoilSharpness: 50
+  maxRecoilDistance: 0.5
+  recoilRspositionSharpness: 10
 --- !u!4 &8528395496428365225
 Transform:
   m_ObjectHideFlags: 0

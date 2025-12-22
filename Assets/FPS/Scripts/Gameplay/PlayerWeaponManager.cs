@@ -369,6 +369,8 @@ namespace Unity.FPS.Gameplay
                     //셋팅한 무기를 슬롯에 추가
                     weaponSlots[i] = weaponInstance;
 
+
+
                     return true;
                 }
             }
