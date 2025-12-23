@@ -39,6 +39,8 @@ namespace Unity.FPS.Gameplay
 
         //무기 교체        
         public UnityAction<WeaponController> onSwitchToWeapon;  //무기 교체시 등록된 함수를 호출
+        public UnityAction<WeaponController, int> onAddedWeapon; //무기 추가시 등록된 함수를 호출
+        public UnityAction<WeaponController, int> onRemovedWeapon; //무기 제거시 등록된 함수 호출
 
         private WeaponSwitchState weaponSwitchState;    //교체 상태
 
@@ -369,7 +371,8 @@ namespace Unity.FPS.Gameplay
                     //셋팅한 무기를 슬롯에 추가
                     weaponSlots[i] = weaponInstance;
 
-
+                    //무기 추가시 등록된 함수 호출
+                    onAddedWeapon?.Invoke(weaponInstance, i);
 
                     return true;
                 }

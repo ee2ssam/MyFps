@@ -30,7 +30,17 @@ namespace Unity.FPS.UI
 
         private void Start()
         {
-            
+            WeaponController activeWapon = playerWeaponManager.GetAcitveWeapon();
+            if (activeWapon != null)
+            {
+                AddWeapon(activeWapon, playerWeaponManager.ActiveWeaponIndex);
+                SwitchWeapon(activeWapon);
+            }
+
+            //무기 관련 이벤트 함수 등록
+            playerWeaponManager.onAddedWeapon += AddWeapon;
+            playerWeaponManager.onRemovedWeapon += RemoveWeapon;
+            playerWeaponManager.onSwitchToWeapon += SwitchWeapon;
         }
         #endregion
 
@@ -38,9 +48,12 @@ namespace Unity.FPS.UI
         //무기 추가시 UI 추가
         public void AddWeapon(WeaponController newWeapon, int weaponIndex)
         {
+            //Ammo UI 생성하여 추가
             GameObject ammoCounterInstance = Instantiate(ammoCountPrefab, ammoPanel);
             AmmoCounter ammoCounter = ammoCounterInstance.GetComponent<AmmoCounter>();
-
+            //Ammo UI 초기화
+            ammoCounter.Initialize(newWeapon, weaponIndex);
+            //리스트 추가
             ammoCounters.Add(ammoCounter);
         }
 
@@ -66,6 +79,11 @@ namespace Unity.FPS.UI
         }
 
         //액티브 무기 교체시 UI도 변경
+        public void SwitchWeapon(WeaponController weapon)
+        {
+            //액티브 무기 변경 적용, UI를 강제로 다시 갱신
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(ammoPanel);
+        }
         #endregion
     }
 }

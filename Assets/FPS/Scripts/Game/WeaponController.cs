@@ -83,6 +83,8 @@ namespace Unity.FPS.Game
         public bool IsWeaponActive { get; private set; }    //무기 활성화 여부, true 이면 현재 들고 있는 무기
         public Vector3 MuzzleWorldVelocity { get; private set; }    //이번 프레임에서의 총구 속도
         public float CurrentCharge { get; private set; }        //현재 충전 량
+
+        public float CurrentAmmoRatio => currentAmmo / maxAmmo; //Ammo 게이지바 율
         #endregion
 
         #region Unity Event Method
