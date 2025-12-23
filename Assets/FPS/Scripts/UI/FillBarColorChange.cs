@@ -41,11 +41,23 @@ namespace Unity.FPS.UI
         public void UpdateVisual(float currentRaito)
         {
             //평상시, 풀찰때, emptyValue이하로 떨어질때
+            if(currentRaito == fullValue && currentRaito != m_WasValue)
+            {
+                foregroundImage.color = flashForgroundColorFull;
+            }
+            else if(currentRaito < emptyValue)
+            {
+                backgroundIamge.color = flashBackgroundColorEmpty;
+            }
+            else
+            {
+                foregroundImage.color = Color.Lerp(foregroundImage.color, defaultForegroundColor,
+                    Time.deltaTime * colorChangeSharpness);
+                backgroundIamge.color = Color.Lerp(backgroundIamge.color, defaultBackgroundColor,
+                    Time.deltaTime * colorChangeSharpness);
+            }
 
-
-
-
-
+            //
             m_WasValue = currentRaito;
         }
         #endregion

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2225486910712267856}
   - component: {fileID: 8050500475010048900}
+  - component: {fileID: 7056692150715653027}
   - component: {fileID: 7583640433812654122}
   m_Layer: 7
   m_Name: Weapon_Launcher
@@ -59,7 +60,7 @@ MonoBehaviour:
     CrossHairColor: {r: 0.35870656, g: 0.7610062, b: 0.016751762, a: 1}
   aimZoomRatio: 0.8
   aimOffset: {x: 0, y: 0, z: 0}
-  shootType: 0
+  shootType: 2
   maxAmmo: 4
   delayBeteenShots: 0.5
   weaponMuzzle: {fileID: 2749496858225023403}
@@ -69,6 +70,19 @@ MonoBehaviour:
   prejectilePrefab: {fileID: 4346021353870538952, guid: 0e23901b938cf4f4eb86850d912715eb, type: 3}
   bulletsPerShot: 1
   bulletSpreadAngle: 0
+  lastChargeTriggerTimestamp: 0
+--- !u!114 &7056692150715653027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225486910712267859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4961801076fdd7c4584e7f1cb6bf4652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &7583640433812654122
 AudioSource:
   m_ObjectHideFlags: 0

@@ -140,7 +140,7 @@ namespace Unity.FPS.Gameplay
             bool isFire = activeWeapon.HandleShootInputs(
                 inputHandler.GetFireInputDown(),
                 inputHandler.GetFireInputHeld(),
-                inputHandler.GetCrouchInputReleased());
+                inputHandler.GetFireInputReleased());
 
             //반동 효과: 밀리는 량 계산
             if (isFire)
