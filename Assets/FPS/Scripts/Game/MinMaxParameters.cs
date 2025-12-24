@@ -11,8 +11,8 @@ namespace Unity.FPS.Game
     [Serializable]
     public struct MinMaxFloat
     {
-        public float Min;           //0
-        public float Max;           //1
+        public float Min;           //a: 0
+        public float Max;           //b: 1
 
         public float GetValueFromRatio(float ratio)
         {

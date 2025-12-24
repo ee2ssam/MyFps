@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 106790115311484949}
   - component: {fileID: 106790115311484954}
   - component: {fileID: 4346021353870538952}
+  - component: {fileID: 3388193311135603623}
   m_Layer: 0
   m_Name: Projectile_Disc
   m_TagString: Untagged
@@ -100,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b03767836f11164d8b92ccf351af24a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLifeTime: 5
   speed: 30
   root: {fileID: 106790115311484948}
   tip: {fileID: 106790115311484948}
@@ -112,6 +114,25 @@ MonoBehaviour:
   impactVfxLifeTime: 5
   impactVfxSpanwOffset: 0.1
   impactSfxClip: {fileID: 8300000, guid: ecfe17dc8e8d5e541afa5f2432f96d1d, type: 3}
+--- !u!114 &3388193311135603623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106790115311484953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410010261ccd1834d9dbd96ea3591a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chargingObejct: {fileID: 106790115311484953}
+  scale:
+    Min: {x: 0, y: 0, z: 0}
+    Max: {x: 0, y: 0, z: 0}
+  color:
+    Min: {r: 0.66805655, g: 1.7411011, b: 0.44666988, a: 1}
+    Max: {r: 0.17782933, g: 2.490439, b: 0, a: 1}
 --- !u!1 &1945832826066038730
 GameObject:
   m_ObjectHideFlags: 0

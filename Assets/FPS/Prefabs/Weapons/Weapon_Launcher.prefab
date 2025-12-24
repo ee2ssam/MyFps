@@ -83,6 +83,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4961801076fdd7c4584e7f1cb6bf4652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charingObject: {fileID: 2990922162098100103}
+  spiningFrame: {fileID: 2990922162098100101}
+  scale:
+    Min: {x: 0.01, y: 0.01, z: 0.01}
+    Max: {x: 1, y: 1, z: 1}
+  diskOrbitParticlePrefab: {fileID: 1087039822203223203, guid: b9cf7bff98404174d83a37d58c543aa5, type: 3}
+  offset: {x: 0, y: 0, z: 0.764}
+  parentTransform: {fileID: 0}
+  orbitY:
+    Min: 3.1416
+    Max: 12.5664
+  radius:
+    Min: {x: 0.5, y: 0.5, z: 0.5}
+    Max: {x: 1.5, y: 1.5, z: 1.5}
+  spiningSpeed:
+    Min: 50
+    Max: 1500
+  chargeSfx: {fileID: 8300000, guid: 26a072f463523e242822aeff5c6a756a, type: 3}
+  loopChargeWeaponSfx: {fileID: 8300000, guid: 13eab1ac5fad95c4f871de8af486b4b0, type: 3}
+  fadeLoopDuration: 0.5
+  useProceduralPitchOnLoop: 0
+  maxProceduralPitchValue: 2
 --- !u!82 &7583640433812654122
 AudioSource:
   m_ObjectHideFlags: 0
