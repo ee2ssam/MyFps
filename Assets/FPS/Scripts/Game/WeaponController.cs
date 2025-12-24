@@ -95,6 +95,11 @@ namespace Unity.FPS.Game
         //ShootType - Charge:
         public bool IsCharging { get; private set; }
         public float CurrentCharge { get; private set; }        //현재 충전 량
+
+        //재장전 - Reload
+        [SerializeField] private bool automaticRelaod = true;   //재장전 자동/수동
+        [SerializeField] private float ammoReloadRate = 1f;     //재장전 속도 (초당 재장전 량)
+        [SerializeField] private float ammoReloadDelay = 2f;    //발사후 딜레이 시간 이후 재장전
         #endregion
 
         #region Unity Event Method
@@ -115,7 +120,7 @@ namespace Unity.FPS.Game
         private void Update()
         {
             UpdateCharge(); //충전 처리
-            UpdateAmmo();   //Ammo Ratio 처리
+            UpdateAmmo();   //Ammo 처리
 
             //이번 프레임에서의 총구 속도 계산
             if (Time.deltaTime > 0f)
@@ -165,10 +170,11 @@ namespace Unity.FPS.Game
             }
         }
 
-        //Ammo Ratio 처리
+        //Ammo 처리
         private void UpdateAmmo()
         {
-            if(maxAmmo == 0 || maxAmmo == Mathf.Infinity)
+            //Ammo Ratio 처리
+            if (maxAmmo == 0 || maxAmmo == Mathf.Infinity)
             {
                 CurrentAmmoRatio = 1f;
             }
@@ -176,6 +182,26 @@ namespace Unity.FPS.Game
             {
                 CurrentAmmoRatio = currentAmmo / maxAmmo;
             }
+
+            //재장전 처리 - 자동
+            if(automaticRelaod && currentAmmo < maxAmmo && IsCharging == false
+                && lastTimeShot + ammoReloadDelay < Time.time )
+            {
+                //초당 ammoReloadRate만큼 충전
+                currentAmmo += ammoReloadDelay * Time.deltaTime;
+                currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
+            }
+        }
+
+        //재장전 - 수동
+        public void Reload()
+        {
+            if (automaticRelaod || IsCharging == true)
+                return;
+
+            currentAmmo = maxAmmo;
+
+            //충전에 따른 비용 처리
         }
 
         //무기 교체 - show: 활성화, 비활성
@@ -274,7 +300,6 @@ namespace Unity.FPS.Game
             if(currentAmmo >= 1f && lastTimeShot + delayBeteenShots <= Time.time)
             {
                 currentAmmo -= 1f;
-                Debug.Log($"currentAmmo: {currentAmmo}");
 
                 //슛 연출
                 HandleShoot();

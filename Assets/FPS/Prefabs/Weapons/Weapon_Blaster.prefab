@@ -195,6 +195,12 @@ MonoBehaviour:
   shootSfx: {fileID: 8300000, guid: 4c1de44255c65fa4586a692ae142169c, type: 3}
   recoilForec: 0.5
   prejectilePrefab: {fileID: 780735714272621290, guid: 3c6b27d949cdda749892906e1f1d1b27, type: 3}
+  bulletsPerShot: 1
+  bulletSpreadAngle: 0
+  lastChargeTriggerTimestamp: 0
+  automaticRelaod: 1
+  ammoReloadRate: 1
+  ammoReloadDelay: 2
 --- !u!82 &8090847488450120274
 AudioSource:
   m_ObjectHideFlags: 0

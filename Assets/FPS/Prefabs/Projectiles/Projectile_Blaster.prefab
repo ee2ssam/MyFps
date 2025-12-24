@@ -58,6 +58,7 @@ MonoBehaviour:
   impactVfxLifeTime: 5
   impactVfxSpanwOffset: 0.1
   impactSfxClip: {fileID: 0}
+  damage: 15
 --- !u!1 &5564024855854763701
 GameObject:
   m_ObjectHideFlags: 0

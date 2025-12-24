@@ -15,29 +15,31 @@ namespace Unity.FPS.Gameplay
         [SerializeField] private float maxLifeTime = 5f;
 
         //이동
-        [SerializeField] private float speed = 20f;
+        public float speed = 20f;
         public Transform root;                          //발사체 오브젝트의 기준점
         public Transform tip;                           //발사체의 맨 앞 기준점
 
         private Vector3 lastRootPosition;               //이전 프레임에서의 root 위치
         private Vector3 velocity;                       //속도
 
-        [SerializeField] private float gravityDown = 0f;    //중력 계산값
+        public float gravityDown = 0f;    //중력 계산값
 
         //충돌
-        [SerializeField] private float radius = 0.01f;     //충돌 체크 범위 (구의 반경)
+        public float radius = 0.01f;     //충돌 체크 범위 (구의 반경)
 
         public LayerMask HittableLayers = -1;               //충돌 레이어마스크
         private List<Collider> ignoredColliders;            //충돌 체크에 제외되는 충돌체 리스트
 
         //충돌 효과
-        private float damage = 10f;
-
         public GameObject impactVfxPrefab;                      //충돌 효과 vfx 이펙트 프리팹
         [SerializeField] private float impactVfxLifeTime = 5f;  //이펙트 라이프타임
         [SerializeField] private float impactVfxSpanwOffset = 0.1f; //이펙트 생성위치 조정값
 
         public AudioClip impactSfxClip;                         //충돌 효과 sfx 사운드
+
+        //데미지 량
+        public float damage = 10f;
+        private DamageArea damageArea;                          //범위 공격 객체
         #endregion
 
         #region Unity Event Method
@@ -48,7 +50,8 @@ namespace Unity.FPS.Gameplay
             //이벤트 함수 등록
             projectileBase.onShoot += OnShoot;
 
-            
+            //범위 공격 객체 가져오기
+            damageArea = GetComponent<DamageArea>();
 
             //킬 예약
             Destroy(gameObject, maxLifeTime);
@@ -144,7 +147,21 @@ namespace Unity.FPS.Gameplay
         private void OnHit(Vector3 point, Vector3 normal, Collider collider)
         {
             //데미지 처리
-
+            //범위 공격 여부 체크
+            if(damageArea)
+            {
+                //범위 공격 데미지 계산
+                damageArea.InflictDamageArea(damage, point, HittableLayers,
+                    QueryTriggerInteraction.Collide, projectileBase.Owner);
+            }
+            else
+            {
+                Damageable damageable = collider.GetComponent<Damageable>();
+                if (damageable)
+                {
+                    damageable.InflictDamage(damage, false, projectileBase.Owner);
+                }
+            }   
 
             //Vfx
             if(impactVfxPrefab)

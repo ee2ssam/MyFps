@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 106790115311484954}
   - component: {fileID: 4346021353870538952}
   - component: {fileID: 3388193311135603623}
+  - component: {fileID: 8317358389520404340}
+  - component: {fileID: -7262183367027956321}
   m_Layer: 0
   m_Name: Projectile_Disc
   m_TagString: Untagged
@@ -114,6 +116,7 @@ MonoBehaviour:
   impactVfxLifeTime: 5
   impactVfxSpanwOffset: 0.1
   impactSfxClip: {fileID: 8300000, guid: ecfe17dc8e8d5e541afa5f2432f96d1d, type: 3}
+  damage: 10
 --- !u!114 &3388193311135603623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,11 +131,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargingObejct: {fileID: 106790115311484953}
   scale:
-    Min: {x: 0, y: 0, z: 0}
-    Max: {x: 0, y: 0, z: 0}
+    Min: {x: 0.5, y: 0.5, z: 0.5}
+    Max: {x: 0.8, y: 0.8, z: 0.8}
   color:
     Min: {r: 0.66805655, g: 1.7411011, b: 0.44666988, a: 1}
     Max: {r: 0.17782933, g: 2.490439, b: 0, a: 1}
+--- !u!114 &8317358389520404340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106790115311484953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2028560c4cd1b74ab12c19528e03d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed:
+    Min: 20
+    Max: 40
+  gravityDown:
+    Min: 10
+    Max: 3
+  radius:
+    Min: 0.2
+    Max: 0.3
+  damage:
+    Min: 80
+    Max: 350
+--- !u!114 &-7262183367027956321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106790115311484953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a3713cbb0c01143936ed85154f7be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaOfEffectDistance: 5
+  damageRatioOverDistance:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.0000003746578
+      outSlope: -0.0000003746578
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.3181818
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.6141975
+      outSlope: -2.6141975
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.099173546
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1945832826066038730
 GameObject:
   m_ObjectHideFlags: 0

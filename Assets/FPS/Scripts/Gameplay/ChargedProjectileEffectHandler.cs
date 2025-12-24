@@ -28,6 +28,7 @@ namespace Unity.FPS.Gameplay
         #endregion
 
         #region Custom Method
+        //발사 순간 이펙트 값 설정
         private void OnShoot()
         {
             chargingObejct.transform.localScale = scale.GetValueFromRatio(projectileBase.InitialCharge);

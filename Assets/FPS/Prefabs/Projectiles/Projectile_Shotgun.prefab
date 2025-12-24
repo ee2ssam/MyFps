@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b03767836f11164d8b92ccf351af24a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLifeTime: 5
   speed: 150
   root: {fileID: 3659995153115176982}
   tip: {fileID: 1135791333161367127}
@@ -57,6 +58,7 @@ MonoBehaviour:
   impactVfxLifeTime: 5
   impactVfxSpanwOffset: 0.1
   impactSfxClip: {fileID: 0}
+  damage: 6
 --- !u!1 &5564024855854763701
 GameObject:
   m_ObjectHideFlags: 0
