@@ -1276,6 +1276,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8464852480473858024, guid: 424ba8d2d3f3cb448a2eeff318fd6943, type: 3}
+      propertyPath: movementSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 44c5f76f80602024e82d3e5f3af4ee97, type: 3}
+    - target: {fileID: 8464852480473858024, guid: 424ba8d2d3f3cb448a2eeff318fd6943, type: 3}
+      propertyPath: pitchMovementSpeed.Max
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464852480473858024, guid: 424ba8d2d3f3cb448a2eeff318fd6943, type: 3}
+      propertyPath: pitchMovementSpeed.Min
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
