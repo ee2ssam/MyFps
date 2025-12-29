@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Unity.FPS.Game;
+using System.Linq;
 
 namespace Unity.FPS.AI
 {
@@ -41,7 +42,85 @@ namespace Unity.FPS.AI
         //디텍팅
         public virtual void HandleTargetDetection(Actor actor, Collider[] selfColliders)
         {
+            //KnownDetectedTarget 체크
+            if(KnownDetectedTarget && IsSeeingTarget == false 
+                && (Time.time - timeLastSeenTarget) > knownTargetTimeout)
+            {
+                KnownDetectedTarget = null;
+            }
 
+            //피아 구분해서 최소 거리에 있고 DetectionRange 안에 있는 적 찾기
+            float sqrDetectionRange = detectingRange * detectingRange;
+            IsSeeingTarget = false;
+            float closestSqrDistance = Mathf.Infinity;
+
+            foreach (var otherActor in actorManager.Actors)
+            {   
+                if(otherActor.affiliation != actor.affiliation)
+                {
+                    //가장 가까운 적을 찾는다
+                    float sqrDistance = (otherActor.aimPoint.position - detectingSourcePoint.position).sqrMagnitude;
+                    if(sqrDistance < sqrDetectionRange && sqrDistance < closestSqrDistance)
+                    {
+                        RaycastHit[] hits = Physics.RaycastAll( detectingSourcePoint.position,
+                            (otherActor.aimPoint.position - detectingSourcePoint.position).normalized,
+                            detectingRange, -1, QueryTriggerInteraction.Ignore);
+
+                        //가장 가까운 충돌체 찾기
+                        RaycastHit closesHit = new RaycastHit();
+                        closesHit.distance = Mathf.Infinity;
+                        bool foundValidHit = false;             //적을 찾았는지 체크
+                        foreach (var hit in hits)
+                        {
+                            if (hit.distance < closesHit.distance
+                                && selfColliders.Contains(hit.collider) == false)
+                            {
+                                closesHit = hit;
+                                foundValidHit = true;
+                            }
+                        }
+
+                        //최소 거리에 있는 충돌체를 찾았으면 타겟 설정
+                        if (foundValidHit)
+                        {
+                            Actor hitActor = closesHit.collider.GetComponentInParent<Actor>();
+                            if(hitActor == otherActor)
+                            {
+                                IsSeeingTarget = true;
+                                closestSqrDistance = sqrDistance;
+
+                                timeLastSeenTarget = Time.time;
+                                KnownDetectedTarget = otherActor.aimPoint.gameObject;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //target을 모르고 있다가 타겟을 발견한 순간
+            if(HadKnownTarget == false && KnownDetectedTarget != null)
+            {
+                OnDetectTarget();
+            }
+
+            //target을 알고 있다가 타겟을 잃어 버린 순간
+            if(HadKnownTarget == true && KnownDetectedTarget == null)
+            {
+                OnLostTarget();
+            }
+
+            //
+            HadKnownTarget = (KnownDetectedTarget != null);
+        }
+
+        private void OnDetectTarget()
+        {
+            onDetectedTarget?.Invoke();
+        }
+
+        private void OnLostTarget()
+        {
+            onLostTarget?.Invoke();
         }
         #endregion
     }

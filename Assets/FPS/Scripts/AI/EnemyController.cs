@@ -32,6 +32,8 @@ namespace Unity.FPS.AI
         #region Variables
         //참조
         private Health health;
+        private Actor actor;
+        private Collider[] selfColliders;
 
         //데미지 효과
         public UnityAction onDamaged;           //데미지를 입었을때 등록된 함수 호출
@@ -57,6 +59,10 @@ namespace Unity.FPS.AI
         //패트롤
         private int pathDestinationNodeIndex;   //이동 목표 노드 인덱스
         [SerializeField] private float pathReachingRadius = 1f;  //도착 판정
+
+        //디텍팅
+        public UnityAction onDetectedTarget;    //디텍팅되면 등록되어 있는 함수 호출
+        public UnityAction onLostTarget;        //타겟을 읽어버리면 등록되어 있는 함수 호출
         #endregion
 
         #region Property
@@ -64,6 +70,12 @@ namespace Unity.FPS.AI
         public NavMeshAgent Agent { get; private set; }
         //패트롤 할 패스
         public PatrolPath PatrolPath { get; set; }
+
+        //디텍팅
+        public DetectionModule DetectionModule { get; private set; }
+        public GameObject KnownDetectedTarget => DetectionModule.KnownDetectedTarget;
+        public bool HadKnownTarget => DetectionModule.HadKnownTarget;
+        public bool IsSeeingTarget => DetectionModule.IsSeeingTarget;
         #endregion
 
         #region Unity Event Method
@@ -72,6 +84,11 @@ namespace Unity.FPS.AI
             //참조
             health = GetComponent<Health>();
             Agent = GetComponent<NavMeshAgent>();
+
+            actor = GetComponent<Actor>();
+            selfColliders = GetComponentsInChildren<Collider>();
+
+            DetectionModule = GetComponentInChildren<DetectionModule>();
         }
 
         private void Start()
@@ -97,6 +114,9 @@ namespace Unity.FPS.AI
 
         private void Update()
         {
+            //디텍팅
+            DetectionModule.HandleTargetDetection(actor, selfColliders);
+
             //body 메터리얼 컬러 변경
             Color currentColor = onHotBodyGradient.Evaluate((Time.time - lastTimeDamaged)/flashOnHitDuration);
             bodyFlashMaterialProperyBlock.SetColor("_EmissionColor", currentColor);
