@@ -22,12 +22,17 @@ namespace Unity.FPS.AI
 
         public UnityAction onDetectedTarget;    //적을 찾았을때 등록된 함수 호출
         public UnityAction onLostTarget;        //적을 잃어버리면 등록된 함수 호출
+
+        //Attack
+        [SerializeField] private float attackRange = 10f;
         #endregion
 
         #region Property
         public GameObject KnownDetectedTarget { get; private set; } //디텍팅되어 있는 타겟 오브젝트
         public bool HadKnownTarget { get; private set; }    //특정 시점을 찾기위한 was변수
         public bool IsSeeingTarget { get; private set; }    //타겟이 시야에 있는지 체크
+        //attack
+        public bool IsTargetInAttackRange { get; private set; } //공격 범위 여부 체크
         #endregion
 
         #region Unity Event Method
@@ -97,8 +102,12 @@ namespace Unity.FPS.AI
                 }
             }
 
+            //공격 범위 체크
+            IsTargetInAttackRange = KnownDetectedTarget != null
+                && Vector3.Distance(transform.position, KnownDetectedTarget.transform.position) <= attackRange;
+
             //target을 모르고 있다가 타겟을 발견한 순간
-            if(HadKnownTarget == false && KnownDetectedTarget != null)
+            if (HadKnownTarget == false && KnownDetectedTarget != null)
             {
                 OnDetectTarget();
             }

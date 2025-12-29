@@ -63,6 +63,19 @@ namespace Unity.FPS.AI
         //디텍팅
         public UnityAction onDetectedTarget;    //디텍팅되면 등록되어 있는 함수 호출
         public UnityAction onLostTarget;        //타겟을 읽어버리면 등록되어 있는 함수 호출
+
+        //공격
+        public UnityAction onAttack;            //공격시 등록된 함수 호출
+        private float orientSpeed = 10f;
+
+        //무기
+        public bool swapToNextWeapon = false;
+        public float delayAfterWeaponSwap = 0f;
+
+        private float lastTimeWeaponSwapped = Mathf.NegativeInfinity;
+        private int currentWeaponIndex;
+        private WeaponController currentWeapon;
+        private WeaponController[] weapons;
         #endregion
 
         #region Property
@@ -76,6 +89,7 @@ namespace Unity.FPS.AI
         public GameObject KnownDetectedTarget => DetectionModule.KnownDetectedTarget;
         public bool HadKnownTarget => DetectionModule.HadKnownTarget;
         public bool IsSeeingTarget => DetectionModule.IsSeeingTarget;
+        public bool IsTargetInAttackRange => DetectionModule.IsTargetInAttackRange;
         #endregion
 
         #region Unity Event Method
@@ -93,9 +107,18 @@ namespace Unity.FPS.AI
 
         private void Start()
         {
+            //DetectionModule 이벤트 함수 등록
+            DetectionModule.onDetectedTarget += OnDetectedTarget;
+            DetectionModule.onLostTarget += OnLostTarget;
+
             //health 이벤트 함수 등록
             health.onDamaged += OnDamaged;
             health.onDeath += OnDie;
+
+            //무장
+            FindAndInitializeAllWeapon();
+            var weapon = GetCurrentWeapon();
+            weapon.ShowWeapon(true);
 
             //bodyMaterial를 가진 렌더러 찾아 리스트 추가
             foreach (var rend in GetComponentsInChildren<Renderer>(true))
@@ -243,6 +266,89 @@ namespace Unity.FPS.AI
                     }
                 }
             }
+        }
+
+        private void OnDetectedTarget()
+        {
+            onDetectedTarget?.Invoke();    //디텍팅되면 등록되어 있는 함수 호출
+
+            //enemy의 디텍팅 연출 - eye 레드 컬러 변경
+        }
+
+        private void OnLostTarget()
+        {
+            onLostTarget?.Invoke();        //타겟을 읽어버리면 등록되어 있는 함수 호출
+
+            //enemy의 디텍팅 연출 - eye 디폴트 컬러 변경
+        }
+
+        //무기 셋팅
+        private void FindAndInitializeAllWeapon()
+        {
+            if (weapons == null)
+            {
+                weapons = GetComponentsInChildren<WeaponController>();
+                for (int i = 0; i < weapons.Length; i++)
+                {
+                    weapons[i].Owner = this.gameObject;
+                }
+            }
+        }
+
+        //현재 들고 있는 무기 셋팅
+        private void SetCurrentWeapon(int index)
+        {
+            currentWeaponIndex = index;
+            currentWeapon = weapons[currentWeaponIndex];
+            if(swapToNextWeapon)
+            {
+                lastTimeWeaponSwapped = Time.time;
+            }
+            else
+            {
+                lastTimeWeaponSwapped = Mathf.NegativeInfinity;
+            }
+        }
+
+        //현재 들고 있는 무기 반환
+        public WeaponController GetCurrentWeapon()
+        {
+            FindAndInitializeAllWeapon();
+            if(currentWeapon == null)
+            {
+                SetCurrentWeapon(0);
+            }
+
+            return currentWeapon;
+        }
+
+        //타겟를 향해 모든 무기가 바라보도록 만든다
+        public void OrientWeaponsTowards(Vector3 lookPosition)
+        {
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                Vector3 weaponForward = (lookPosition - weapons[i].transform.position).normalized;
+                weapons[i].transform.forward = weaponForward;
+            }
+        }
+
+        public bool TryAttack(Vector3 targetPosition)
+        {
+            OrientWeaponsTowards(targetPosition);
+
+            if((lastTimeWeaponSwapped + delayAfterWeaponSwap) >= Time.time)
+            {
+                return false;
+            }
+
+            bool didFire = GetCurrentWeapon().HandleShootInputs(true, false, false);
+
+            if (didFire && onAttack != null)
+            {
+                onAttack?.Invoke();
+            }
+
+            return didFire;
         }
         #endregion
     }

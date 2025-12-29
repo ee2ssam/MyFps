@@ -1424,6 +1424,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1377214803922383146, guid: 424ba8d2d3f3cb448a2eeff318fd6943, type: 3}
+      propertyPath: shootSfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 02784a17c8311624aa22f4a001528756, type: 3}
+    - target: {fileID: 1377214803922383146, guid: 424ba8d2d3f3cb448a2eeff318fd6943, type: 3}
+      propertyPath: prejectilePrefab
+      value: 
+      objectReference: {fileID: 1553111901942223318, guid: c9387256d59c80f4f9f66257031ac197, type: 3}
     - target: {fileID: 3233149843197735905, guid: 424ba8d2d3f3cb448a2eeff318fd6943, type: 3}
       propertyPath: m_Name
       value: Enemy_HoverBot
@@ -3017,6 +3025,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2729281213404769777}
+  - component: {fileID: 2729281213404769784}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -3024,6 +3033,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2729281213404769784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2729281213404769783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141813f75ca20fe47adae686a6c857a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2729281213596062134
 PrefabInstance:
   m_ObjectHideFlags: 0

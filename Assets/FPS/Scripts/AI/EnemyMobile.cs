@@ -29,8 +29,16 @@ namespace Unity.FPS.AI
         public AudioClip movementSound;         //이동 사운드 소스
         public MinMaxFloat pitchMovementSpeed;  //이동속도에 따른 재생 속도 최소,최대값
 
+        //디텍트
+        public ParticleSystem[] onDetectedVfx;
+        public AudioClip onDetectedSfx;
+
         //애니메이터 파라미터
         private const string k_AnimOnDamagedParameter = "OnDamaged";
+        private const string k_AnimMoveSpeedParameter = "MoveSpeed";
+        private const string k_AnimAlertedParameter = "Alerted";
+        private const string k_AnimAttackParameter = "Attack";
+        private const string k_AnimDeathParameter = "Death";
         #endregion
 
         #region Property
@@ -49,6 +57,9 @@ namespace Unity.FPS.AI
         {
             //enemyController 이벤트 함수 등록
             enemyController.onDamaged += OnDamaged;
+            enemyController.onDetectedTarget += OnDetectedTarget;
+            enemyController.onLostTarget += OnLostTarget;
+            enemyController.onAttack += OnAttack;
 
             //초기화
             AiState = AIState.Patrol;
@@ -61,6 +72,12 @@ namespace Unity.FPS.AI
         {
             //AI 상태 구현
             UpdateAiState();
+            UpdateAiStateTransitions();
+
+            //이동속도에 따른 애니, 사운드 연출
+            float moveSpeed = enemyController.Agent.velocity.magnitude;
+            animator.SetFloat(k_AnimMoveSpeedParameter, moveSpeed);
+            audioSource.pitch = pitchMovementSpeed.GetValueFromRatio(moveSpeed/enemyController.Agent.speed);
         }
         #endregion
 
@@ -76,9 +93,36 @@ namespace Unity.FPS.AI
                     break;
 
                 case AIState.Follow:
+                    enemyController.SetNavDestination(enemyController.KnownDetectedTarget.transform.position);
                     break;
 
                 case AIState.Attack:
+                    enemyController.TryAttack(enemyController.KnownDetectedTarget.transform.position);
+                    break;
+            }
+        }
+
+        //AI 상태 전환
+        private void UpdateAiStateTransitions()
+        {
+            switch (AiState)
+            {
+                case AIState.Patrol:
+                    break;
+
+                case AIState.Follow:
+                    if(enemyController.IsSeeingTarget && enemyController.IsTargetInAttackRange)
+                    {
+                        AiState = AIState.Attack;
+                        enemyController.SetNavDestination(transform.position);
+                    }
+                    break;
+
+                case AIState.Attack:
+                    if (enemyController.IsTargetInAttackRange == false)
+                    {
+                        AiState = AIState.Follow;
+                    }
                     break;
             }
         }
@@ -95,6 +139,54 @@ namespace Unity.FPS.AI
 
             //애니메이터
             animator.SetTrigger(k_AnimOnDamagedParameter);
+        }
+
+        private void OnDetectedTarget()
+        {
+            //상태 변경
+            if(AiState == AIState.Patrol)
+            {
+                AiState = AIState.Follow;
+            }
+
+            //Vfx
+            for (int i = 0; i < onDetectedVfx.Length; i++)
+            {
+                onDetectedVfx[i].Play();
+            }
+
+            //Sfx
+            if(onDetectedSfx)
+            {
+                AudioUtility.CreatSFX(onDetectedSfx, transform.position, 1f);
+            }
+
+            //애니메이션
+            animator.SetBool(k_AnimAlertedParameter, true);
+        }
+
+        private void OnLostTarget()
+        {
+            //상태 변경
+            if (AiState == AIState.Follow || AiState == AIState.Attack)
+            {
+                AiState = AIState.Patrol;
+            }
+
+            //Vfx
+            for (int i = 0; i < onDetectedVfx.Length; i++)
+            {
+                onDetectedVfx[i].Stop();
+            }
+
+            //애니메이션
+            animator.SetBool(k_AnimAlertedParameter, false);
+        }
+
+        private void OnAttack()
+        {
+            //애니메이션
+            animator.SetTrigger(k_AnimAttackParameter);
         }
         #endregion
     }
