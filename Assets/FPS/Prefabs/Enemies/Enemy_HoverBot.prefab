@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 4251763107625635750}
   - component: {fileID: 4844771570425105690}
   - component: {fileID: 4073601639866682055}
+  - component: {fileID: 8510178037210775267}
+  - component: {fileID: 5806463481478211318}
   - component: {fileID: 2396199060422527798}
   m_Layer: 0
   m_Name: Enemy_HoverBot
@@ -121,6 +123,7 @@ MonoBehaviour:
   damageSfx: {fileID: 8300000, guid: 1e14946d0e470c247a6c15c36e0744ca, type: 3}
   deathVfxPrefab: {fileID: 8950624839484268180, guid: 2a8f5052fe50f7b41b17149abb0f7414, type: 3}
   deathVfxSpawnPosition: {fileID: 3632986063801220720}
+  pathReachingRadius: 1
 --- !u!114 &8464852480473858024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +142,10 @@ MonoBehaviour:
   - {fileID: 8733863868845061032}
   - {fileID: 5297132826653583942}
   - {fileID: 5052009285170829610}
+  movementSound: {fileID: 8300000, guid: 44c5f76f80602024e82d3e5f3af4ee97, type: 3}
+  pitchMovementSpeed:
+    Min: 0.1
+    Max: 2
 --- !u!114 &4251763107625635750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +187,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c76c180258e354daad90232a5414b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8510178037210775267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3233149843197735905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b338adb07f0fb534ca65f2bc4f822dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affiliation: 0
+  aimPoint: {fileID: 3632986063801220720}
+--- !u!195 &5806463481478211318
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3233149843197735905}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 720
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!82 &2396199060422527798
 AudioSource:
   m_ObjectHideFlags: 0
@@ -784,6 +827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3945222175499381949}
+  - component: {fileID: 3397660898590619807}
   m_Layer: 0
   m_Name: DetectionModule
   m_TagString: Untagged
@@ -806,6 +850,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3233149843197735917}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3397660898590619807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7013745491809113944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ea403eb28bb23409fb7e3669dd04ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7844559239388257163
 GameObject:
   m_ObjectHideFlags: 0

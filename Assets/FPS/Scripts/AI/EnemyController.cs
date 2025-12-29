@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using Unity.FPS.Game;
 using System;
@@ -52,6 +53,17 @@ namespace Unity.FPS.AI
         //죽음 효과
         public GameObject deathVfxPrefab;           //죽음 효과 폭발 VFX
         public Transform deathVfxSpawnPosition;     //VFX 스폰 위치
+
+        //패트롤
+        private int pathDestinationNodeIndex;   //이동 목표 노드 인덱스
+        [SerializeField] private float pathReachingRadius = 1f;  //도착 판정
+        #endregion
+
+        #region Property
+        //패트롤
+        public NavMeshAgent Agent { get; private set; }
+        //패트롤 할 패스
+        public PatrolPath PatrolPath { get; set; }
         #endregion
 
         #region Unity Event Method
@@ -59,6 +71,7 @@ namespace Unity.FPS.AI
         {
             //참조
             health = GetComponent<Health>();
+            Agent = GetComponent<NavMeshAgent>();
         }
 
         private void Start()
@@ -127,6 +140,89 @@ namespace Unity.FPS.AI
                 Quaternion.identity);
             Destroy(effectGo, 5);
 
+        }
+
+        //패트롤 패트 유효 체크
+        public bool IsPathVaild()
+        {
+            return PatrolPath && PatrolPath.PathNodes.Count > 0;
+        }
+
+        //목표 지점 초기화
+        public void ResetPathDestination()
+        {
+            pathDestinationNodeIndex = 0;
+        }
+
+        //가장 가까운 노드 찾아서 목표 노드로 셋팅
+        public void SetPathDestinationToClosestNode()
+        {
+            //패스 체크
+            if(IsPathVaild())
+            {
+                int closestPathNodeIndex = 0;
+                for(int i = 0; i < PatrolPath.PathNodes.Count; i++)
+                {
+                    float distanceToNode = PatrolPath.GetDistanceToNode(transform.position, i);
+                    if(distanceToNode < PatrolPath.GetDistanceToNode(transform.position, closestPathNodeIndex))
+                    {
+                        closestPathNodeIndex = i;
+                    }
+                }
+                pathDestinationNodeIndex = closestPathNodeIndex;
+            }
+            else
+            {
+                pathDestinationNodeIndex = 0;
+            }
+        }
+
+        //이동 목표 위치 반환
+        public Vector3 GetDestinationOnPath()
+        {
+            //패스 체크
+            if (IsPathVaild())
+            {
+                return PatrolPath.GetPositionOfPathNode(pathDestinationNodeIndex);
+            }
+            else
+            {
+                return transform.position;
+            }
+        }
+
+        //Agent 목표지점 설정
+        public void SetNavDestination(Vector3 destination)
+        {
+            //Agent 체크
+            if (Agent)
+            {
+                Agent.SetDestination(destination);
+            }
+        }
+
+        //패트롤
+        public void UpdatePathDestination(bool inverseOrder = false)
+        {
+            //패스 체크
+            if (IsPathVaild())
+            {
+                //도착 판정후 다음 노드 지정
+                float distance = (transform.position - GetDestinationOnPath()).magnitude;
+                if(distance < pathReachingRadius)
+                {
+                    pathDestinationNodeIndex = inverseOrder ?
+                        (pathDestinationNodeIndex - 1) : (pathDestinationNodeIndex + 1);
+                    if(pathDestinationNodeIndex < 0)
+                    {
+                        pathDestinationNodeIndex += PatrolPath.PathNodes.Count;
+                    }
+                    if(pathDestinationNodeIndex >= PatrolPath.PathNodes.Count)
+                    {
+                        pathDestinationNodeIndex -= PatrolPath.PathNodes.Count;
+                    }
+                }
+            }
         }
         #endregion
     }
