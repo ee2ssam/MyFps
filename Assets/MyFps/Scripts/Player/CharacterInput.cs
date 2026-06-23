@@ -14,6 +14,9 @@ namespace MyFps
 
         //이동 입력 값 - wasd
         private Vector2 move;
+
+        //마우스 입력값 - 마우스 위치 
+        private Vector2 look;
         #endregion
 
         #region Property
@@ -21,6 +24,12 @@ namespace MyFps
         {
             get { return move; }
             private set { move = value; }
+        }
+
+        public Vector2 Look
+        {
+            get { return look; }
+            private set { look = value; }
         }
         #endregion
 
@@ -49,6 +58,8 @@ namespace MyFps
         {
             //wasd 입력값 처리 : 인스턴스이름.액션맵이름.액션이름.ReadValue
             Move = inputActions.Player.Move.ReadValue<Vector2>();
+            Look = inputActions.Player.Look.ReadValue<Vector2>();
+
         }
         #endregion
 

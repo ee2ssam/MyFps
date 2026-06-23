@@ -18,7 +18,7 @@ namespace MyFps
         [SerializeField] private float sprintSpeed = 7f;    //뛰는 속도
         private float moveSpeed;                            //이동 속도
 
-        //
+        //점프
         #endregion
 
         #region Unity Event Method
@@ -45,10 +45,17 @@ namespace MyFps
             if (input.Move == Vector2.zero)
                 moveSpeed = 0f;
 
-            //방향
+            //인풋에서 방향값 얻어오기
+            Vector3 inputDirection = Vector3.zero;
 
+            //플레이어의 로컬 방향 구하기
+            if (input.Move != Vector2.zero)
+            {
+                inputDirection = transform.right * input.Move.x + transform.forward * input.Move.y;
+            }
 
             //이동 : 방향 * Time.deltatime * speed
+            controller.Move(inputDirection.normalized * Time.deltaTime * moveSpeed);
         }
         #endregion
 
