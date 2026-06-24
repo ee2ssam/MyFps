@@ -14,9 +14,13 @@ namespace MyFps
 
         //이동 입력 값 - wasd
         private Vector2 move;
+        [SerializeField] private bool isSprint;
 
         //마우스 입력값 - 마우스 위치 
         private Vector2 look;
+
+        //점프
+        [SerializeField] private bool isJump;
         #endregion
 
         #region Property
@@ -26,10 +30,22 @@ namespace MyFps
             private set { move = value; }
         }
 
+        public bool IsSprint
+        {
+            get { return isSprint; }
+            private set { isSprint = value; }
+        }
+
         public Vector2 Look
         {
             get { return look; }
             private set { look = value; }
+        }
+
+        public bool IsJump
+        {
+            get { return isJump; }
+            set { isJump = value; }
         }
         #endregion
 
@@ -56,10 +72,23 @@ namespace MyFps
 
         private void Update()
         {
-            //wasd 입력값 처리 : 인스턴스이름.액션맵이름.액션이름.ReadValue
+            //value 입력값 처리 : 인스턴스이름.액션맵이름.액션이름.ReadValue
             Move = inputActions.Player.Move.ReadValue<Vector2>();
             Look = inputActions.Player.Look.ReadValue<Vector2>();
 
+            //버튼 입력값 처리
+            if (inputActions.Player.Jump.WasPressedThisFrame())
+            {
+                IsJump = true;
+            }
+            if(inputActions.Player.Sprint.WasPressedThisFrame())
+            {
+                IsSprint = true;
+            }
+            else if (inputActions.Player.Sprint.WasReleasedThisFrame())
+            {
+                IsSprint = false;
+            }
         }
         #endregion
 

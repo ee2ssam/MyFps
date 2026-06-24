@@ -31,6 +31,13 @@ namespace MyFps
             input = GetComponent<CharacterInput>();
         }
 
+        private void Start()
+        {
+            //마우스 커서 초기화
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         private void LateUpdate()
         {
             //카메라 회전
