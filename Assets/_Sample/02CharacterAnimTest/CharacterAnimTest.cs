@@ -19,6 +19,10 @@ namespace MySample
         [SerializeField] private bool isMove;
         [SerializeField] private bool isRun;
 
+        [SerializeField] private float walkSpeed = 4f;
+        [SerializeField] private float runSpeed = 7f;
+        private float moveSpeed = 0f;
+
         //애니 파라미터 스트링
         private string isMoving = "IsMove";
         private string isRunning = "IsRun";
