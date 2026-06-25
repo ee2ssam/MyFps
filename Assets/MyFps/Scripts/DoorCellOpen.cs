@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 namespace MyFps
@@ -13,10 +15,23 @@ namespace MyFps
         #region Variables
         //UI 오브젝트
         public GameObject actionUI;
+        public GameObject extraCross;
+        public TextMeshProUGUI actionText;
 
         private Collider doorCollider;
         private Mouse mouse;
-        private bool isMouseOverDoor = false;
+
+        private bool mouseOverDoor = false;         //현재 상태
+        private bool wasMouseOverDoor = false;      //이전 상태
+
+        //인터랙브 액션
+        public InputActionReference interactAction;
+        public string action = "action Text";       //인터랙티브 액션 내용
+
+        public Animator animator;
+        private string isOpen = "IsOpen";
+
+        public AudioSource audioSource;
         #endregion
 
         #region Unity Event Method
@@ -32,6 +47,12 @@ namespace MyFps
         private void OnEnable()
         {
             mouse = Mouse.current;
+            interactAction.action.Enable();
+        }
+
+        private void OnDisable()
+        {
+            interactAction.action.Disable();
         }
 
         private void Update()
@@ -42,7 +63,7 @@ namespace MyFps
             if (PlayerCasting.DistanceFromTarget > 2f)
             {
                 HideActionUI();
-                isMouseOverDoor = false;
+                wasMouseOverDoor = false;
                 return;
             }
 
@@ -51,30 +72,57 @@ namespace MyFps
             bool hitDoor = Physics.Raycast(ray, out RaycastHit hit);
 
             // 이 오브젝트의 collider를 맞았는지 확인
-            bool mouseOverDoor = hitDoor && hit.collider.gameObject == gameObject;
+            mouseOverDoor = hitDoor && hit.collider.gameObject == gameObject;
 
             // 상태 변화 감지            
-            if (mouseOverDoor && !isMouseOverDoor)
+            if (mouseOverDoor != wasMouseOverDoor)
             {
-                // 마우스가 들어옴
-                ShowActionUI();
-                isMouseOverDoor = true;
+                if(mouseOverDoor)
+                {
+                    // 마우스가 들어옴
+                    ShowActionUI();
+                }
+                else
+                {
+                    // 마우스가 나감
+                    HideActionUI();
+                }
             }
-            else if (!mouseOverDoor && isMouseOverDoor)
+
+            if(mouseOverDoor && interactAction.action.WasPressedThisFrame())
             {
-                // 마우스가 나감
-                HideActionUI();
-                isMouseOverDoor = false;
+                DoAction();
             }
+
+            //was 상태 저장
+            wasMouseOverDoor = mouseOverDoor;
         }
         #endregion
 
         #region Custom Method
+        void DoAction()
+        {
+            //인터랙티브 액션 - open the door
+            animator.SetBool(isOpen, true);
+
+            //사운드 플레이, AudioSource null 체크
+            if (audioSource)
+            {
+                audioSource.Play();
+            }
+
+            //초기화
+            HideActionUI();
+            doorCollider.enabled = false;
+        }
+
         void ShowActionUI()
         {
             if (actionUI != null)
             {
                 actionUI.SetActive(true);
+                extraCross.SetActive(true);
+                actionText.text = action;
             }
         }
 
@@ -83,6 +131,8 @@ namespace MyFps
             if (actionUI != null)
             {
                 actionUI.SetActive(false);
+                extraCross.SetActive(false);
+                actionText.text = "";
             }
         }
         #endregion
