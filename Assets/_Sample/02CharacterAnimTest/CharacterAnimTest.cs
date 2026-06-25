@@ -21,11 +21,14 @@ namespace MySample
 
         [SerializeField] private float walkSpeed = 4f;
         [SerializeField] private float runSpeed = 7f;
-        private float moveSpeed = 0f;
+        [SerializeField] private float moveSpeed = 0f;
+
+        [SerializeField] private float accelerationSpeed = 0.1f;  //가속도
 
         //애니 파라미터 스트링
         private string isMoving = "IsMove";
         private string isRunning = "IsRun";
+        private string velocity = "Velocity";
 
         //인풋 액션
         public InputActionReference moveAction;
@@ -50,6 +53,16 @@ namespace MySample
             {
                 isRun = value;
                 animator.SetBool(isRunning, value);
+            }
+        }
+
+        public float MoveSpeed
+        {
+            get { return moveSpeed; }
+            private set
+            {
+                moveSpeed = value;
+                animator.SetFloat(velocity, value);
             }
         }
         #endregion
@@ -89,6 +102,46 @@ namespace MySample
             else if (sprintAction.action.WasReleasedThisFrame())
             {
                 IsRun = false;
+            }
+
+            //이동 속도 처리
+            if (IsMove && !IsRun)
+            {
+                if (MoveSpeed > walkSpeed)
+                {
+                    MoveSpeed -= accelerationSpeed;
+                    if (MoveSpeed <= walkSpeed)
+                    {
+                        MoveSpeed = walkSpeed;
+                    }
+                }
+                else
+                {
+                    MoveSpeed += accelerationSpeed;
+                    if (MoveSpeed >= walkSpeed)
+                    {
+                        MoveSpeed = walkSpeed;
+                    }
+                }
+            }
+            else if (IsMove && IsRun) //뛰기
+            {
+                MoveSpeed += accelerationSpeed;
+                if (MoveSpeed >= runSpeed)
+                {
+                    MoveSpeed = runSpeed;
+                }
+            }
+            else
+            {
+                if (MoveSpeed > 0f)
+                {
+                    MoveSpeed -= accelerationSpeed;
+                    if (MoveSpeed <= 0f)
+                    {
+                        MoveSpeed = 0f;
+                    }
+                }
             }
         }
         #endregion

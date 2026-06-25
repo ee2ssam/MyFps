@@ -1972,7 +1972,7 @@ Animator:
   m_GameObject: {fileID: 3996054841924650416}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c59c33c888bc7284291267b21d744cc7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 16416878b7c95a940b8fcb0bd817c497, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2000,8 +2000,10 @@ MonoBehaviour:
   isRun: 0
   walkSpeed: 4
   runSpeed: 7
+  moveSpeed: 0
+  accelerationSpeed: 0.01
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  sprintAction: {fileID: 0}
+  sprintAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!4 &4421718562040210091
 Transform:
   m_ObjectHideFlags: 0
