@@ -15,8 +15,8 @@ namespace MyFps
         public Image img;               //페이더 이미지
         public AnimationCurve curve;    //페이드 효과를 위한 커브 값 적용
 
-        public bool isFadeIn = false;    //시작시 페이드 효과를 자동으로 적용할지 여부
-        public float delayTime = 0f;     //페이더 시작전 딜레이 타임
+        [SerializeField] private bool isFadeIn = false;     //시작시 페이드 효과를 자동으로 적용할지 여부
+        [SerializeField] float delayTime = 0f;              //페이더 시작전 딜레이 타임
         #endregion
 
         #region Unity Methods

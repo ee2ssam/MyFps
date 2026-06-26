@@ -19,10 +19,9 @@ namespace MyFps
         public TextMeshProUGUI actionText;
 
         private Collider doorCollider;
-        private Mouse mouse;
 
-        private bool mouseOverDoor = false;         //현재 상태
-        private bool wasMouseOverDoor = false;      //이전 상태
+        private bool currentCasting = false;        //현재 캐스팅 상태
+        private bool wasCasting = false;            //이전 캐스팅 상태
 
         //인터랙브 액션
         public InputActionReference interactAction;
@@ -45,8 +44,7 @@ namespace MyFps
         }
 
         private void OnEnable()
-        {
-            mouse = Mouse.current;
+        {            
             interactAction.action.Enable();
         }
 
@@ -57,45 +55,36 @@ namespace MyFps
 
         private void Update()
         {
-            if (mouse == null) return;
-
             //플레이어의 캐스팅 거리가 체크
             if (PlayerCasting.DistanceFromTarget > 2f)
             {
                 HideActionUI();
-                wasMouseOverDoor = false;
+                wasCasting = false;
                 return;
             }
 
-            // 마우스 위치에서 raycast 수행
-            Ray ray = Camera.main.ScreenPointToRay(mouse.position.ReadValue());
-            bool hitDoor = Physics.Raycast(ray, out RaycastHit hit);
+            // 이 오브젝트의 캐스팅한 오브젝트인 체크
+            currentCasting = PlayerCasting.CastGameObject != null && PlayerCasting.CastGameObject == this.gameObject;
 
-            // 이 오브젝트의 collider를 맞았는지 확인
-            mouseOverDoor = hitDoor && hit.collider.gameObject == gameObject;
-
-            // 상태 변화 감지            
-            if (mouseOverDoor != wasMouseOverDoor)
+            // 상태 변화 감지: 경계
+            if (currentCasting != wasCasting && currentCasting == true)  
             {
-                if(mouseOverDoor)
-                {
-                    // 마우스가 들어옴
-                    ShowActionUI();
-                }
-                else
-                {
-                    // 마우스가 나감
-                    HideActionUI();
-                }
+                //캐스팅하고 있지 않다가 캐스팅을 시작할때
+                ShowActionUI();
+            }
+            else if (currentCasting != wasCasting && currentCasting == false)
+            {
+                //캐스팅 하고 있다가 캐스팅을 놓치는것을 시작할때
+                HideActionUI();
             }
 
-            if(mouseOverDoor && interactAction.action.WasPressedThisFrame())
+            if (currentCasting && interactAction.action.WasPressedThisFrame())
             {
                 DoAction();
             }
 
             //was 상태 저장
-            wasMouseOverDoor = mouseOverDoor;
+            wasCasting = currentCasting;
         }
         #endregion
 
