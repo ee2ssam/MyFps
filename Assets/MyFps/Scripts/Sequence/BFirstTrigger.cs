@@ -4,6 +4,10 @@ using TMPro;
 
 namespace MyFps
 {
+    /// <summary>
+    /// 첫번째 복도끝 시퀀스 트리거 구현
+    /// 시퀀스 내용 : 무기발견 연출 구현
+    /// </summary>
     public class BFirstTrigger : MonoBehaviour
     {
         #region Variables
@@ -18,8 +22,7 @@ namespace MyFps
             //플레이어 체크
             if (other.gameObject.tag != "Player")
                 return;
-
-            Debug.Log($"OnTriggerEnter: {other.gameObject.name}");
+            
             StartCoroutine(SequencePlay(other.gameObject));
 
             //트리거 제거
