@@ -14,6 +14,9 @@ namespace MyFps
         public Animator twoDoorAnimator;
         public GameObject robot;
 
+        public AudioSource doorBang;
+        public AudioSource jumpScare;
+
         private string isOpen = "IsOpen";
         #endregion
 
@@ -37,17 +40,33 @@ namespace MyFps
         IEnumerator SequencePlay(GameObject player)
         {
             //-플레이 캐릭터 비활성화(플레이 멈춤)
-            //문 열기
-            //적 활성화
-            //이번 프레임 딜레이
+            //문 열기(애니메이션)
+            //문 여는 사운드
+            //적 활성화            
+
+            //1초 딜레이
+            //Enemy 등장 사운드
+            //Enemy가 문이 완전히 열리면 타겟(플레이어)를 향해 걷는다
+
             //-플레이 캐릭터 활성화(다시 플레이)
 
             player.SetActive(false);
 
             twoDoorAnimator.SetBool(isOpen, true);
+            doorBang.Play();
+
             robot.SetActive(true);
 
-            yield return null; //이번 프레임에만 지연, 다음 프레임에서 진행
+            yield return new WaitForSeconds(1f);
+            //yield return null; //이번 프레임에만 지연, 다음 프레임에서 진행
+
+            jumpScare.Play();            
+            Robot enemyRobot = robot.GetComponent<Robot>();
+            if(enemyRobot != null)
+            {
+                enemyRobot.ChangeState(RobotState.R_Walk);
+            }
+
             player.SetActive(true);
         }
         #endregion
