@@ -23,6 +23,7 @@ namespace MyFps
         //참조
         private Animator animator;
         private Transform thePlayer;
+        private Player player;
 
         //로봇의 상태 (enum)
         [SerializeField] private RobotState currentState;    //현재 상태
@@ -34,8 +35,9 @@ namespace MyFps
         //공격
         [SerializeField] private float attakRange = 1.5f;   //공격 범위
         [SerializeField] private float attackDamage = 5f;   //공격력
-        [SerializeField] private float attackTimer = 2f;
-        private float countdown = 0f;
+
+        //[SerializeField] private float attackTimer = 2f;
+        //private float countdown = 0f;
 
         //체력
         [SerializeField] private float maxHealth = 20f;
@@ -51,10 +53,10 @@ namespace MyFps
         {
             //참조
             animator = GetComponent<Animator>();
-            PlayerMove playerMove = FindFirstObjectByType<PlayerMove>();
-            if (playerMove != null)
+            player = FindFirstObjectByType<Player>();
+            if (player != null)
             {
-                thePlayer = FindFirstObjectByType<PlayerMove>().transform;
+                thePlayer = player.transform;
             }
         }
 
@@ -67,7 +69,7 @@ namespace MyFps
 
         private void Update()
         {
-            //죽음 체크
+            //적의 죽음 체크
             if(isDeath)
             {
                 return;
@@ -76,11 +78,17 @@ namespace MyFps
             //타겟 체크
             if(thePlayer == null)
             {
-                PlayerMove playerMove = FindFirstObjectByType<PlayerMove>();
-                if (playerMove != null)
+                player = FindFirstObjectByType<Player>();
+                if (player != null)
                 {
-                    thePlayer = FindFirstObjectByType<PlayerMove>().transform;
+                    thePlayer = player.transform;
                 }
+                return;
+            }
+
+            //플레이어 죽음 체크
+            if(player.IsDeath)
+            {
                 return;
             }
 
@@ -113,7 +121,7 @@ namespace MyFps
                     break;
 
                 case RobotState.R_Attack:   //일정거리안에 들어오면 공격한다
-                    //공격 타이머
+                    /*//공격 타이머
                     countdown += Time.deltaTime;
                     if(countdown >= attackTimer)
                     {
@@ -122,7 +130,7 @@ namespace MyFps
 
                         //타이머 초기화
                         countdown = 0f;
-                    }
+                    }*/
 
                     //타겟을 바라본다
                     transform.LookAt(thePlayer);

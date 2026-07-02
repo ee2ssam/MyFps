@@ -16,6 +16,7 @@ namespace MyFps
 
         public AudioSource doorBang;
         public AudioSource jumpScare;
+        public AudioSource bgm01;
 
         private string isOpen = "IsOpen";
         #endregion
@@ -40,6 +41,8 @@ namespace MyFps
         IEnumerator SequencePlay(GameObject player)
         {
             //-플레이 캐릭터 비활성화(플레이 멈춤)
+            //배경음 정지
+
             //문 열기(애니메이션)
             //문 여는 사운드
             //적 활성화            
@@ -51,6 +54,8 @@ namespace MyFps
             //-플레이 캐릭터 활성화(다시 플레이)
 
             player.SetActive(false);
+
+            bgm01.Stop();
 
             twoDoorAnimator.SetBool(isOpen, true);
             doorBang.Play();

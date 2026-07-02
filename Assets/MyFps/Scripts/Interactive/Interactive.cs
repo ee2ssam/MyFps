@@ -1,59 +1,47 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 namespace MyFps
 {
     /// <summary>
-    /// 플레이어와 인터랙티브 기능 구현
+    /// 인터랙티브한 오브젝트를 관리하는 클래스들의 부모 추상 클래스
+    /// 인터랙티브의 공통 기능을 모아서 구현
     /// 가까이 가서 crosshair 캐스팅하면 액션 UI 보여준다
-    /// 액션 : 문을 연다
+    /// 액션 키를 누르면 액션을 실행한다
     /// </summary>
-    public class DoorCellOpen : MonoBehaviour
+    public abstract class Interactive : MonoBehaviour
     {
+        //추상메서드 - 구현하도록 강제하는 기능 정의
+        #region abstract
+        protected abstract void DoAction();
+        #endregion
+
         #region Variables
+        [Header("Interative UI")]
         //UI 오브젝트
         public GameObject actionUI;
         public GameObject extraCross;
         public TextMeshProUGUI actionText;
-
-        private Collider doorCollider;
-
-        private bool currentCasting = false;        //현재 캐스팅 상태
-        private bool wasCasting = false;            //이전 캐스팅 상태
-
-        //인터랙브 액션
-        public InputActionReference interactAction;
         public string action = "action Text";       //인터랙티브 액션 내용
 
-        public Animator animator;
-        private string isOpen = "IsOpen";
-
-        public AudioSource audioSource;
+        [Header("Interative Input")]     //헤더 특성
+        public InputActionReference interactAction;
+        
+        //오브젝트 캐스팅
+        protected Collider castCollider;
+        protected bool currentCasting = false;        //현재 캐스팅 상태
+        protected bool wasCasting = false;            //이전 캐스팅 상태
         #endregion
 
         #region Unity Event Method
-        private void Awake()
+        protected virtual void Awake()
         {
-            doorCollider = GetComponent<Collider>();
-            if (doorCollider == null)
-            {
-                Debug.LogError("DoorCellOpen: Collider component not found!");
-            }
+            //참조
+            castCollider = GetComponent<Collider>();
         }
 
-        private void OnEnable()
-        {            
-            interactAction.action.Enable();
-        }
-
-        private void OnDisable()
-        {
-            interactAction.action.Disable();
-        }
-
-        private void Update()
+        protected virtual void Update()
         {
             //플레이어의 캐스팅 거리가 체크
             if (PlayerCasting.DistanceFromTarget > 2f)
@@ -67,7 +55,7 @@ namespace MyFps
             currentCasting = PlayerCasting.CastGameObject != null && PlayerCasting.CastGameObject == this.gameObject;
 
             // 상태 변화 감지: 경계
-            if (currentCasting != wasCasting && currentCasting == true)  
+            if (currentCasting != wasCasting && currentCasting == true)
             {
                 //캐스팅하고 있지 않다가 캐스팅을 시작할때
                 ShowActionUI();
@@ -81,6 +69,7 @@ namespace MyFps
             if (currentCasting && interactAction.action.WasPressedThisFrame())
             {
                 DoAction();
+                HideActionUI();
             }
 
             //was 상태 저장
@@ -88,24 +77,9 @@ namespace MyFps
         }
         #endregion
 
-        #region Custom Method
-        void DoAction()
-        {
-            //인터랙티브 액션 - open the door
-            animator.SetBool(isOpen, true);
 
-            //사운드 플레이, AudioSource null 체크
-            if (audioSource)
-            {
-                audioSource.Play();
-            }
-
-            //초기화
-            HideActionUI();
-            doorCollider.enabled = false;
-        }
-
-        void ShowActionUI()
+        #region Custom Method        
+        protected virtual void ShowActionUI()
         {
             if (actionUI != null)
             {
@@ -115,7 +89,7 @@ namespace MyFps
             }
         }
 
-        void HideActionUI()
+        protected virtual void HideActionUI()
         {
             if (actionUI != null)
             {
@@ -127,3 +101,12 @@ namespace MyFps
         #endregion
     }
 }
+
+
+/*
+인터랙티브 기능
+1. 게임오브젝트 제어 : 문 열기
+2. 아이템 획득 : 권총 획득
+public class PikcupItem : Interactive
+public class PikcupPistol : PickupItem
+*/

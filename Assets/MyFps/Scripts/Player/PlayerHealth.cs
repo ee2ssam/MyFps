@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MyFps
 {
@@ -13,6 +14,16 @@ namespace MyFps
         private float currentHealth;
 
         private bool isDeath = false;
+
+        //데미지 입을때 등록된 함수 호출하는 이벤트 함수
+        public UnityAction<float> onDamaged;
+        //죽었을때 등록된 함수 호출 이벤트 함수
+        public UnityAction onDie;
+        #endregion
+
+        #region Properties
+        public float CurrentHealth => currentHealth;
+        public bool IsDeath => isDeath;
         #endregion
 
         #region Unity Event Method
@@ -27,8 +38,14 @@ namespace MyFps
         //데미지 입기
         public void TakeDamage(float damage)
         {
+            if (isDeath)
+                return;
+
             currentHealth -= damage;
-            Debug.Log($"{gameObject.name} currentHealth: {currentHealth}");
+            //Debug.Log($"{gameObject.name} currentHealth: {currentHealth}");
+
+            //데미지 입을때 등록된 함수 호출
+            onDamaged?.Invoke(damage);
 
             //데미지 효과 처리(VFX, SFX)
 
@@ -44,10 +61,13 @@ namespace MyFps
         {
             isDeath = true;
 
+            //죽었을때 등록된 함수 호출
+            onDie?.Invoke();
+
             //죽음 처리 (VFX, SFX, 보상처리)
 
             //게임오버
-            Debug.Log("GameOver!!!");
+            //Debug.Log("GameOver!!!");
         }
         #endregion
     }
