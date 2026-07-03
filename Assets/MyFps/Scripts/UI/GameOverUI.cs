@@ -28,7 +28,8 @@ namespace MyFps
 
         public void MainMenu()
         {
-            Debug.Log("Goto MainMenu");
+            //Debug.Log("Goto MainMenu");
+            fader.FadeTo(loadToScene);
         }
         #endregion
     }

@@ -62,7 +62,8 @@ namespace MyFps
 
         public void MainMenu()
         {
-            Debug.Log($"Goto {loadToScene}");
+            Time.timeScale = 1f;
+            fader.FadeTo(loadToScene);
         }
         #endregion
 

@@ -7,7 +7,7 @@ namespace MyFps
     /// 두번째 문앞 시퀀스 트리거
     /// 문이 열리고 문 뒤에 있는 적이 활성화 된다
     /// </summary>
-    public class CSecondTrigger : MonoBehaviour
+    public class CSecondTrigger : SequenceTrigger
     {
         #region Variables
         //연출
@@ -21,24 +21,12 @@ namespace MyFps
         private string isOpen = "IsOpen";
         #endregion
 
-        #region Unity Event Method
-        private void OnTriggerEnter(Collider other)
-        {
-            //플레이어 체크
-            if (other.gameObject.tag != "Player")
-                return;
-
-            Debug.Log($"OnTriggerEnter: {other.gameObject.name}");
-            StartCoroutine(SequencePlay(other.gameObject));
-
-            //트리거 제거
-            transform.GetComponent<BoxCollider>().enabled = false;
-        }
+        #region Unity Event Method        
         #endregion
 
         #region Custom Method
         //연출 내용
-        IEnumerator SequencePlay(GameObject player)
+        protected override IEnumerator SequencePlay(GameObject player)
         {
             //-플레이 캐릭터 비활성화(플레이 멈춤)
             //배경음 정지
