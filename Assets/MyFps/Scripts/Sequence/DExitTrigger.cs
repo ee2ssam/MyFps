@@ -29,7 +29,7 @@ namespace MyFps
             //- 다음씬(PlayScene02)으로 이동
 
             twoDoorAnimator.SetBool(isOpen, true);
-            jumpScare.Stop();
+            AudioManager.Instance.StopBgm();
 
             //씬 클리어 처리...
 

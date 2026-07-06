@@ -14,5 +14,5 @@ namespace MyFps
             base.Awake();
             DontDestroyOnLoad(this.gameObject);
         }
-}
+    }
 }

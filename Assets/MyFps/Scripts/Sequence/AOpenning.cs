@@ -39,6 +39,8 @@ namespace MyFps
             //4. 2초후에 시나리오 텍스트 없어진다
             //5.플레이 캐릭터 활성화
 
+            AudioManager.Instance.PlayBgm("Bgm01");
+
             thePlayer.SetActive(false);
             fader.FadeStart(3f);
 

@@ -15,10 +15,6 @@ namespace MyFps
         //데미지 효과
         public GameObject damagedFlash;
 
-        public AudioSource hurt01;
-        public AudioSource hurt02;
-        public AudioSource hurt03;
-
         //죽음 처리
         public GameObject gameOverUI;
         #endregion
@@ -74,15 +70,16 @@ namespace MyFps
             int hurtNumber = Random.Range(1, 4);
             if(hurtNumber == 1)
             {
-                hurt01.Play();
+                AudioManager.Instance.Play("Hurt01");
+
             }
             else if (hurtNumber == 2)
             {
-                hurt02.Play();
+                AudioManager.Instance.Play("Hurt02");
             }
             else
             {
-                hurt03.Play();
+                AudioManager.Instance.Play("Hurt03");
             }
 
             yield return new WaitForSeconds(1f);

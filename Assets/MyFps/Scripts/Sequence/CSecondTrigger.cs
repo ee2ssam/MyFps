@@ -15,8 +15,8 @@ namespace MyFps
         public GameObject robot;
 
         public AudioSource doorBang;
-        public AudioSource jumpScare;
-        public AudioSource bgm01;
+        //public AudioSource jumpScare;
+        //public AudioSource bgm01;
 
         private string isOpen = "IsOpen";
         #endregion
@@ -43,7 +43,7 @@ namespace MyFps
 
             player.SetActive(false);
 
-            bgm01.Stop();
+            AudioManager.Instance.StopBgm();
 
             twoDoorAnimator.SetBool(isOpen, true);
             doorBang.Play();
@@ -53,7 +53,9 @@ namespace MyFps
             yield return new WaitForSeconds(1f);
             //yield return null; //이번 프레임에만 지연, 다음 프레임에서 진행
 
-            jumpScare.Play();            
+            //jumpScare.Play();            
+            AudioManager.Instance.PlayBgm("Bgm02");
+
             Robot enemyRobot = robot.GetComponent<Robot>();
             if(enemyRobot != null)
             {
