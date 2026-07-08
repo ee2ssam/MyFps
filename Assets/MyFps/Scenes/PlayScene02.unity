@@ -3801,6 +3801,7 @@ GameObject:
   - component: {fileID: 445270479}
   - component: {fileID: 445270481}
   - component: {fileID: 445270480}
+  - component: {fileID: 445270482}
   m_Layer: 0
   m_Name: BreakableObject
   m_TagString: Untagged
@@ -3837,6 +3838,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc66c76b9a2291544acd2a2bdbe211d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BreakableObject
+  fakeObejct: {fileID: 1805233710418723}
+  breakObject: {fileID: 1020699186516932012}
+  breakSound: {fileID: 445270482}
+  health: 1
+  hiddenItemPrefab: {fileID: 3949794271223646688, guid: 610af6796e7e89a4e806be863548c364, type: 3}
+  offset: {x: 0, y: 0.7, z: 0}
+  isUnbreakable: 0
 --- !u!65 &445270481
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3858,6 +3866,103 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8, y: 0.9, z: 0.8}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!82 &445270482
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445270478}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: f4845a68fae56da4f9991eae557ffc7b, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &447709553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5405,6 +5510,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3613753648313706070, guid: 9dd231edeab55bf4aac45bc6fddd064f, type: 3}
   m_PrefabInstance: {fileID: 665343910}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1428200877 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4457255621768552822, guid: 9dd231edeab55bf4aac45bc6fddd064f, type: 3}
+  m_PrefabInstance: {fileID: 665343910}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078378bdb813462418da3f6afaad09f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyFps.Door
 --- !u!1 &1428508518
 GameObject:
   m_ObjectHideFlags: 0
@@ -6143,6 +6259,10 @@ PrefabInstance:
     - target: {fileID: 1994593013310838864, guid: bdbf6f22517269046b7d1c525c74f0f4, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4994007159812795172, guid: bdbf6f22517269046b7d1c525c74f0f4, type: 3}
+      propertyPath: sensivity
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5448891018580310474, guid: bdbf6f22517269046b7d1c525c74f0f4, type: 3}
       propertyPath: m_IsActive
@@ -7993,6 +8113,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 898192135}
     m_Modifications:
+    - target: {fileID: 2284535719167762131, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1428200877}
+    - target: {fileID: 2284535719167762131, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: action
+      value: Open The Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 2284535719167762131, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: actionUI
+      value: 
+      objectReference: {fileID: 1623398848}
+    - target: {fileID: 2284535719167762131, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: actionText
+      value: 
+      objectReference: {fileID: 745492668}
+    - target: {fileID: 2284535719167762131, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: extraCross
+      value: 
+      objectReference: {fileID: 2139378662}
+    - target: {fileID: 2284535719167762131, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: interactAction
+      value: 
+      objectReference: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 5639379952885089810, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: m_Size.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639379952885089810, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: m_Size.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639379952885089810, guid: eb99b9f14519f1243909268a77f24965, type: 3}
+      propertyPath: m_Size.z
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5978891912088186599, guid: eb99b9f14519f1243909268a77f24965, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5
