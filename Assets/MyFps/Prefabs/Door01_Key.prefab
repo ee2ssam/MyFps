@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1337386489643164523}
   - component: {fileID: 7093459146739742117}
   m_Layer: 0
-  m_Name: TheKey
+  m_Name: Door01_Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,6 +70,7 @@ MonoBehaviour:
   floatAmplitude: 0.25
   floatFrequency: 0.5
   rotationSpeed: {x: 0, y: 45, z: 0}
+  puzzleItem: 1
 --- !u!1001 &5092466327248967015
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -67,7 +67,7 @@ namespace MyFps
             }
 
             if (currentCasting && interactAction.action.WasPressedThisFrame())
-            {
+            {                
                 DoAction();
                 HideActionUI();
             }

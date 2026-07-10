@@ -15,6 +15,9 @@ namespace MyFps
         public Renderer renderer;
         public Material closeMaterial;
         private Material originMaterial;
+
+        //열쇠 필요 여부 : PuzzleItem.None 키 필요 없을때
+        [SerializeField] private PuzzleItem doorKey = PuzzleItem.None;
         #endregion
 
         #region Unity Event Method
@@ -47,11 +50,32 @@ namespace MyFps
             if (door == null)
                 return;
 
-            StartCoroutine(Toggle());
+            if(NeedKey())
+            {
+                StartCoroutine(Toggle());
+            }
         }
         #endregion
 
         #region Custom Method
+        protected override void ShowActionUI()
+        {
+            if (actionUI != null)
+            {
+                actionUI.SetActive(true);
+                extraCross.SetActive(true);
+
+                if (NeedKey())
+                {
+                    actionText.text = action;
+                }
+                else
+                {
+                    actionText.text = "You need doorKey";
+                }
+            }
+        }
+
         IEnumerator Toggle()
         {
             //콜라이더 기능 제거
@@ -82,6 +106,22 @@ namespace MyFps
         {
             action = "Open The Door";
             renderer.material = originMaterial;
+        }
+
+        bool NeedKey()
+        {
+            bool hasKey = false;
+            //도어 키 체크
+            if (doorKey == PuzzleItem.None)
+            {
+                hasKey = true;
+            }
+            else
+            {
+                hasKey = PlayerStats.Instance.HavePuzzleItem(doorKey);
+            }
+
+            return hasKey;
         }
         #endregion
     }

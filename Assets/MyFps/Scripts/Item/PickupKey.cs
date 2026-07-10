@@ -9,12 +9,15 @@ namespace MyFps
     {
         #region Variables        
         //열쇠 퍼즐 아이템
+        [SerializeField] private PuzzleItem puzzleItem;
         #endregion
 
         #region abstract
         protected override bool OnPickup()
         {
-            //PlayerStats.Instance.AddAmmo(giveAmmo);
+            //퍼즐 아이템 줍기
+            PlayerStats.Instance.GainPuzzleItem(puzzleItem);
+
             return true;
         }
         #endregion
