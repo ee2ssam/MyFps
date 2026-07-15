@@ -23,6 +23,9 @@ namespace MyFps
 
         //애니메이터 파라미터
         private string isOpen = "IsOpen";
+
+        //적 등록 하기
+        public GunMan[] enemies;
         #endregion
 
         #region Property
@@ -62,6 +65,12 @@ namespace MyFps
 
             //문을 열때 등록되어 있는 함수 호출
             OnActivate?.Invoke();
+
+            //
+            foreach (var enemy in enemies)
+            {
+                enemy.IsDetecting = true;
+            }
         }
 
         //문 닫기
@@ -71,6 +80,11 @@ namespace MyFps
 
             //문을 닫을때 등록되어 있는 함수 호출
             OnDeActivate?.Invoke();
+
+            foreach (var enemy in enemies)
+            {
+                enemy.IsDetecting = false;
+            }
         }
         #endregion
     }
