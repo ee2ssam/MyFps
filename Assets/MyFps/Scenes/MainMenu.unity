@@ -8697,7 +8697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
   fader: {fileID: 1838461279}
-  loadToScene: PlayScene01
+  loadToScene: Intro
 --- !u!4 &1942460121
 Transform:
   m_ObjectHideFlags: 0

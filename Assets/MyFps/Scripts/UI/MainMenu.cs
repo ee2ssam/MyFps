@@ -25,6 +25,10 @@ namespace MyFps
 
             //배경음 플레이
             audioManager.PlayBgm("MenuBgm");
+
+            //마우스 커서 초기화
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         #endregion
 
