@@ -8645,7 +8645,6 @@ GameObject:
   m_Component:
   - component: {fileID: 701430636}
   - component: {fileID: 701430635}
-  - component: {fileID: 701430637}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -8685,18 +8684,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &701430637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 701430634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26e18e4fe32e51b4984488ad31b2a6a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MyFps.PlayerStats
 --- !u!1 &705335281
 GameObject:
   m_ObjectHideFlags: 0

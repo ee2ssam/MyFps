@@ -38,7 +38,7 @@ namespace MyFps
             //(I need get out of here)
             //4. 2초후에 시나리오 텍스트 없어진다
             //5.플레이 캐릭터 활성화
-
+            Debug.Log("SequencePlay");
             AudioManager.Instance.PlayBgm("Bgm01");
 
             thePlayer.SetActive(false);
