@@ -63,6 +63,9 @@ namespace MyFps
         //데미지 효과 처리(VFX, SFX)
         IEnumerator DamageEffect()
         {
+            //화면 흔들림 효과
+            CinemachineShake.Instance.ShakeCarmera();
+
             //데미지 플래시 효과
             damagedFlash.SetActive(true);
 

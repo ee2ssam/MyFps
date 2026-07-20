@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace MyFps
 {
@@ -13,12 +14,19 @@ namespace MyFps
         public Sound[] sounds;
         //현재 플레이되는 배경음 사운드 이름
         [SerializeField] private string bgmSound = "";
+
+        //사운드 볼륨 조절
+        public AudioMixer audioMixer;
         #endregion
 
         #region Unity Event Method
         protected override void Awake()
         {
             base.Awake();
+
+            //AudioMixer에서 필요한 AudioMixerGroup가져오기
+            //Master 포함 모든 자식 MixerGroup를 배열로 가져온다 Master:0, BGM:1, SFX:2
+            AudioMixerGroup[] mixerGroups = audioMixer.FindMatchingGroups("Master");
 
             //오디오 소스 셋팅
             foreach (var s in sounds)
@@ -30,6 +38,16 @@ namespace MyFps
                 s.audioSource.pitch = s.pitch;
                 s.audioSource.loop = s.loop;
                 s.audioSource.playOnAwake = s.playOnAwake;
+
+                //배경음 체크
+                if(s.audioSource.loop)
+                {
+                    s.audioSource.outputAudioMixerGroup = mixerGroups[1]; //BGM
+                }
+                else
+                {
+                    s.audioSource.outputAudioMixerGroup = mixerGroups[2]; //SFX
+                }
             }
         }
         #endregion

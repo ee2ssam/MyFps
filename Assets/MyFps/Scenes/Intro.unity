@@ -1192,6 +1192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IntroOpenning
   fader: {fileID: 723646894}
   loadToScene: PlayScene01
+  escapeAction: {fileID: -6355610398710810726, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!82 &1046785422
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1201,7 +1202,7 @@ AudioSource:
   m_GameObject: {fileID: 1046785419}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3839020660764562082, guid: cb7a211cd32449144a02b94e4987eaa5, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -2131,7 +2132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &2081162729
 Light:
   m_ObjectHideFlags: 0

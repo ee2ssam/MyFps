@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 namespace MyFps
 {
@@ -13,6 +14,9 @@ namespace MyFps
         //참조
         public SceneFader fader;
         [SerializeField] private string loadToScene = "PlayScene01";
+
+        //인트로 강제로 끝내기
+        public InputActionReference escapeAction;
         #endregion
 
         #region Unity Event Method
@@ -26,7 +30,10 @@ namespace MyFps
         private void Update()
         {
             //Esc 키를 누르면 강제로 플레이씬 가기
-
+            if(escapeAction.action.WasPressedThisFrame())
+            {
+                Exit();
+            }
         }
         #endregion
 
