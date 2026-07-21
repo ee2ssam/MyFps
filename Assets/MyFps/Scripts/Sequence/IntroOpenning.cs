@@ -14,6 +14,7 @@ namespace MyFps
         //참조
         public SceneFader fader;
         [SerializeField] private string loadToScene = "PlayScene01";
+        [SerializeField] private int loadToSceneNumber = 2;
 
         //인트로 강제로 끝내기
         public InputActionReference escapeAction;
@@ -49,8 +50,12 @@ namespace MyFps
 
         IEnumerator ExitSequence()
         {
+            //게임 데이터 저장 - 다음 씬번호 저장
+            PlayerStats.Instance.SceneNumber = loadToSceneNumber;
+            SaveLoad.SaveData();
+
             yield return new WaitForSeconds(1f);
-            fader.FadeTo(loadToScene);
+            fader.FadeTo(loadToSceneNumber);
         }
         #endregion
     }

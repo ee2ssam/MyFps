@@ -6185,6 +6185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FExitTrigger
   fader: {fileID: 133729662}
+  loadToSceneNumber: 4
   loadToScene: MainMenu
 --- !u!65 &353211524
 BoxCollider:
@@ -13233,6 +13234,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 517386985208599630, guid: b8ed7d376ece1004ea1968e25f63af12, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1659909767703586341, guid: b8ed7d376ece1004ea1968e25f63af12, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.29393
@@ -15744,6 +15749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1479448679}
+  - component: {fileID: 1479448681}
   - component: {fileID: 1479448680}
   m_Layer: 0
   m_Name: SceneManager
@@ -15781,6 +15787,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MyFps.EOpenning
   thePlayer: {fileID: 2127519821}
   fader: {fileID: 133729662}
+--- !u!114 &1479448681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479448678}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac1dc3316aedb845bb7c968587aa6cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyFps.AutoSave
 --- !u!1 &1487854530
 GameObject:
   m_ObjectHideFlags: 0

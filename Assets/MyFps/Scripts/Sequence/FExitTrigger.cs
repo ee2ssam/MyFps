@@ -13,9 +13,8 @@ namespace MyFps
         //참조
         public SceneFader fader;
         //[SerializeField] private string loadToScene = "PlayScene03";
-        [SerializeField] private string loadToScene = "MainMenu";
-
-        
+        [SerializeField] private int loadToSceneNumber = 4;
+        [SerializeField] private string loadToScene = "MainMenu";        
         #endregion
 
         #region Custom Method
@@ -27,6 +26,10 @@ namespace MyFps
             AudioManager.Instance.StopBgm();
 
             //씬 클리어 처리...
+            //TODO : 다음씬이 없어 게임 데이터 저장 생략
+            //게임 데이터 저장 - 다음 씬번호, AmmoCount, Health 저장
+            //PlayerStats.Instance.SceneNumber = loadToSceneNumber;
+            //SaveLoad.SaveData();
 
             yield return new WaitForSeconds(0.1f);
             fader.FadeTo(loadToScene);
