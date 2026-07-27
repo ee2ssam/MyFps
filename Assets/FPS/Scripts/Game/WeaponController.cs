@@ -4,6 +4,18 @@ using UnityEngine.Audio;
 namespace Unity.FPS.Game
 {
     /// <summary>
+    /// 조준점 데이터 정의
+    /// 이미지, 크기, 컬러 
+    /// </summary>
+    [System.Serializable]
+    public struct CrossHairData
+    {
+        public Sprite CrossHairSprite;
+        public float CrossHairSize;
+        public Color CrossHairColor;
+    }
+
+    /// <summary>
     /// 총기류 무기를 관리하는 클래스
     /// </summary>
     [RequireComponent (typeof(AudioSource))]
@@ -20,6 +32,10 @@ namespace Unity.FPS.Game
         //슛팅 오디오
         private AudioSource shootAudioSource;
         public AudioClip switchWeaponSfx;           //무기 교체 효과음
+
+        //크로스헤어
+        public CrossHairData crossHairDefault;          //기본(평상시)
+        public CrossHairData crossHairTargetInSight;    //적 포착시(타겟팅)
         #endregion
 
         #region Unity Event Method

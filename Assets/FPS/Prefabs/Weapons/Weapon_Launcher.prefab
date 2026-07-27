@@ -145,6 +145,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Unity.FPS.Game.WeaponController
   weaponRoot: {fileID: 5646165488041817916}
+  switchWeaponSfx: {fileID: 0}
+  crossHairDefault:
+    CrossHairSprite: {fileID: 21300000, guid: 68bfc835c46c9b44b9e6efb11901646e, type: 3}
+    CrossHairSize: 100
+    CrossHairColor: {r: 0.5624957, g: 1, b: 0.19811308, a: 1}
+  crossHairTargetInSight:
+    CrossHairSprite: {fileID: 21300000, guid: 68bfc835c46c9b44b9e6efb11901646e, type: 3}
+    CrossHairSize: 100
+    CrossHairColor: {r: 0.24286534, g: 0.8050314, b: 0.022783771, a: 1}
 --- !u!1 &2990922162098100101
 GameObject:
   m_ObjectHideFlags: 0
