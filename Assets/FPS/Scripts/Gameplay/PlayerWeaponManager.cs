@@ -64,15 +64,106 @@ namespace Unity.FPS.Gameplay
             ActiveWeaponIndex = -1;
             weaponSwitchState = WeaponSwitchState.Down;
 
+            //무기 교체 이벤트 등록
+            OnSwitchToWeapon += OnWeaponSwitched;
+
             //지급 받은 무기 장착하기
             foreach (var w in startingWeapons)
             {
                 AddWeapon(w);
             }
+            SwitchWeapon(true);
+        }
+
+        private void Update()
+        {
+            //인풋
+            if (weaponSwitchState == WeaponSwitchState.Up 
+                || weaponSwitchState == WeaponSwitchState.Down)
+            {
+                int switchWeaponInput = inputHandler.GetSwitchWeaponInput();
+                if(switchWeaponInput != 0)
+                {
+                    bool switchUp = switchWeaponInput > 0f;
+                    SwitchWeapon(switchUp);
+                }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            UpdateWeaponSwitching();
+
+            //무기의 최종 위치
+            weaponParentSocket.localPosition = weaponMainLocalPosition;
         }
         #endregion
 
         #region Custom Method
+        //무기 상태 변화로 무기 교체 연출
+        private void UpdateWeaponSwitching()
+        {
+            //Lerp 계수
+            float switchingTimeFactor = 0f;
+            if(weaponSwitchDelay == 0f)
+            {
+                switchingTimeFactor = 1f;
+            }
+            else
+            {
+                switchingTimeFactor = Mathf.Clamp01((Time.time - weaponSwitchTimeStarted) / weaponSwitchDelay);
+            }
+
+            //타이머 완료 - 
+            if(switchingTimeFactor >= 1)
+            {
+                //내리는 연출 완료
+                if (weaponSwitchState == WeaponSwitchState.PutDownPrevious)
+                {
+                    //현재 무기를 false, 새로운 무기를 true
+                    WeaponController oldWeapon = GetActiveWeapon();
+                    if(oldWeapon != null)
+                    {
+                        oldWeapon.ShowWeapon(false);
+                    }
+
+                    ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
+                    WeaponController newWeapon = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
+                    OnSwitchToWeapon?.Invoke(newWeapon);
+
+                    //연출 초기화
+                    switchingTimeFactor = 0f;
+                    if(newWeapon != null)
+                    {
+                        //올라가는 연출 시작
+                        weaponSwitchTimeStarted = Time.time;
+                        weaponSwitchState = WeaponSwitchState.PutUpNew;
+                    }
+                    else
+                    {
+                        weaponSwitchState = WeaponSwitchState.Down;
+                    }
+                }
+                else if (weaponSwitchState == WeaponSwitchState.PutUpNew) //올리는 연출 완료
+                {
+                    weaponSwitchState = WeaponSwitchState.Up;
+                }
+            }
+
+            //무기 스위치 이동 연출
+            if(weaponSwitchState == WeaponSwitchState.PutDownPrevious)
+            {
+                weaponMainLocalPosition = Vector3.Lerp(defaultWeaponPosition.localPosition, 
+                    downWeaponPosition.localPosition, switchingTimeFactor);
+            }
+            else if (weaponSwitchState == WeaponSwitchState.PutUpNew)
+            {
+                weaponMainLocalPosition = Vector3.Lerp(downWeaponPosition.localPosition,
+                    defaultWeaponPosition.localPosition, switchingTimeFactor);
+            }
+        }
+
+
         //지급 받은 무기<WeaponController>를 무기 슬롯에 추가하기
         public bool AddWeapon(WeaponController weaponPrefab)
         {
@@ -142,9 +233,88 @@ namespace Unity.FPS.Gameplay
         }
 
         //무기 교체하기, ascendingOrder: 오름차순, 내림차순으로 무기 교체하기
+        //현재 들고 있는 무기 false => 새로운 무기 true
         public void SwitchWeapon(bool ascendingOrder)
         {
+            //새로운 무기 인덱스
+            int newWeponIndex = -1;
+            int closestSlotDistance = weaponSlots.Length;
+            for (int i = 0; i < weaponSlots.Length; i++)
+            {
+                if(i != ActiveWeaponIndex && GetWeaponAtSlotIndex(i) != null)
+                {
+                    //액티브 무기와의 거리 구하기
+                    int distanceToActiveIndex = GetDistanceBetweenWeaponSlots(
+                        ActiveWeaponIndex, i, ascendingOrder);
+                    if (distanceToActiveIndex < closestSlotDistance)
+                    {
+                        closestSlotDistance = distanceToActiveIndex;
+                        newWeponIndex = i;
+                    }
+                }
+            }
 
+            //새로운 무기의 인덱스로 무기 교체
+            SwitchWeaponIndex(newWeponIndex);
+        }
+
+        //새로운 무기의 인덱스로 무기 교체
+        private void SwitchWeaponIndex(int newWeaponIndex)
+        {
+            //인덱스 체크
+            if (newWeaponIndex < 0 || newWeaponIndex >= weaponSlots.Length
+                || newWeaponIndex == ActiveWeaponIndex)
+                return;
+
+            //무기 교체 연출 초기화
+            weaponSwitchNewWeaponIndex = newWeaponIndex;
+            weaponSwitchTimeStarted = Time.time;
+
+            //액티브 무기 체크
+            if(GetActiveWeapon() == null)
+            {
+                weaponMainLocalPosition = downWeaponPosition.localPosition;
+                weaponSwitchState = WeaponSwitchState.PutUpNew;
+
+                ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
+                WeaponController newWeapon = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
+                OnSwitchToWeapon?.Invoke(newWeapon);
+            }
+            else
+            {
+                //내리는 연출 시작
+                weaponSwitchState = WeaponSwitchState.PutDownPrevious;
+            }
+        }
+
+        //슬롯간 거리 구하기
+        private int GetDistanceBetweenWeaponSlots(int fromIndex, int toIndex, bool ascendingOrder)
+        {
+            int distance = 0;
+
+            if(ascendingOrder)
+            {
+                distance = toIndex - fromIndex;
+            }
+            else
+            {
+                distance = fromIndex - toIndex;
+            }
+
+            if(distance < 0)
+            {
+                distance = distance + weaponSlots.Length;
+            }
+
+            return distance;
+        }
+
+        private void OnWeaponSwitched(WeaponController newWeapon)
+        {
+            if(newWeapon != null)
+            {
+                newWeapon.ShowWeapon(true);
+            }
         }
         #endregion
     }

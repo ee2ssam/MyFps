@@ -5636,7 +5636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac5ddb3ce9b8884ca9588dc620ffcab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookSensitivity: 1
+  LookSensitivity: 0.05
   WebglLookSensitivityMultiplier: 0.25
   TriggerAxisThreshold: 0.4
   InvertYAxis: 1
@@ -5688,6 +5688,7 @@ MonoBehaviour:
   weaponParentSocket: {fileID: 1432261321010830765}
   defaultWeaponPosition: {fileID: 1841072762710260398}
   downWeaponPosition: {fileID: 4149389865222750965}
+  weaponSwitchDelay: 1
 --- !u!114 &8118132282568604723
 MonoBehaviour:
   m_ObjectHideFlags: 0
