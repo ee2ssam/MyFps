@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Unity.FPS.Gameplay
 {
+    /// <summary>
+    /// 플레이어 인풋을 관리하는 클래스
+    /// </summary>
     public class PlayerInputHandler : MonoBehaviour
     {
         //inputSystem class 인스턴스 선언
@@ -89,7 +92,7 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                return Input.GetButtonDown(GameConstants.k_ButtonNameJump);
+                return inputActions.Player.Jump.WasPressedThisFrame();
             }
 
             return false;
@@ -99,7 +102,7 @@ namespace Unity.FPS.Gameplay
         {
             if (CanProcessInput())
             {
-                return Input.GetButton(GameConstants.k_ButtonNameJump);
+                return inputActions.Player.Jump.IsPressed();
             }
 
             return false;
@@ -139,7 +142,7 @@ namespace Unity.FPS.Gameplay
         public bool GetCrouchInputDown()
         {            
             if (CanProcessInput())
-            {
+            {                
                 return inputActions.Player.Crouch.WasPressedThisFrame();
             }
 
@@ -158,10 +161,10 @@ namespace Unity.FPS.Gameplay
 
         public bool GetSprintInputHeld()
         {
-            /*if (CanProcessInput())
+            if (CanProcessInput())
             {
-                return Input.GetButton(GameConstants.k_ButtonNameSprint);
-            }*/
+                return inputActions.Player.Sprint.IsPressed();
+            }
 
             return false;
         }
@@ -182,6 +185,17 @@ namespace Unity.FPS.Gameplay
             }
 
             return 0;
+        }
+
+        //조준 모드
+        public bool GetAimInputHeld()
+        {
+            if (CanProcessInput())
+            {
+                return inputActions.Player.Aim.IsPressed();
+            }
+
+            return false;
         }
         
     }

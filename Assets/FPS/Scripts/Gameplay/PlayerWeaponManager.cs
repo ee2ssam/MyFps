@@ -47,22 +47,41 @@ namespace Unity.FPS.Gameplay
 
         public Transform defaultWeaponPosition;     //무기 up 위치
         public Transform downWeaponPosition;        //무기 down 위치
+        public Transform aimingWeaponPosition;      //무기 조준 위치
 
         //교체 연출에 필요한 변수
         private int weaponSwitchNewWeaponIndex;
         private float weaponSwitchTimeStarted = 0f;
         [SerializeField] private float weaponSwitchDelay = 1f;
+                
+        //적 타겟팅
+        public bool IsPointingAtEnemy { get; private set; }     //적 타겟팅 여부
+        public Camera weaponCamera;                              //무기 전용 카메라
+
+        //카메라
+        private PlayerCharacterController playerCharacterController;
+        public float defaultFov = 60f;                          //FOV 기본값
+        public float weaponFovMultiplier = 1f;                  //무기 fov 계수값
+
+        //조준
+        public bool IsAiming { get; private set; }          //조준 여부
+        public float aimingAnimationSpeed = 10f;            //연출 속도
         #endregion
 
         #region Unity Event Method
-        private void Start()
+        private void Awake()
         {
             //참조
             inputHandler = GetComponent<PlayerInputHandler>();
+            playerCharacterController = GetComponent<PlayerCharacterController>();
+        }
 
+        private void Start()
+        {
             //초기화
             ActiveWeaponIndex = -1;
             weaponSwitchState = WeaponSwitchState.Down;
+            SetFov(defaultFov);
 
             //무기 교체 이벤트 등록
             OnSwitchToWeapon += OnWeaponSwitched;
@@ -77,21 +96,47 @@ namespace Unity.FPS.Gameplay
 
         private void Update()
         {
-            //인풋
-            if (weaponSwitchState == WeaponSwitchState.Up 
-                || weaponSwitchState == WeaponSwitchState.Down)
+            //현재 손에 들고 있는 무기(액티브 무기) 가져오기
+            WeaponController activeWeapon = GetActiveWeapon();
+
+            //인풋 처리
+            IsAiming = inputHandler.GetAimInputHeld();
+
+            //조준 안하고 있을때만 무기 교체 가능
+            if (IsAiming == false)
             {
-                int switchWeaponInput = inputHandler.GetSwitchWeaponInput();
-                if(switchWeaponInput != 0)
+                if (weaponSwitchState == WeaponSwitchState.Up
+                    || weaponSwitchState == WeaponSwitchState.Down)
                 {
-                    bool switchUp = switchWeaponInput > 0f;
-                    SwitchWeapon(switchUp);
+                    int switchWeaponInput = inputHandler.GetSwitchWeaponInput();
+                    if (switchWeaponInput != 0)
+                    {
+                        bool switchUp = switchWeaponInput > 0f;
+                        SwitchWeapon(switchUp);
+                    }
+                }
+            }
+
+            //적 타겟팅
+            IsPointingAtEnemy = false;
+            if(activeWeapon)
+            {
+                if(Physics.Raycast(weaponCamera.transform.position,
+                    weaponCamera.transform.forward, out RaycastHit hit, 100f))
+                {
+                    //Debug.Log($"hit {hit.collider.gameObject.name}");
+                    Health enemyHealth = hit.collider.GetComponentInParent<Health>();
+                    if(enemyHealth)
+                    {                        
+                        IsPointingAtEnemy = true;
+                    }
                 }
             }
         }
 
         private void LateUpdate()
         {
+            UpdateWeaponAiming();
             UpdateWeaponSwitching();
 
             //무기의 최종 위치
@@ -100,7 +145,40 @@ namespace Unity.FPS.Gameplay
         #endregion
 
         #region Custom Method
-        //무기 상태 변화로 무기 교체 연출
+        //FOV 조정하기
+        public void SetFov(float fov)
+        {
+            playerCharacterController.PlayerCamera.fieldOfView = fov;
+            weaponCamera.fieldOfView = fov * weaponFovMultiplier;
+        }
+
+        //무기 조준 연출 : 디폴트위치 <-> 조준위치
+        private void UpdateWeaponAiming()
+        {
+            //상태 체크
+            if (weaponSwitchState != WeaponSwitchState.Up)
+                return;
+            
+            WeaponController activeWeapon = GetActiveWeapon();
+            if(IsAiming && activeWeapon)
+            {
+                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
+                   aimingWeaponPosition.localPosition + activeWeapon.aimOffset,
+                   aimingAnimationSpeed * Time.deltaTime);
+                SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, 
+                    activeWeapon.aimZoomratio * defaultFov, aimingAnimationSpeed * Time.deltaTime));
+            }
+            else
+            {
+                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition,
+                   defaultWeaponPosition.localPosition, aimingAnimationSpeed * Time.deltaTime);
+                SetFov(Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView,
+                    defaultFov, aimingAnimationSpeed * Time.deltaTime));
+            }
+
+        }
+
+        //무기 상태 변화로 무기 교체 연출 : 디폴트위치 <-> 아래위치
         private void UpdateWeaponSwitching()
         {
             //Lerp 계수

@@ -36,6 +36,10 @@ namespace Unity.FPS.Game
         //크로스헤어
         public CrossHairData crossHairDefault;          //기본(평상시)
         public CrossHairData crossHairTargetInSight;    //적 포착시(타겟팅)
+
+        //조준
+        [Range(0, 1)] public float aimZoomratio = 1f;   //조준시 줌 비율
+        public Vector3 aimOffset = Vector3.zero;        //조준 위치 이동시 무기별 위치 조정값
         #endregion
 
         #region Unity Event Method
