@@ -169,7 +169,7 @@ namespace Unity.FPS.Gameplay
             return false;
         }
 
-
+        //무기 교체 인풋 처리
         public int GetSwitchWeaponInput()
         {
             if (CanProcessInput())
@@ -187,7 +187,7 @@ namespace Unity.FPS.Gameplay
             return 0;
         }
 
-        //조준 모드
+        //조준 입력 처리
         public bool GetAimInputHeld()
         {
             if (CanProcessInput())
@@ -198,5 +198,36 @@ namespace Unity.FPS.Gameplay
             return false;
         }
         
+        //발사 버튼 입력처리
+        public bool GetFireInputDown()
+        {
+            if (CanProcessInput())
+            {
+                return inputActions.Player.Fire.WasPressedThisFrame();
+            }
+
+            return false;
+        }
+
+        public bool GetFireInputReleased()
+        {
+            if (CanProcessInput())
+            {
+                return inputActions.Player.Fire.WasReleasedThisFrame();
+            }
+
+            return false;
+        }
+
+        public bool GetFireInputHeld()
+        {
+            if (CanProcessInput())
+            {
+                return inputActions.Player.Fire.IsPressed();
+            }
+
+            return false;
+        }
+
     }
 }

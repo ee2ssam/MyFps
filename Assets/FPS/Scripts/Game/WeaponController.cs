@@ -16,6 +16,18 @@ namespace Unity.FPS.Game
     }
 
     /// <summary>
+    /// 무기별 슛 타입 정의
+    /// </summary>
+    public enum WeaponShootType
+    {
+        Manual,
+        Automatic,
+        Charge,
+        Sniper,
+        //..
+    }
+
+    /// <summary>
     /// 총기류 무기를 관리하는 클래스
     /// </summary>
     [RequireComponent (typeof(AudioSource))]
@@ -40,6 +52,15 @@ namespace Unity.FPS.Game
         //조준
         [Range(0, 1)] public float aimZoomratio = 1f;   //조준시 줌 비율
         public Vector3 aimOffset = Vector3.zero;        //조준 위치 이동시 무기별 위치 조정값
+
+        //슛팅
+        [SerializeField] private WeaponShootType shootType; //슛팅 타입
+
+        [SerializeField] private float maxAmmo = 8f;        //최대 탄환 갯수
+        private float currentAmmo;                          //현재 탄환 갯수
+
+        [SerializeField] private float delayBetweenShots = 0.5f;    //연사 방지, 초당 발사 갯수 
+        private float lastTimeShot;
         #endregion
 
         #region Unity Event Method
@@ -47,6 +68,13 @@ namespace Unity.FPS.Game
         {
             //참조
             shootAudioSource = GetComponent<AudioSource>();
+        }
+
+        private void Start()
+        {
+            //초기화
+            currentAmmo = maxAmmo;
+            lastTimeShot = Time.time;
         }
         #endregion
 
@@ -61,6 +89,62 @@ namespace Unity.FPS.Game
                 shootAudioSource.PlayOneShot(switchWeaponSfx);
             }
             IsWeaponActive = show;
+        }
+
+        //인풋에 따른 발사 처리
+        public bool HandleShootInputs(bool inputDown, bool inputHeld, bool inputUp)
+        {
+            switch(shootType)
+            {
+                case WeaponShootType.Manual:
+                    if(inputDown == true)
+                    {
+                        return TryShoot();
+                    }
+                    break;
+
+                case WeaponShootType.Automatic:
+                    if (inputHeld == true)
+                    {
+                        return TryShoot();
+                    }
+                    break;
+
+                case WeaponShootType.Charge:
+                    break;
+
+                case WeaponShootType.Sniper:
+                    break;
+            }
+
+            return false;
+        }
+
+        //발사 처리
+        private bool TryShoot()
+        {
+            //ammo 체크, 연사방지 체크
+            if(currentAmmo >= 1f && lastTimeShot + delayBetweenShots < Time.time)
+            {
+                Debug.Log("Shoot!!!!!!");
+
+                currentAmmo -= 1f;
+                Debug.Log($"currentAmmo: {currentAmmo}");
+
+                HandleShoot();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        //슛 연출 처리
+        private void HandleShoot()
+        {
+
+
+            lastTimeShot = Time.time;
         }
         #endregion
     }
