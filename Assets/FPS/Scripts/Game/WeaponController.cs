@@ -61,6 +61,23 @@ namespace Unity.FPS.Game
 
         [SerializeField] private float delayBetweenShots = 0.5f;    //연사 방지, 초당 발사 갯수 
         private float lastTimeShot;
+
+        //슛 연출
+        public Transform weaponMuzzle;          //총구, 파이어포인트
+        public GameObject muzzleFlashPrefab;    //총구 발사 이펙트 프리팹
+        public AudioClip shootSfx;              //슛 사운드 클립(소스)
+
+        //슛 반동 Recoil
+        public float recoilForce = 0.5f;
+
+        //발사체 Projectile
+        public Vector3 MuzzleWorldVelocity { get; private set; }    //총구 이동 속도
+        private Vector3 lastMuzzlePosition;
+        public float CurrentCharge { get; private set; }            //충전 량
+
+        public ProjectileBase ProjectilePrefab;     //발사체 프리팹
+        public int bulletsPerShot = 1;              //한번 발사할때 마다 생성되는 발사체의 갯수
+        public float bulletSpreadAngle = 0f;        //발사각
         #endregion
 
         #region Unity Event Method
@@ -75,6 +92,19 @@ namespace Unity.FPS.Game
             //초기화
             currentAmmo = maxAmmo;
             lastTimeShot = Time.time;
+            lastMuzzlePosition = weaponMuzzle.position;
+        }
+
+        private void Update()
+        {
+
+            //이번 프레임의 총구 이동 속도는
+            if (Time.deltaTime > 0)
+            {   
+                MuzzleWorldVelocity = (weaponMuzzle.position - lastMuzzlePosition) / Time.deltaTime;
+                //이번 프레임의 위치 저장
+                lastMuzzlePosition = weaponMuzzle.position;
+            }
         }
         #endregion
 
@@ -142,9 +172,36 @@ namespace Unity.FPS.Game
         //슛 연출 처리
         private void HandleShoot()
         {
+            //발사체 생성
+            for (int i = 0; i < bulletsPerShot; i++)
+            {
+                Vector3 shotDirection = GetShotDirectionWithinSpread(weaponMuzzle);
+                ProjectileBase projectileInstance = Instantiate(ProjectilePrefab, weaponMuzzle.position,
+                    Quaternion.LookRotation(shotDirection));
+                projectileInstance.Shoot(this);
+            }
 
+            //효과(vfx, sfx)
+            if(muzzleFlashPrefab)
+            {
+                GameObject muzzleFlashInstance = Instantiate(muzzleFlashPrefab,
+                    weaponMuzzle.position, weaponMuzzle.rotation, weaponMuzzle);
+                Destroy(muzzleFlashInstance, 2f);
+            }
+            if(shootSfx)
+            {
+                shootAudioSource.PlayOneShot(shootSfx);
+            }
 
             lastTimeShot = Time.time;
+        }
+
+        //발사각 설정
+        private Vector3 GetShotDirectionWithinSpread(Transform shootTransform)
+        {
+            float spreadAngleRation = bulletSpreadAngle / 180f;            
+            return Vector3.Slerp(shootTransform.forward, UnityEngine.Random.insideUnitSphere,
+                spreadAngleRation);
         }
         #endregion
     }
