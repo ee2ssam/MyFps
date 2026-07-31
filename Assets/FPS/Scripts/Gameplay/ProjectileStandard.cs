@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.FPS.Game;
+using Unity.FPS.Utility;
 using System.Collections.Generic;
 
 namespace Unity.FPS.Gameplay
@@ -39,6 +40,7 @@ namespace Unity.FPS.Gameplay
         public AudioClip impactSfxClip;             //충돌 효과 사운드
 
         //데미지
+        public float damage = 15f;                  //데미지 량
         #endregion
 
         #region Unity Event Method
@@ -60,12 +62,118 @@ namespace Unity.FPS.Gameplay
         //발사체를 생성시 초기값 설정
         private void OnShoot()
         {
+            //초기화
             velocity = transform.forward * speed;
             transform.position += projectileBase.InheritedMuzzleVelocity * Time.deltaTime;
             lastRootPosition = root.position;
 
             //쏘는 플레이어의 충돌체들 가져와서 충돌 제외 리스트 등록
+            ignoredColliders = new List<Collider>();
+            Collider[] ownerColliders = projectileBase.Owner.GetComponentsInChildren<Collider>();
+            ignoredColliders.AddRange(ownerColliders);
+        }
 
+        private void Update()
+        {
+            //이동
+            transform.position += velocity * Time.deltaTime;
+
+            //중력
+            if(gravityDown > 0f)
+            {
+                velocity += Vector3.down * gravityDown * Time.deltaTime;
+            }
+
+            //충돌 체크
+            RaycastHit closestHit = new RaycastHit();
+            closestHit.distance = Mathf.Infinity;
+            bool foundHit = false;
+
+            //Sphere cast
+            Vector3 displacementSinceLastFrame = tip.position - lastRootPosition;
+            RaycastHit[] hits = Physics.SphereCastAll(lastRootPosition, radius,
+                displacementSinceLastFrame.normalized, displacementSinceLastFrame.magnitude,
+                hittableLayers, QueryTriggerInteraction.Collide);
+            foreach (var hit in hits)
+            {
+                if(IsHitValid(hit) == true && hit.distance < closestHit.distance)
+                {
+                    foundHit = true;
+                    closestHit = hit;
+                }
+            }
+
+            //가장 가까운 충돌체를 찾았다
+            if(foundHit)
+            {
+                //
+                if(closestHit.distance <= 0f)
+                {
+                    closestHit.point = root.position;
+                    closestHit.normal = -transform.forward;
+                }
+
+                //충돌 처리
+                OnHit(closestHit.point, closestHit.normal, closestHit.collider);
+            }
+
+            //루트 위치 저장
+            lastRootPosition = root.position;
+        }
+
+        //hit한 충돌체(hit.collider) 유효 체크
+        private bool IsHitValid(RaycastHit hit)
+        {
+            //hit를 무효화하는 컴포넌트를 가진 충돌체는 무효
+            if(hit.collider.GetComponent<IgnoreHitDetection>() != null)
+            {
+                return false;
+            }
+
+            //트리거 충돌체이면서 damageable 컴포넌트가 없는 충돌체는 무효
+            if(hit.collider.isTrigger && hit.collider.GetComponent<Damageable>() == null)
+            {
+                return false;
+            }
+
+            //충돌 체크에서 제외되는 충돌체 리스트에 포함되어 있으면 무효
+            if(ignoredColliders != null && ignoredColliders.Contains(hit.collider))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        //충돌처리
+        private void OnHit(Vector3 point, Vector3 normal, Collider collider)
+        {
+            //데미지
+            //Debug.Log($"damage: {damage}");
+            Damageable damageable = collider.GetComponent<Damageable>();
+            if(damageable)
+            {
+                damageable.InflictDamage(damage, false, projectileBase.Owner);
+            }
+
+            //충돌 효과 (vfx, sfx)
+            if(impactVfxPrefab)
+            {
+                GameObject impactGo = Instantiate(impactVfxPrefab, point + (normal * impactVfxSpawnOffset),
+                    Quaternion.LookRotation(normal));
+                if(impactVfxLimeTime > 0f)
+                {
+                    Destroy(impactGo, impactVfxLimeTime);
+                }
+            }
+
+            if(impactSfxClip)
+            {
+                AudioUtility.CreateSFX(impactSfxClip, point, 1f, 3f);
+            }
+
+            //발사체 킬
+            Destroy(gameObject);
         }
         #endregion
     }

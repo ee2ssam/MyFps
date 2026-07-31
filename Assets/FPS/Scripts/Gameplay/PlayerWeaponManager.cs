@@ -36,8 +36,10 @@ namespace Unity.FPS.Gameplay
             PutUpNew,           //다운상태에서 무기 교체후 올리려는 상태
         }
 
-        //무기 교체시 등록된 함수 호출하는 이벤트 함수
-        public UnityAction<WeaponController> OnSwitchToWeapon;
+        //무기 교체,추가,제거시 등록된 함수 호출하는 이벤트 함수
+        public UnityAction<WeaponController> OnSwitchToWeapon;      //무기 교체
+        public UnityAction<WeaponController, int> OnAddedWeapon;    //무기 추가
+        public UnityAction<WeaponController, int> OnRemovedWeapon;    //무기 제거
 
         //무기 교체 상태 변수
         private WeaponSwitchState weaponSwitchState;
@@ -368,11 +370,38 @@ namespace Unity.FPS.Gameplay
 
                     //슬롯에 추가
                     weaponSlots[i] = weaponInstance;
+
+                    //이벤트 함수 호출
+                    OnAddedWeapon?.Invoke(weaponInstance, i);
+
                     return true;
                 }
             }
 
             Debug.Log("Weapon Slots Full");
+            return false;
+        }
+
+        //무기 슬롯에서 지정한 무기 제거
+        public bool RemovedWeapon(WeaponController weaponInstance)
+        {            
+            for (int i = 0; i < weaponSlots.Length; i++)
+            {
+                //weaponInstance 무기 찾기
+                if (weaponSlots[i] == weaponInstance)
+                {
+                    weaponSlots[i] = null;  //슬롯 제거
+                    OnRemovedWeapon?.Invoke(weaponInstance, i); //이벤트 함수 호출
+                    Destroy(weaponInstance.gameObject); //하이라키 창에서 오브젝트 킬
+
+                    //현재 들고 있는 무기를 제거할때 다음 무기로 변경해준다
+                    if(i == ActiveWeaponIndex)
+                    {
+                        SwitchWeapon(true);
+                    }
+                    return true;
+                }
+            }
             return false;
         }
 

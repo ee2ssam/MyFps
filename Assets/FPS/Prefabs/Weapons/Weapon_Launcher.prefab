@@ -156,7 +156,7 @@ MonoBehaviour:
     CrossHairColor: {r: 0.24286534, g: 0.8050314, b: 0.022783771, a: 1}
   aimZoomratio: 0.8
   aimOffset: {x: 0, y: 0, z: 0}
-  shootType: 2
+  shootType: 0
   maxAmmo: 8
   delayBetweenShots: 0.5
   weaponMuzzle: {fileID: 2749496858225023403}
@@ -164,6 +164,8 @@ MonoBehaviour:
   shootSfx: {fileID: 8300000, guid: db351fd9be1155b458c57f20a33c8e7a, type: 3}
   recoilForce: 0.5
   ProjectilePrefab: {fileID: 5849995467245898940, guid: 0e23901b938cf4f4eb86850d912715eb, type: 3}
+  bulletsPerShot: 1
+  bulletSpreadAngle: 0
 --- !u!1 &2990922162098100101
 GameObject:
   m_ObjectHideFlags: 0

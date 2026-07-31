@@ -58,6 +58,7 @@ namespace Unity.FPS.Game
 
         [SerializeField] private float maxAmmo = 8f;        //최대 탄환 갯수
         private float currentAmmo;                          //현재 탄환 갯수
+        public float CurrentAmmoRatio => currentAmmo / maxAmmo;  //ammo 게이지 Ratio
 
         [SerializeField] private float delayBetweenShots = 0.5f;    //연사 방지, 초당 발사 갯수 
         private float lastTimeShot;
@@ -156,8 +157,6 @@ namespace Unity.FPS.Game
             //ammo 체크, 연사방지 체크
             if(currentAmmo >= 1f && lastTimeShot + delayBetweenShots < Time.time)
             {
-                Debug.Log("Shoot!!!!!!");
-
                 currentAmmo -= 1f;
                 Debug.Log($"currentAmmo: {currentAmmo}");
 
