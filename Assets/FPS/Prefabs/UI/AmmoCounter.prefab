@@ -196,7 +196,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.55
+  m_FillAmount: 0.44
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 645032500860478886}
   - component: {fileID: 645032500860478887}
   - component: {fileID: 9214201941437819547}
+  - component: {fileID: 6265879145271224473}
   m_Layer: 5
   m_Name: AmmoCounter
   m_TagString: Untagged
@@ -272,6 +273,28 @@ MonoBehaviour:
   weaponSwitchSharpness: 10
   canvasGroup: {fileID: 645032500860478887}
   unSelectedOpacity: 0.5
+  fillBarColorChange: {fileID: 6265879145271224473}
+--- !u!114 &6265879145271224473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645032500860478885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c82615bdb03b814592b4e26d0b27de3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Unity.FPS.UI.FillBarColorChange
+  foregroundImage: {fileID: 645032500597732956}
+  defaultForegroundColor: {r: 1, g: 1, b: 1, a: 1}
+  flashForegroundColorFull: {r: 0, g: 0, b: 0, a: 1}
+  backgroundImage: {fileID: 645032499974091307}
+  defaultBackgroundColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+  flashBackgroundColorEmpty: {r: 1, g: 0, b: 0, a: 0.5019608}
+  fullValue: 1
+  emptyValue: 0.1
+  colorChangeSharpness: 5
 --- !u!1 &1644869328222790790
 GameObject:
   m_ObjectHideFlags: 0

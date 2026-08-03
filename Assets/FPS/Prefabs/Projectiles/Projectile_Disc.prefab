@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 106790115311484949}
   - component: {fileID: 106790115311484954}
   - component: {fileID: 5849995467245898940}
+  - component: {fileID: 8093034399122738770}
   m_Layer: 0
   m_Name: Projectile_Disc
   m_TagString: Untagged
@@ -118,6 +119,30 @@ MonoBehaviour:
   impactVfxSpawnOffset: 0.1
   impactSfxClip: {fileID: 8300000, guid: 9f10062f38150d54a8a9779273675305, type: 3}
   damage: 40
+--- !u!114 &8093034399122738770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106790115311484953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32dc47c8a90b4c2429606c15e8a2cd1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Unity.FPS.Gameplay.ProjectileChargeParameters
+  damage:
+    Min: 80
+    Max: 350
+  speed:
+    Min: 20
+    Max: 40
+  gravityDown:
+    Min: 10
+    Max: 5
+  radius:
+    Min: 0.2
+    Max: 0.2
 --- !u!1 &1945832826066038730
 GameObject:
   m_ObjectHideFlags: 0

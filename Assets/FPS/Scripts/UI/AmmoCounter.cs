@@ -14,7 +14,7 @@ namespace Unity.FPS.UI
         #region Variables
         //참조
         private PlayerWeaponManager weaponManager;
-
+        
         private WeaponController weapon;                //UI와 매칭되는 무기
         private int weaponCounterIndex;                 //무기(Ammo) UI의 인덱스
 
@@ -28,6 +28,9 @@ namespace Unity.FPS.UI
         public CanvasGroup canvasGroup;
         [Range(0,1)] public float unSelectedOpacity = 0.5f; //액티브 무기가 아니면 투명 처리
         private Vector3 unSelectedScale = Vector3.one * 0.8f; //액티브 무기가 아니면 크기 80%
+
+        //게이지바 이미지 컬러 변경 연출
+        public FillBarColorChange fillBarColorChange;
         #endregion
 
         #region Unity Event Method
@@ -47,6 +50,8 @@ namespace Unity.FPS.UI
             transform.localScale = Vector3.Lerp(transform.localScale, currentScale,
                 weaponSwitchSharpness * Time.deltaTime);
 
+            //게이지 컬러 변경 업데이트
+            fillBarColorChange.UpdateVisual(currentFillRate);
         }
         #endregion
 
@@ -62,6 +67,9 @@ namespace Unity.FPS.UI
 
             //UI
             weaponIndexText.text = (weaponCounterIndex + 1).ToString();
+
+            //게이지 컬러 변경 초기화
+            fillBarColorChange.Initialize(1.0f, 0.1f);
         }
         #endregion
     }

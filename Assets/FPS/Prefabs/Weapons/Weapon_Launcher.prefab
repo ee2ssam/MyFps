@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2225486910712267856}
   - component: {fileID: 7583640433812654122}
   - component: {fileID: 5658484607464363184}
+  - component: {fileID: 7770628034911977352}
   m_Layer: 8
   m_Name: Weapon_Launcher
   m_TagString: Untagged
@@ -156,7 +157,7 @@ MonoBehaviour:
     CrossHairColor: {r: 0.24286534, g: 0.8050314, b: 0.022783771, a: 1}
   aimZoomratio: 0.8
   aimOffset: {x: 0, y: 0, z: 0}
-  shootType: 0
+  shootType: 2
   maxAmmo: 8
   delayBetweenShots: 0.5
   weaponMuzzle: {fileID: 2749496858225023403}
@@ -166,6 +167,41 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 5849995467245898940, guid: 0e23901b938cf4f4eb86850d912715eb, type: 3}
   bulletsPerShot: 1
   bulletSpreadAngle: 0
+  lastChareTriggerTimeTamp: 0
+--- !u!114 &7770628034911977352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225486910712267859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 314ed3e89631d284bb806206b609a8f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Unity.FPS.Gameplay.ChargedWeaponEffectHandler
+  chargingObject: {fileID: 2990922162098100103}
+  spiningFrame: {fileID: 2990922162098100101}
+  diskOrbitParticlePrefab: {fileID: 1087039822203223203, guid: b9cf7bff98404174d83a37d58c543aa5, type: 3}
+  scale:
+    Min: {x: 0.1, y: 0.1, z: 0.1}
+    Max: {x: 1, y: 1, z: 1}
+  offset: {x: 0, y: 0, z: 0.764}
+  parentTransform: {fileID: 0}
+  orbitY:
+    Min: 3.1416
+    Max: 12.5664
+  radius:
+    Min: {x: 0.5, y: 0.5, z: 0.5}
+    Max: {x: 1.5, y: 1.5, z: 1.5}
+  spiningSpeed:
+    Min: 50
+    Max: 1500
+  chargeSound: {fileID: 8300000, guid: a0250b579098c29499f65cfd30b10504, type: 3}
+  loopChargeWeaponSfx: {fileID: 8300000, guid: 76cbd6048d33772459bfc1bccb4cfe94, type: 3}
+  fadeLoopDuration: 0.5
+  useProceduralPitchOnLoop: 0
+  maxProceduralPitchValue: 2
 --- !u!1 &2990922162098100101
 GameObject:
   m_ObjectHideFlags: 0
