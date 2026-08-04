@@ -59,7 +59,7 @@ namespace Unity.FPS.Game
 
         [SerializeField] private float maxAmmo = 8f;        //최대 탄환 갯수
         private float currentAmmo;                          //현재 탄환 갯수
-        public float CurrentAmmoRatio => currentAmmo / maxAmmo;  //ammo 게이지 Ratio
+        public float CurrentAmmoRatio { get; private set; }  //ammo 게이지 Ratio
 
         [SerializeField] private float delayBetweenShots = 0.5f;    //연사 방지, 초당 발사 갯수 
         private float lastTimeShot;
@@ -90,6 +90,11 @@ namespace Unity.FPS.Game
         private float maxChargeDuration = 2f;               //충전 최대 시간
 
         public float lastChareTriggerTimeTamp;              //발사 버튼을 누른 시간 저장
+
+        //재장전 Reload
+        public bool automaticReload = true;             //재장전 자동/수동
+        public float ammoReloadRate = 1f;               //재장전 속도 (초당 재장전량)
+        public float ammoReloadDelay = 2f;              //발사 후 딜레이 시간 이후에 재장전 시작
         #endregion
 
         #region Unity Event Method
@@ -109,8 +114,8 @@ namespace Unity.FPS.Game
 
         private void Update()
         {
+            UpdateAmmo();
             UpdateCharge();
-
 
             //이번 프레임의 총구 이동 속도는
             if (Time.deltaTime > 0)
@@ -141,6 +146,40 @@ namespace Unity.FPS.Game
             currentAmmo -= amount;
             currentAmmo = Mathf.Clamp(currentAmmo, 0, maxAmmo);
             lastTimeShot = Time.time;
+        }
+
+        //Ammo 처리
+        private void UpdateAmmo()
+        {
+            //AmmoRatio
+            if(maxAmmo == 0f || maxAmmo == Mathf.Infinity)
+            {
+                CurrentAmmoRatio = 1f;
+            }
+            else
+            {
+                CurrentAmmoRatio = currentAmmo / maxAmmo;
+            }
+            
+            //Reload - 자동
+            if(automaticReload && currentAmmo < maxAmmo && IsCharge == false
+                && lastTimeShot + ammoReloadDelay < Time.time)
+            {
+                //재장전 속도 (초당 재장전량)
+                currentAmmo += ammoReloadRate * Time.deltaTime;
+                currentAmmo = Mathf.Clamp(currentAmmo, 0f, maxAmmo);
+            }
+        }
+
+        //Reload - 수동
+        public void Reload()
+        {
+            if (automaticReload || IsCharge || currentAmmo >= maxAmmo)
+                return;
+
+            currentAmmo = maxAmmo;
+
+            //재장전에 따른 비용 처리, 이펙트 효과
         }
 
         //충전

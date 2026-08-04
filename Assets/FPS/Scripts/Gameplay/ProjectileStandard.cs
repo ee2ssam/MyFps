@@ -40,7 +40,8 @@ namespace Unity.FPS.Gameplay
         public AudioClip impactSfxClip;             //충돌 효과 사운드
 
         //데미지
-        public float damage = 15f;                  //데미지 량
+        public float damage = 15f;                  //데미지 량        
+        private DamageArea damageArea;              //범위 데미지 주기 객체
         #endregion
 
         #region Unity Event Method
@@ -51,6 +52,8 @@ namespace Unity.FPS.Gameplay
             //이벤트 함수 등록
             projectileBase.onShoot += OnShoot;
 
+            //범위 데미지 주기 객체 가져오기
+            damageArea = GetComponent<DamageArea>();
 
             //킬 예약
             Destroy(gameObject, maxLifeTime);
@@ -148,12 +151,21 @@ namespace Unity.FPS.Gameplay
         //충돌처리
         private void OnHit(Vector3 point, Vector3 normal, Collider collider)
         {
-            //데미지
+            //데미지 : 뷸렛/폭탄 여부 체크
             //Debug.Log($"damage: {damage}");
-            Damageable damageable = collider.GetComponent<Damageable>();
-            if(damageable)
+            if(damageArea)
             {
-                damageable.InflictDamage(damage, false, projectileBase.Owner);
+                //범위 공격 데미지 주기
+                damageArea.InflictDamageArea(damage, point, hittableLayers,
+                    QueryTriggerInteraction.Collide, projectileBase.Owner);
+            }
+            else
+            {
+                Damageable damageable = collider.GetComponent<Damageable>();
+                if (damageable)
+                {
+                    damageable.InflictDamage(damage, false, projectileBase.Owner);
+                }
             }
 
             //충돌 효과 (vfx, sfx)

@@ -158,7 +158,7 @@ MonoBehaviour:
   aimZoomratio: 0.8
   aimOffset: {x: 0, y: 0, z: 0}
   shootType: 2
-  maxAmmo: 8
+  maxAmmo: 4
   delayBetweenShots: 0.5
   weaponMuzzle: {fileID: 2749496858225023403}
   muzzleFlashPrefab: {fileID: 0}

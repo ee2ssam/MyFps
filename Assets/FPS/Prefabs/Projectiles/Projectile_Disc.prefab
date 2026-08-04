@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 106790115311484949}
   - component: {fileID: 106790115311484954}
   - component: {fileID: 5849995467245898940}
+  - component: {fileID: 4917424753928790673}
   - component: {fileID: 8093034399122738770}
   m_Layer: 0
   m_Name: Projectile_Disc
@@ -119,6 +120,52 @@ MonoBehaviour:
   impactVfxSpawnOffset: 0.1
   impactSfxClip: {fileID: 8300000, guid: 9f10062f38150d54a8a9779273675305, type: 3}
   damage: 40
+--- !u!114 &4917424753928790673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106790115311484953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7672b8e968064f46ad11f56bd194353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Unity.FPS.Game.DamageArea
+  areaOfEffectDistance: 5
+  damageRatioOverDistance:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.15
+      value: 1
+      inSlope: -0.010497888
+      outSlope: -0.010497888
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.32135943
+    - serializedVersion: 3
+      time: 0.598141
+      value: 0.75922626
+      inSlope: -1.0266461
+      outSlope: -1.0266461
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.15
+      inSlope: -2.0442593
+      outSlope: -2.0442593
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.13606666
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &8093034399122738770
 MonoBehaviour:
   m_ObjectHideFlags: 0
